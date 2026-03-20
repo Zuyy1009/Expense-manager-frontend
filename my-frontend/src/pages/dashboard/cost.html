@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="./cost.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="left-sidebar">
+            <section class="profile-info">
+                <p>Thông tin tài khoản</p>
+            </section>
+
+            <nav class="side-menu">
+                <a class="menu-item"
+                    href="D:\TTCS Project\EM System\Enter\Frontend\src\pages\dashboard\dashboard.html">Bảng điều
+                    khiển</a>
+                <a class="menu-item" href="#">Chi phí</a>
+                <a class="menu-item" href="#">Chức năng khác</a>
+                <a class="menu-item" href="#">Cài đặt</a>
+                <a class="menu-item" href="#">Hỗ trợ</a>
+            </nav>
+
+            <section class="logo">
+                <img src="D:\TTCS Project\Resource\Logo.png" class="logo-img" alt="logoimg" />
+                <h2>Expense Manager</h2>
+            </section>
+        </aside> <!-- Dùng Shift Alt F để căn chỉnh ngay-->
+        <main class="content">
+            <section class="filter-row">
+                <h3 class="filter-title">Bộ lọc</h3>
+                <p class="filter-type-name">Thời gian: </p>
+                <select name="time-filt" id="time-filt" class="filt-select">
+                    <option value="this-month">Tháng này</option>
+                    <option value="previous-month">Tháng trước</option>
+                    <option value="two-previous-month">2 tháng này</option>
+                    <option value="five-previous-month">5 tháng này</option>
+                    <option value="last-year">Năm ngoái</option>
+                </select>
+                <p class="filter-type-name">Loại giao dịch: </p>
+                <select name="type-filt" id="type-filt" class="filt-select">
+                    <option value="room-expense">Tiền trọ</option>
+                    <option value="shopping-expense">Mua sắm</option>
+                    <option value="travel">Đi lại</option>
+                    <option value="eating">Ăn uống</option>
+                    <option value="other">Khác</option>
+                </select>
+                <p class="filter-type-name">Phạm vi tiền: </p>
+                <select name="money-filt" id="money-filt" class="filt-select">
+                    <option value="room-expense">Dưới 200,000 đồng</option>
+                    <option value="shopping-expense">Từ 200,000 đến 500,000 đồng</option>
+                    <option value="travel">Từ 500,000 đồng đến 1,000,000 đồng</option>
+                    <option value="eating">Từ 1,000,000 đồng đến 5,000,000 đồng</option>
+                    <option value="eating">5,000,000 trở lên</option>
+                </select>
+            </section>
+            <section class="expense-list">
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Áo phông thần đu đủ</strong></p>
+                    <p class="ei-date">12-01-2026</p>
+                    <p class="ei-price">450,000 đ</p>
+                    <p class="ei-type">Mua sắm</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Quần cheems</strong></p>
+                    <p class="ei-date">10-01-2026</p>
+                    <p class="ei-price">650,000 đ</p>
+                    <p class="ei-type">Mua sắm</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Tiền phòng tháng 1</strong></p>
+                    <p class="ei-date">05-01-2026</p>
+                    <p class="ei-price">850,000 đ</p>
+                    <p class="ei-type">Tiền trọ</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Đặt xe tới trường</strong></p>
+                    <p class="ei-date">04-01-2026</p>
+                    <p class="ei-price">23,000 đ</p>
+                    <p class="ei-type">Đi lại</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Ăn chực ở KFC</strong></p>
+                    <p class="ei-date">02-01-2026</p>
+                    <p class="ei-price">55,000 đ</p>
+                    <p class="ei-type">Ăn uống</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Đặt xe về nhà</strong></p>
+                    <p class="ei-date">29-12-2025</p>
+                    <p class="ei-price">130,000 đ</p>
+                    <p class="ei-type">Đi lại</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Sửa lốp xe</strong></p>
+                    <p class="ei-date">28-12-2025</p>
+                    <p class="ei-price">308,000 đ</p>
+                    <p class="ei-type">Khác</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Chuột mới</strong></p>
+                    <p class="ei-date">27-12-2025</p>
+                    <p class="ei-price">90,000 đ</p>
+                    <p class="ei-type">Mua sắm</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Áo hoodie in hình con kyu</strong></p>
+                    <p class="ei-date">24-12-2025</p>
+                    <p class="ei-price">399,000 đ</p>
+                    <p class="ei-type">Mua sắm</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Ăn chực ở Loteria</strong></p>
+                    <p class="ei-date">22-12-2025</p>
+                    <p class="ei-price">75,000 đ</p>
+                    <p class="ei-type">Ăn uống</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Bắt xe qua cây ATM gần nhất</strong></p>
+                    <p class="ei-date">16-12-2025</p>
+                    <p class="ei-price">38,000 đ</p>
+                    <p class="ei-type">Đi lại</p>
+                </div>
+                <div class="expense-item">
+                    <p class="ei-name"><strong>Tiền 4G hàng tháng</strong></p>
+                    <p class="ei-date">14-12-2025</p>
+                    <p class="ei-price">90,000 đ</p>
+                    <p class="ei-type">Khác</p>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>
