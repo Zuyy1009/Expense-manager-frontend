@@ -1,0 +1,119 @@
+.container {
+    display: grid;
+    grid-template-columns: 1fr 500px 1fr;
+    height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #ffddfb;
+}
+
+.login-section {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    display: flex;
+    /*1*/
+    flex-direction: column;
+    /*2*/
+    justify-content: center;
+    /*3*/
+    align-items: center;
+    /*4. Cần cả 4 để căn ra chính giữa*/
+}
+
+.login-title {
+    margin-bottom: -2px;
+    margin-top: -10px;
+    /* Kéo sát chữ đăng nhập vào mép trên*/
+}
+
+.middle-sect {
+    display: grid;
+    grid-template-rows: 1fr 300px 1fr;
+}
+
+.input-field {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    width: 400px;
+    padding: 10px;
+}
+
+.login-button {
+    border: 2px solid purple;
+    border-radius: 10px;
+    background-color: purple;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    margin-top: 20px;
+    padding: 7.5px;
+    width: 250px;
+}
+
+.left-sidebar {
+    background: #7a1f6f;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile-info {
+    padding-top: 30px;
+    text-align: center;
+}
+
+.side-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.item-chosen {
+    background: white;
+    border: 2px solid white;
+    color: #7a1f6f;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.menu-item {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background: white;
+    color: #7a1f6f;
+}
+
+.content {
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 50px 500px 50px;
+    /* Hai hàng, hàng 1 50px*/
+    gap: 20px;
+}
+
+.ed-item:hover {
+    background-color: purple;
+    color: white;
+}
+
+.logo-img {
+    width: 70px;
+    display: block;
+    margin: 0 auto;
+}
