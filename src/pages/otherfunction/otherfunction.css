@@ -140,6 +140,103 @@
     background-color: white;
 }
 
+.func-interface-1 {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    display: grid;
+    grid-template-rows: 100px 300px auto;
+    /*Phân làm 3 hàng*/
+    padding: 20px;
+    /*Đẩy các phần tử bên trong cách mép ngoài 20px*/
+    gap: 10px;
+    /*Khoảng cách giữa các hàng bên trong*/
+}
+
+.func-tool {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.tool-hr {
+    margin-top: -15px;
+}
+
+.ft-button {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    height: 30px;
+}
+
+.ft-button:hover {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: purple;
+    color: white;
+}
+
+.ft-button:active {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: #ffddfb;
+    color: purple;
+}
+
+.goal-lists {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.gl-scrolllist {
+    display: grid;
+    grid-auto-flow: column;
+    /*Với mỗi phần tử con mới, tạo thêm một cột mới bên phải*/
+    grid-auto-columns: 190px;
+    width: 1020px;
+    gap: 50px;
+    overflow-x: auto;
+    /*Kết hợp với grid-auto-flow, CSS grid sẽ ép tất cả các phần tử con phải nằm trên 1 hàng và kéo dài vô hạn về bên phải*/
+    scrollbar-color: purple #fff8fe;
+}
+
+.gl-name {
+    border-bottom: 2px solid #7a1f6f;
+}
+
+.gl-item {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    height: 200px;
+    width: 200px;
+    display: grid;
+    grid-template-rows: 1.75fr 1fr 1.75fr;
+    padding: 5px;
+    justify-items: center;
+}
+
+.income-info {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.func-interface-2 {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    padding: 20px;
+}
+
 .logo-img {
     width: 70px;
     display: block;
