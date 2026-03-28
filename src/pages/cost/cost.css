@@ -57,8 +57,8 @@
 .content {
     padding: 20px;
     display: grid;
-    grid-template-rows: 50px 500px 50px;
-    /* Hai hàng, hàng 1 50px*/
+    grid-template-rows: 50px 500px 70px;
+    /* Ba hàng, hàng 1 50px*/
     gap: 20px;
 }
 
@@ -98,7 +98,8 @@
     background-color: white;
     height: 485px;
     padding-top: 15px;
-    padding-bottom: 15px; /*Đẩy thanh scrollbar vào trong*/
+    padding-bottom: 15px;
+    /*Đẩy thanh scrollbar vào trong*/
 }
 
 .expense-list {
@@ -172,14 +173,73 @@
 
 .ed-item {
     border: 2px solid purple;
-    border-radius: 20px;
+    border-radius: 30px;
     background-color: white;
     margin-right: 20px;
-    height: 30px;
-    width: 95px;
+    height: 50px;
+    width: 50px;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*align-items và justify-items cần đi cùng với nhau*/
+    font-size: 60px;
+    margin-top: 20px;
 }
 
 .ed-item:hover {
+    background-color: purple;
+    color: white;
+}
+
+.el-form {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.el-text-input {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: purple;
+    padding: 7px;
+    font-size: 15px;
+    color: white;
+    height: 20px;
+    margin-top: 2px;
+}
+
+.el-text-input:focus {
+    /*Có tác dụng khi người dùng nhập vào trường văn bản*/
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    color: black;
+}
+
+.el-part {
+    display: grid;
+    grid-template-columns: 200px 500px;
+}
+
+.el-part-trans-type {
+    display: grid;
+    grid-template-columns: 200px 200px;
+}
+
+.saving-button {
+    border: 2px solid purple;
+    border-radius: 20px;
+    background-color: white;
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 15px;
+}
+
+.saving-button:hover {
+    border: 2px solid purple;
+    border-radius: 20px;
     background-color: purple;
     color: white;
 }
