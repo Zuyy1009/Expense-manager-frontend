@@ -171,6 +171,11 @@
     margin-top: 20px;
 }
 
+.button-list {
+    display: grid;
+    grid-template-columns: 75px 75px;
+}
+
 .ed-item {
     border: 2px solid purple;
     border-radius: 30px;
@@ -189,6 +194,28 @@
 }
 
 .ed-item:hover {
+    background-color: purple;
+    color: white;
+}
+
+.ed-item-delete {
+    border: 2px solid purple;
+    border-radius: 30px;
+    background-color: white;
+    margin-right: 20px;
+    height: 52px;
+    width: 52px;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*align-items và justify-items cần đi cùng với nhau*/
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.ed-item-delete:hover {
     background-color: purple;
     color: white;
 }
