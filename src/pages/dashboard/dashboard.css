@@ -21,6 +21,12 @@
     text-align: center;
 }
 
+/*Add this*/
+.def-avt {
+    width: 70px;
+}
+/*Add this*/
+
 .side-menu {
     display: flex;
     flex-direction: column;
