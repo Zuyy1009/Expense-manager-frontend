@@ -20,6 +20,10 @@
     text-align: center;
 }
 
+.def-avt {
+    width: 70px;
+}
+
 .side-menu {
     display: flex;
     flex-direction: column;
