@@ -1,7 +1,7 @@
 // Tìm và gắn thẻ <form> (có class là register-section) từ file HTML vào một biến trong JavaScript tên là form
-const form = document.querySelector('.register-section');
+let form = document.querySelector('.register-section');
 // Tìm và gắn thẻ <a> (có class là register-button) vào biến registerBtn
-const registerBtn = document.querySelector('.register-button');
+let registerBtn = document.querySelector('.register-button');
 
 registerBtn.addEventListener('click', function (e) {
     // 1. Ngăn chặn chuyển trang ngay lập tức của thẻ <a>
@@ -15,7 +15,7 @@ registerBtn.addEventListener('click', function (e) {
     const email = inputs[3].value.trim();
     const matKhau = inputs[4].value;
 
-    // 3. Kiểm tra dữ liệu (Validation) cơ bản
+    // 3.0. Kiểm tra dữ liệu (Validation) cơ bản
     if (!ho || !ten || !ngaySinh || !email || !matKhau) {
         alert("Vui lòng điền đầy đủ thông tin!");
         return;
@@ -25,6 +25,31 @@ registerBtn.addEventListener('click', function (e) {
         alert("Mật khẩu phải có ít nhất 6 ký tự!");
         return;
     }
+
+    // 3.1. Lấy danh sách tài khoản cũ (nếu chưa có thì tạo mảng trống)
+    const accsList = JSON.parse(localStorage.getItem("userAccounts")) || [];
+
+    // 3.2. Kiểm tra xem email đã tồn tại chưa
+    const existedEmail = accsList.find(user => user.email === email);
+    if (existedEmail) {
+        alert("Email này đã được đăng ký!");
+        return;
+    }
+
+    // 3.3. Tạo đối tượng người dùng mới
+    const newUser = {
+        ho: ho,
+        ten: ten,
+        ngaySinh: ngaySinh,
+        email: email,
+        matKhau: matKhau // Lưu ý: Thực tế không bao giờ lưu mật khẩu trần như thế này!
+    }
+
+    // Thêm vào mảng và lưu lại
+    accsList.push(newUser);
+    localStorage.setItem("userAccounts", JSON.stringify(accsList));
+
+    localStorage.setItem("currentUser", JSON.stringify(newUser));
 
     // 4. Giả lập gửi dữ liệu hoặc xử lý Logic
     console.log("Đang đăng ký cho:", { ho, ten, email, ngaySinh });
