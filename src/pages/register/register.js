@@ -11,17 +11,17 @@ registerBtn.addEventListener('click', function (e) {
     const inputs = document.querySelectorAll('input');
     const ho = inputs[0].value.trim();
     const ten = inputs[1].value.trim();
-    const ngaySinh = inputs[2].value;
+    const birthDate = inputs[2].value;
     const email = inputs[3].value.trim();
-    const matKhau = inputs[4].value;
+    const password = inputs[4].value;
 
     // 3.0. Kiểm tra dữ liệu (Validation) cơ bản
-    if (!ho || !ten || !ngaySinh || !email || !matKhau) {
+    if (!ho || !ten || !birthDate || !email || !password) {
         alert("Vui lòng điền đầy đủ thông tin!");
         return;
     }
 
-    if (matKhau.length < 6) {
+    if (password.length < 6) {
         alert("Mật khẩu phải có ít nhất 6 ký tự!");
         return;
     }
@@ -40,9 +40,9 @@ registerBtn.addEventListener('click', function (e) {
     const newUser = {
         ho: ho,
         ten: ten,
-        ngaySinh: ngaySinh,
+        birthDate: birthDate,
         email: email,
-        matKhau: matKhau // Lưu ý: Thực tế không bao giờ lưu mật khẩu trần như thế này!
+        password: password // Lưu ý: Thực tế không bao giờ lưu mật khẩu trần như thế này!
     }
 
     // Thêm vào mảng và lưu lại
@@ -52,7 +52,7 @@ registerBtn.addEventListener('click', function (e) {
     localStorage.setItem("currentUser", JSON.stringify(newUser));
 
     // 4. Giả lập gửi dữ liệu hoặc xử lý Logic
-    console.log("Đang đăng ký cho:", { ho, ten, email, ngaySinh });
+    console.log("Đang đăng ký cho:", { ho, ten, email, birthDate });
 
     // Nếu mọi thứ ổn, bạn có thể chuyển hướng người dùng
     alert("Đăng ký thành công!");
