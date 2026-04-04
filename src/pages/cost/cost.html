@@ -37,6 +37,7 @@
                 <h3 class="filter-title">Bộ lọc</h3>
                 <p class="filter-type-name">Thời gian: </p>
                 <select name="time-filt" id="time-filt" class="filt-select">
+                    <option value="all-time">Tất cả thời gian</option>
                     <option value="this-month">Tháng này</option>
                     <option value="previous-month">Tháng trước</option>
                     <option value="two-previous-month">2 tháng này</option>
@@ -45,6 +46,7 @@
                 </select>
                 <p class="filter-type-name">Loại giao dịch: </p>
                 <select name="type-filt" id="type-filt" class="filt-select">
+                    <option value="all-type">Tất cả loại</option>
                     <option value="room-expense">Tiền trọ</option>
                     <option value="shopping-expense">Mua sắm</option>
                     <option value="travel">Đi lại</option>
@@ -53,11 +55,12 @@
                 </select>
                 <p class="filter-type-name">Phạm vi tiền: </p>
                 <select name="money-filt" id="money-filt" class="filt-select">
-                    <option value="room-expense">Dưới 200,000 đồng</option>
-                    <option value="shopping-expense">Từ 200,000 đến 500,000 đồng</option>
-                    <option value="travel">Từ 500,000 đồng đến 1,000,000 đồng</option>
-                    <option value="eating">Từ 1,000,000 đồng đến 5,000,000 đồng</option>
-                    <option value="eating">5,000,000 trở lên</option>
+                    <option value="no-range">Không có phạm vi</option>
+                    <option value="range-1">Dưới 200,000 đồng</option>
+                    <option value="range-2">Từ 200,000 đến 500,000 đồng</option>
+                    <option value="range-3">Từ 500,000 đồng đến 1,000,000 đồng</option>
+                    <option value="range-4">Từ 1,000,000 đồng đến 5,000,000 đồng</option>
+                    <option value="range-5">5,000,000 trở lên</option>
                 </select>
             </section>
             <section class="el-border">
