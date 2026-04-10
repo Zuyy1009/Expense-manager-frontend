@@ -13,7 +13,7 @@ body {
 
 .middle-sect {
     display: grid;
-    grid-template-rows: 200px 1fr 200px;
+    grid-template-rows: 170px 1fr 170px;
 }
 
 .login-region {
