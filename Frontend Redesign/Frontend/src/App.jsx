@@ -5,6 +5,7 @@ import heroImg from './assets/hero.png'
 import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom'
 import defAvt from './assets/dashboard_icon/def_avatar.png' // Cần import mới dùng được ảnh
 import './App.css'
+import {Stat} from './stat/stat.jsx' // Dùng ngoặc nhọn để import nếu không phải export default
 
 
 
@@ -12,7 +13,7 @@ import './App.css'
 
 function App() {
     return (
-        <div>
+        <Router>
             <div className='outer-boundary'>
                 <aside className='left-sidebar'>
                     <section className='account-sect' >
@@ -20,13 +21,20 @@ function App() {
                         <p style={{color:"white"}} >Username1290</p>
                         <p style={{color:"white", marginTop: "-5px"}} >example@gmail.com</p>
                     </section>
-                    <section className='menu-sect' ></section>
+                    <section className='menu-sect' >
+                        <Link to='/' className='link-button' >Stat View</Link>
+                    </section>
                     <section className='logo-sect' ></section>
                 </aside>
-                <main className='function-section'></main>
+                <main className='function-section'>
+                    <Routes>
+                        <Route path='/' element={<Stat />} />
+                    </Routes>
+                </main>
             </div>
-        </div>
+        </Router>
     )
+    // Phải có thẻ Router bao quanh mới dùng được Link, Route,...
 }
 
 export default App
