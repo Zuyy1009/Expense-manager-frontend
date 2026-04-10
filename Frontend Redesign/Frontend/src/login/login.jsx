@@ -1,6 +1,14 @@
 import styles from './login.module.css'
+import { useNavigate, Link } from 'react-router-dom'
 
 export function Login() {
+    const navigate = useNavigate(); // Gọi Hook ở đây, đúng quy tắc
+
+    const handleGoToRegister = (e) => {
+        e.preventDefault();
+        navigate('/register'); // Điều hướng đến PATH, không phải file .jsx
+    };
+
     return (
         <div className={styles['outer-boundary']} >
             <section className={styles['left-empty']}></section>
@@ -24,7 +32,7 @@ export function Login() {
                     }}>
                         <strong>ĐĂNG NHẬP</strong>
                     </button>
-                    <p>Chưa có tài khoản? Đăng ký</p>
+                    <p>Chưa có tài khoản? <Link to='/register'>Đăng ký</Link></p>
                 </section>
                 <section className={styles['down-sub-empty']}></section>
             </section>
