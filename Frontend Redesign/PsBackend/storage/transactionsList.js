@@ -22,7 +22,7 @@ let transList = [
     {
         id: 3,
         type: 'Thu nhập',
-        amount: 12000000,
+        amount: 18000000,
         category: 'Lương',
         categoryIcon: 'http://localhost:8080/api/images/salary.png',
         date: '31-03-2026',
