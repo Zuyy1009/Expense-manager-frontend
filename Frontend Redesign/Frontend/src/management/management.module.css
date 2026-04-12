@@ -33,6 +33,7 @@ body {
     border: 0px;
     margin-left: 3px;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .button-img {
