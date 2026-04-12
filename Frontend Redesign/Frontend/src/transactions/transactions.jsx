@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 
 export function Transactions() {
     const [transList, setTransList] = useState([]);
+    // SetState là bất đồng bộ
 
     useEffect(() => {
         fetch("http://localhost:8080/api/translist")
@@ -13,16 +14,80 @@ export function Transactions() {
             .catch(err => console.error("Đã xảy ra lỗi!: ", err));
     }, []);
 
+    const [chosenCategory, setChosenCategory] = useState('all-category');
+    const filteredTransList = transList.filter(item => {
+        if (chosenCategory === 'all-category') {
+            return true;
+        }
+        // Lưu ý: Đảm bảo item.category và value của option khớp nhau (vd: 'eating')
+        return item.category === chosenCategory; 
+    });
+
+    const handleSelectChange = (e) => {
+        // Lấy giá trị của option được chọn qua e.target.value
+        setChosenCategory(e.target.value);
+    };
+
     return (
         <div className={styles['outer-boundary']} >
             <div className={styles['filter']} >
-                <strong>Bộ lọc</strong>
+                <section className={styles['filter-region']}>
+                    <strong>Bộ lọc</strong>
+                    <label htmlFor='category' >Danh mục:</label>
+                    <select name='category' id='category' className={styles['filt-selector']} value={chosenCategory} onChange={handleSelectChange} >
+                        <option value='all-category' >Tất cả danh mục</option>
+                        <option value='Ăn uống' >Ăn uống</option>
+                        <option value='Đơn điện tử' >Đơn điện tử</option>
+                        <option value='Sức khỏe' >Sức khỏe</option>
+                        <option value='Nhà ở' >Nhà ở</option>
+                        <option value='Đi lại' >Đi lại</option>
+                        <option value='Giải trí' >Giải trí</option>
+                        <option value='Mua sắm' >Mua sắm</option>
+                        <option value='Chi tiêu khác' >Chi tiêu khác</option>
+                        <option value='Lương' >Lương</option>
+                        <option value='Thu nhập khác' >Thu nhập khác</option>
+                    </select>
+                    <label htmlFor='money-range' >Phạm vi tiền:</label>
+                    <input type='number' placeholder='Tối thiểu' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} />
+                    <input type='number' placeholder='Tối đa' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }}  />
+                    <label htmlFor='time-range' >Thời gian:</label>
+                    <input type='date' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} />
+                    <input type='date' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} />
+                </section>
             </div>
             <div className={styles['trans-region']} >
                 <strong>Giao dịch</strong>
                 <hr />
                 <ul className={styles['trans-list']} style={{ listStyle: 'none' }} >
-                    {transList.map(item => (
+                    {filteredTransList.map(item => (
                         <li key={item.id} style={{
                             display: 'grid',
                             gridTemplateColumns: '30px 350px 110px 180px 220px 210px 50px',
