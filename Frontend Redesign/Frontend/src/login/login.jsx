@@ -14,7 +14,7 @@ export function Login({ onLogin }) {
 
         // 1. Giả lập lưu token vào localStorage
         // Trong thực tế, bạn sẽ gọi API ở đây và lưu token thật
-        if (email === "abc@gmail.com" && password === "12345") {
+        if (email === "abc" && password === "12") {
             // localStorage.setItem('userToken', 'true');
             // Sử dụng window.location.href để ép toàn bộ ứng dụng (App.jsx)
             onLogin();
