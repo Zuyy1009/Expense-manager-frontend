@@ -37,3 +37,10 @@ body {
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
     padding: 15px;
 }
+
+.trans-list {
+    height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: rgb(0, 117, 70) white;
+}
