@@ -61,7 +61,7 @@ export function Stat() {
                     {transList.map(item => (
                         <li style={{
                             display: 'grid',
-                            gridTemplateColumns: '20px 250px 70px 120px 120px 150px',
+                            gridTemplateColumns: '20px 250px 70px 120px 150px 120px',
                             marginLeft: '-20px',
                             border: '2px solid rgb(0, 117, 70)',
                             borderRadius: '20px',
@@ -73,7 +73,9 @@ export function Stat() {
                             <p>{item.note}</p>
                             <p><img style={{ width: '30px', marginTop: '-5px'}} src={item.categoryIcon} /></p>
                             <p>{item.category}</p>
-                            <p>{`${item.amount} đ`}</p>
+                            <p style={item.type === 'Thu nhập' ? {color : 'green'} : {color : 'red'}}>
+                                {item.type === 'Thu nhập' ? `+ ` : `- `}{`${item.amount} đ`}
+                            </p>
                             <p>{item.date}</p>
                         </li>
                     ))}
