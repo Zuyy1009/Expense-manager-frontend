@@ -19,12 +19,28 @@ body {
     padding: 15px;
 }
 
-.trans-list {
+.trans-region {
     border: 2px solid white;
     background-color: white;
     border-radius: 20px;
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
     padding: 15px;
+}
+
+.trans-list {
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: rgb(0, 117, 70) white;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.t-checkbox[type="checkbox"] {
+    accent-color: rgb(0, 117, 70);
+    height: 25px;
+    width: 25px;
+    display: inline;
+    margin-top: 13px;
 }
 
 .func-list {
