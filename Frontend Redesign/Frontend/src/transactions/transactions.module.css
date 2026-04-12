@@ -50,3 +50,17 @@ body {
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
     padding: 15px;
 }
+
+.filter-region {
+    display: grid;
+    grid-template-columns: 80px 80px 150px 120px 100px 100px 100px 120px 120px;
+}
+
+.filt-selector {
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    height: 25px;
+    margin-top: -3px;
+}
