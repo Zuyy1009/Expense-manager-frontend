@@ -39,7 +39,7 @@ body {
 }
 
 .trans-list {
-    height: 300px;
+    height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: rgb(0, 117, 70) white;
