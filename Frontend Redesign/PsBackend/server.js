@@ -14,8 +14,18 @@ app.use('/api/images', express.static('../Frontend/src/assets/category_icon'));
 
 app.use(cors());
 
+let generalStat = { income: 0, expense: 0 };
+
+generalStat.income = transList
+    .filter(item => item.type === 'Thu nhập')
+    .reduce((sum, item) => sum + item.amount, 0);
+
+generalStat.expense = transList
+    .filter(item => item.type === 'Chi tiêu')
+    .reduce((sum, item) => sum + item.amount, 0);
+
 app.get('/api/data', (req, res) => {
-    res.json({ income: 12000000, expense: 1500000 });
+    res.json(generalStat);
 });
 // Chữ data có thể đổi thành từ khác 
 // Phần liên kết có thể đổi, nhưng chữ data ở jsx cần giữ nguyên (.then)
