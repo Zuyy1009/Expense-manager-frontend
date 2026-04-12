@@ -67,10 +67,11 @@ export function Stat() {
                             borderRadius: '20px',
                             paddingLeft: '5px',
                             marginBottom: '5px',
+                            height: '50px',
                         }}>
                             <p><strong>{item.id}</strong></p>
                             <p>{item.note}</p>
-                            <p><img style={{ width: '15px'}} src={item.categoryIcon} /></p>
+                            <p><img style={{ width: '30px', marginTop: '-5px'}} src={item.categoryIcon} /></p>
                             <p>{item.category}</p>
                             <p>{`${item.amount} đ`}</p>
                             <p>{item.date}</p>
