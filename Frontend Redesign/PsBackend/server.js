@@ -2,14 +2,27 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = 8080;
+const { transList } = require('./storage/transactionsList.js');
+// Cần có để express.static hoạt động (?)
+const path = require('path');
+// Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
+// Dùng express.static để "mở cửa" thư mục này
+app.use('/api/images', express.static('../Frontend/src/assets/category_icon'));
+
+// Node.js mặc định xử lý các file .js theo chuẩn CommonJS (sử dụng require) 
+// Trong khi câu lệnh import thuộc chuẩn ES Modules (ESM) => Gây lỗi
 
 app.use(cors());
 
 app.get('/api/data', (req, res) => {
-    res.json({income: 12000000, expense: 1500000});
+    res.json({ income: 12000000, expense: 1500000 });
 });
 // Chữ data có thể đổi thành từ khác 
 // Phần liên kết có thể đổi, nhưng chữ data ở jsx cần giữ nguyên (.then)
 // Sau này có thể đặt nhiều app.get vào 1 file server này
+
+app.get('/api/translist', (req, res) => {
+    res.json(transList);
+});
 
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
