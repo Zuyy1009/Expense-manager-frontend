@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 
 export function Transactions() {
     const [transList, setTransList] = useState([]);
-    // SetState là bất đồng bộ
+    // SetState là bất đồng bộ, khi setState(newValue), React không cập nhật val đó ngay.
+    // Nó sẽ đưa vào 1 hàng đợi trước. Vì thế nếu dùng ngay sau khi gọi hàm set, giá trị vẫn là cũ.
+    // Không nên viết logic lọc bên trong hàm xử lý thay đổi.
 
     useEffect(() => {
         fetch("http://localhost:8080/api/translist")
@@ -15,18 +17,46 @@ export function Transactions() {
     }, []);
 
     const [chosenCategory, setChosenCategory] = useState('all-category');
+    const [minPrice, setMinPrice] = useState('');
+    const [maxPrice, setMaxPrice] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
     const filteredTransList = transList.filter(item => {
-        if (chosenCategory === 'all-category') {
-            return true;
-        }
-        // Lưu ý: Đảm bảo item.category và value của option khớp nhau (vd: 'eating')
-        return item.category === chosenCategory; 
+        const matchCategory = (chosenCategory === 'all-category' || item.category === chosenCategory);
+
+        const price = Number(item.amount);
+        const matchPrice = (!minPrice || price >= Number(minPrice)) && (!maxPrice || price <= Number(maxPrice));
+
+        const dateToCompare = item.date.slice(6, 10) + '-' + item.date.slice(3, 5) + '-' + item.date.slice(0, 2);
+        const sDate = new Date(startDate);
+        const eDate = new Date(endDate);
+        const iDate = new Date(dateToCompare);
+        const matchDate = (!sDate.getTime() || iDate.getTime() >= sDate.getTime()) && (!eDate.getTime() || iDate.getTime() <= eDate.getTime());
+
+        return matchCategory && matchPrice && matchDate;
     });
 
     const handleSelectChange = (e) => {
         // Lấy giá trị của option được chọn qua e.target.value
         setChosenCategory(e.target.value);
     };
+
+    const handleMinPrice = (e) => {
+        setMinPrice(e.target.value);
+    }
+
+    const handleMaxPrice = (e) => {
+        setMaxPrice(e.target.value);
+    }
+
+    const handleStartDate = (e) => {
+        setStartDate(e.target.value);
+    }
+
+    const handleEndDate = (e) => {
+        setEndDate(e.target.value);
+    }
 
     return (
         <div className={styles['outer-boundary']} >
@@ -55,7 +85,7 @@ export function Transactions() {
                         marginTop: '-4px',
                         marginRight: '10px',
                         paddingLeft: '5px',
-                    }} />
+                    }} value={minPrice} onChange={handleMinPrice} />
                     <input type='number' placeholder='Tối đa' style={{
                         border: '2px solid rgb(0, 117, 70)',
                         borderRadius: '20px',
@@ -63,7 +93,7 @@ export function Transactions() {
                         marginTop: '-4px',
                         marginRight: '10px',
                         paddingLeft: '5px',
-                    }}  />
+                    }} value={maxPrice} onChange={handleMaxPrice} />
                     <label htmlFor='time-range' >Thời gian:</label>
                     <input type='date' style={{
                         border: '2px solid rgb(0, 117, 70)',
@@ -72,7 +102,7 @@ export function Transactions() {
                         marginTop: '-4px',
                         marginRight: '10px',
                         paddingLeft: '5px',
-                    }} />
+                    }} value={startDate} onChange={handleStartDate} />
                     <input type='date' style={{
                         border: '2px solid rgb(0, 117, 70)',
                         borderRadius: '20px',
@@ -80,7 +110,7 @@ export function Transactions() {
                         marginTop: '-4px',
                         marginRight: '10px',
                         paddingLeft: '5px',
-                    }} />
+                    }} value={endDate} onChange={handleEndDate} />
                 </section>
             </div>
             <div className={styles['trans-region']} >
