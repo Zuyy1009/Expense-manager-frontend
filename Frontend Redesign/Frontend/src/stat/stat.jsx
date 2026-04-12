@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import styles from './stat.module.css'
 import { useEffect } from 'react'
+import { Eating, Elecbill, Health, Housing, Movement, Otherexpense, Otherincome, Recreation, Salary, Shopping } from '../assets/category_icon/category-image';
 
 
 export function Stat() {
     const [inc, setInc] = useState(0);
     const [exp, setExp] = useState(0);
+    const [transList, setTransList] = useState([]);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/data")
@@ -16,6 +18,16 @@ export function Stat() {
             })
             .catch(err => console.error("Đã xảy ra lỗi!: ", err));
     }, []);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/translist")
+            .then(res => res.json())
+            .then(data => {
+                setTransList(data);
+            })
+            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+    }, []);
+
     return (
         <div className={styles['outer-boundary']} >
             <div className={styles['general-stat']} >
@@ -45,6 +57,26 @@ export function Stat() {
             <div className={styles['recent-transactions']} >
                 <strong>Giao dịch gần đây</strong>
                 <hr />
+                <ul className={styles['trans-list']} style={{listStyle: 'none'}} >
+                    {transList.map(item => (
+                        <li style={{
+                            display: 'grid',
+                            gridTemplateColumns: '20px 250px 70px 120px 120px 150px',
+                            marginLeft: '-20px',
+                            border: '2px solid rgb(0, 117, 70)',
+                            borderRadius: '20px',
+                            paddingLeft: '5px',
+                            marginBottom: '5px',
+                        }}>
+                            <p><strong>{item.id}</strong></p>
+                            <p>{item.note}</p>
+                            <p><img style={{ width: '15px'}} src={item.categoryIcon} /></p>
+                            <p>{item.category}</p>
+                            <p>{`${item.amount} đ`}</p>
+                            <p>{item.date}</p>
+                        </li>
+                    ))}
+                </ul>
             </div>
             <div className={styles['chart']} >
                 <strong>Biểu đồ</strong>
