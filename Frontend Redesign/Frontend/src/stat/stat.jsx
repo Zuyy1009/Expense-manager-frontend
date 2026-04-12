@@ -58,8 +58,8 @@ export function Stat() {
                 <strong>Giao dịch gần đây</strong>
                 <hr />
                 <ul className={styles['trans-list']} style={{listStyle: 'none'}} >
-                    {transList.map(item => (
-                        <li style={{
+                    {transList.slice(0, 5).map(item => (
+                        <li key={item.id} style={{
                             display: 'grid',
                             gridTemplateColumns: '20px 250px 70px 120px 150px 120px',
                             marginLeft: '-20px',
