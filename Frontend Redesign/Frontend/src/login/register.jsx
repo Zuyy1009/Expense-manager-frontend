@@ -24,6 +24,8 @@ export function Register() {
                         borderRadius: "20px",
                         fontSize: "17px",
                         marginBottom: "15px",
+                        border: "none",
+                        cursor: "pointer",
                     }}>
                         <strong>ĐĂNG KÝ</strong>
                     </button>
