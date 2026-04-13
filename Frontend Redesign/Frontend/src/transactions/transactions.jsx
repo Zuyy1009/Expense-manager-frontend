@@ -142,7 +142,22 @@ export function Transactions() {
                 </ul>
             </div>
             <div className={styles['func-list']} >
-                <strong>Chức năng</strong>
+                <section className={styles['func-region']} >
+                    <strong style={{ marginRight: '20px' }} >Chức năng</strong>
+                    <button className={styles['func-button']} >Thêm mới</button>
+                    <button className={styles['func-button']} >Sửa giao dịch</button>
+                    <button className={styles['func-button']} >Xóa</button>
+                    <label htmlFor='sorter' style={{ marginLeft: '10px', marginRight: '10px' }} >Sắp xếp:</label>
+                    <select name='sorter' id='sorter' className={styles['filt-selector']} >
+                        <option value='none' >Không sắp xếp</option>
+                        <option value='date' >Theo ngày (cũ → mới)</option>
+                        <option value='reverse-date' >Theo ngày (mới → cũ)</option>
+                        <option value='price' >Theo tiền (ít → nhiều)</option>
+                        <option value='reverse-price' >Theo tiền (nhiều → ít)</option>
+                        <option value='az' >Theo chữ cái (a → z)</option>
+                        <option value='reverse-az' >Theo chữ cái (z → a)</option>
+                    </select>
+                </section>
             </div>
         </div>
     )
