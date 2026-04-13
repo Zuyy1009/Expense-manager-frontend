@@ -28,7 +28,7 @@ body {
 }
 
 .trans-list {
-    height: 400px;
+    height: 350px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: rgb(0, 117, 70) white;
@@ -36,6 +36,14 @@ body {
 }
 
 .t-checkbox[type="checkbox"] {
+    accent-color: rgb(0, 117, 70);
+    height: 25px;
+    width: 25px;
+    display: inline;
+    margin-top: 13px;
+}
+
+.t-checkbox[type="radio"] {
     accent-color: rgb(0, 117, 70);
     height: 25px;
     width: 25px;
