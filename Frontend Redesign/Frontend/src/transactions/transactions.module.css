@@ -63,4 +63,20 @@ body {
     border-radius: 20px;
     height: 25px;
     margin-top: -3px;
+    cursor: pointer;
+}
+
+.func-button {
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    height: 25px;
+    background-color: white;
+    cursor: pointer;
+    margin-left: 10px;
+    width: 110px;
+}
+
+.func-button:hover {
+    background-color: rgb(0, 117, 70);
+    color: white;
 }
