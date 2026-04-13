@@ -21,6 +21,7 @@ export function Transactions() {
     const [maxPrice, setMaxPrice] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [addEdit, setAddEdit] = useState(0);
 
     const filteredTransList = transList.filter(item => {
         const matchCategory = (chosenCategory === 'all-category' || item.category === chosenCategory);
@@ -56,6 +57,22 @@ export function Transactions() {
 
     const handleEndDate = (e) => {
         setEndDate(e.target.value);
+    }
+
+    const handleAddButton = () => {
+        if ((addEdit === 0) || (addEdit === 2)) {
+            setAddEdit(1);
+        } else {
+            setAddEdit(0);
+        }
+    };
+
+    const handleEditButton = () => {
+        if ((addEdit === 0) || (addEdit === 1)) {
+            setAddEdit(2);
+        } else {
+            setAddEdit(0);
+        }
     }
 
     return (
@@ -136,16 +153,18 @@ export function Transactions() {
                                 {item.type === 'Thu nhập' ? `+ ` : `- `}{`${item.amount} đ`}
                             </p>
                             <p>{item.date}</p>
-                            <input type='checkbox' className={styles['t-checkbox']} />
+                            <input type={addEdit === 2 ? 'radio' : 'checkbox'} name='trans-item' value={item.id} className={styles['t-checkbox']} />
                         </li>
                     ))}
                 </ul>
+                {addEdit === 1 && <p>Trình thêm mới</p>}
+                {addEdit === 2 && <p>Trình chỉnh sửa</p>}
             </div>
             <div className={styles['func-list']} >
                 <section className={styles['func-region']} >
                     <strong style={{ marginRight: '20px' }} >Chức năng</strong>
-                    <button className={styles['func-button']} >Thêm mới</button>
-                    <button className={styles['func-button']} >Sửa giao dịch</button>
+                    <button className={styles['func-button']} onClick={handleAddButton} >Thêm mới</button>
+                    <button className={styles['func-button']} onClick={handleEditButton} >Sửa giao dịch</button>
                     <button className={styles['func-button']} >Xóa</button>
                     <label htmlFor='sorter' style={{ marginLeft: '10px', marginRight: '10px' }} >Sắp xếp:</label>
                     <select name='sorter' id='sorter' className={styles['filt-selector']} >
@@ -157,6 +176,16 @@ export function Transactions() {
                         <option value='az' >Theo chữ cái (a → z)</option>
                         <option value='reverse-az' >Theo chữ cái (z → a)</option>
                     </select>
+                    <label htmlFor='searcher' style={{ marginLeft: '10px', marginRight: '10px' }} >Tìm kiếm:</label>
+                    <input type='text' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                        width: '230px',
+                    }} placeholder='Nhập tên giao dịch'/>
                 </section>
             </div>
         </div>
