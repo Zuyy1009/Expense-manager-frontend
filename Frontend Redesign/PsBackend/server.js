@@ -51,4 +51,46 @@ app.post('/api/add-transaction', (req, res) => {
     res.json(transList);
 });
 
+app.put('/api/update-transaction/:id', (req, res) => {
+    const { id } = req.params; // Thêm ngoặc kép để destructuring
+    const updatedTrans = req.body;
+
+    const index = transList.findIndex(item => item.id === parseInt(id));
+    if (index !== -1) {
+        // Ghi đè thuộc tính trùng nhau của obj bên phải lên obj bên trái
+        transList[index] = {...transList[index], ...updatedTrans};
+        res.json(transList);
+    } else {
+        res.status(404).json({ message: "Không tìm thấy giao dịch."});
+    }
+});
+
+app.delete('/api/delete-transactions', (req, res) => {
+    const { ids } = req.body; // Lấy mảng ID từ frontend gửi về
+
+    if (!Array.isArray(ids)) {
+        return res.status(400).json({ message: "Dữ liệu không hợp lệ." });
+    }
+
+    // Thực hiện lọc: Chỉ giữ lại những item có id KHÔNG nằm trong mảng ids
+    // Lưu ý: Nếu transList là hằng số (const), bạn phải dùng các hàm thay đổi tại chỗ 
+    // hoặc đổi transList sang let. Ở đây ta giả sử transList có thể cập nhật được.
+    
+    // Cách 1: Nếu transList là mảng global có thể thay đổi (thông qua lọc)
+    const originalLength = transList.length;
+    
+    // Xóa bằng cách lọc (Filter)
+    // Lưu ý: Cần gán lại giá trị cho mảng nếu file storage cho phép
+    const newTransList = transList.filter(item => !ids.includes(item.id));
+    
+    // Cập nhật lại mảng chính (xóa sạch mảng cũ và push mảng mới vào để giữ tham chiếu)
+    transList.length = 0; 
+    transList.push(...newTransList);
+
+    console.log(`Đã xóa ${originalLength - transList.length} giao dịch.`);
+
+    // Trả về danh sách mới nhất để Frontend đồng bộ UI
+    res.json(transList);
+});
+
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
