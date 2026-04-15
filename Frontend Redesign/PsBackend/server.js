@@ -7,7 +7,7 @@ const { transList } = require('./storage/transactionsList.js');
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
 // Dùng express.static để "mở cửa" thư mục này
-app.use('/api/images', express.static('../Frontend/src/assets/category_icon'));
+app.use('/api/images', express.static(path.join(__dirname, '../Frontend/src/assets/category_icon')));
 
 // Node.js mặc định xử lý các file .js theo chuẩn CommonJS (sử dụng require) 
 // Trong khi câu lệnh import thuộc chuẩn ES Modules (ESM) => Gây lỗi
