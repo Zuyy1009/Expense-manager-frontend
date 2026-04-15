@@ -161,6 +161,7 @@ export function Transactions() {
                 setNewAmount('');
                 setNewDate('');
                 setNewCategory('Lương');
+                alert("Đã thêm giao dịch!");
             })
             .catch(err => console.error("Lỗi khi thêm:", err));
     }
@@ -264,6 +265,7 @@ export function Transactions() {
                 setEditedAmount('');
                 setEditedDate('');
                 setEditedCategory('Lương');
+                alert("Đã sửa giao dịch!");
             })
             .catch(err => console.error("Lỗi khi sửa: ", err));
     }
