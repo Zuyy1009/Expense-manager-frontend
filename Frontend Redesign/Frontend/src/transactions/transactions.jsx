@@ -22,8 +22,55 @@ export function Transactions() {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [addEdit, setAddEdit] = useState(0);
+    const [sorterFunc, setSorterFunc] = useState('none');
 
-    const filteredTransList = transList.filter(item => {
+    // Sao chép mảng bằng Spread Operator
+    const rearrangedTransList = [...transList];
+
+    switch (sorterFunc) {
+        case 'date':
+            rearrangedTransList.sort((a, b) => {
+                const dateA = new Date(a.date.slice(6, 10) + '-' + a.date.slice(3, 5) + '-' + a.date.slice(0, 2)).getTime();
+                const dateB = new Date(b.date.slice(6, 10) + '-' + b.date.slice(3, 5) + '-' + b.date.slice(0, 2)).getTime();
+                return dateA - dateB;
+            });
+            break;
+        case 'reverse-date':
+            rearrangedTransList.sort((a, b) => {
+                const dateA = new Date(a.date.slice(6, 10) + '-' + a.date.slice(3, 5) + '-' + a.date.slice(0, 2)).getTime();
+                const dateB = new Date(b.date.slice(6, 10) + '-' + b.date.slice(3, 5) + '-' + b.date.slice(0, 2)).getTime();
+                return dateB - dateA;
+            });
+            break;
+        case 'price':
+            rearrangedTransList.sort((a, b) => {
+                const priceA = Number(a.amount);
+                const priceB = Number(b.amount);
+                return priceA - priceB;
+            });
+            break;
+        case 'reverse-price':
+            rearrangedTransList.sort((a, b) => {
+                const priceA = Number(a.amount);
+                const priceB = Number(b.amount);
+                return priceB - priceA;
+            });
+            break;
+        case 'az':
+            rearrangedTransList.sort((a, b) => {
+                return a.note.localeCompare(b.note);
+            });
+            break;
+        case 'reverse-az':
+            rearrangedTransList.sort((a, b) => {
+                return b.note.localeCompare(a.note);
+            });
+            break;
+        default:
+            break;
+    }
+
+    const filteredTransList = rearrangedTransList.filter(item => {
         const matchCategory = (chosenCategory === 'all-category' || item.category === chosenCategory);
 
         const price = Number(item.amount);
@@ -530,7 +577,7 @@ export function Transactions() {
                     <button className={addEdit === 2 ? styles['tickall-button-unactive'] : styles['tickall-button']} onClick={handleSelectAll} disabled={addEdit === 2} >Chọn hết</button>
                     <button className={addEdit === 2 ? styles['untickall-button-unactive'] : styles['untickall-button']} onClick={handleUnselectedAll} disabled={addEdit === 2} >Bỏ chọn hết</button>
                     <label htmlFor='sorter' style={{ marginLeft: '10px', marginRight: '10px' }} >Sắp xếp:</label>
-                    <select name='sorter' id='sorter' className={styles['filt-selector']} >
+                    <select name='sorter' id='sorter' className={styles['filt-selector']} value={sorterFunc} onChange={(e) => setSorterFunc(e.target.value)} >
                         <option value='none' >Không sắp xếp</option>
                         <option value='date' >Theo ngày (cũ → mới)</option>
                         <option value='reverse-date' >Theo ngày (mới → cũ)</option>
