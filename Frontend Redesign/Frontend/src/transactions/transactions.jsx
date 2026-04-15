@@ -23,6 +23,7 @@ export function Transactions() {
     const [endDate, setEndDate] = useState('');
     const [addEdit, setAddEdit] = useState(0);
     const [sorterFunc, setSorterFunc] = useState('none');
+    const [search, setSearch] = useState('');
 
     // Sao chép mảng bằng Spread Operator
     const rearrangedTransList = [...transList];
@@ -82,7 +83,17 @@ export function Transactions() {
         const iDate = new Date(dateToCompare);
         const matchDate = (!sDate.getTime() || iDate.getTime() >= sDate.getTime()) && (!eDate.getTime() || iDate.getTime() <= eDate.getTime());
 
-        return matchCategory && matchPrice && matchDate;
+        const removeAccents = (str) => {
+            return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        }
+
+        // Trong filter:
+        const searchTerm = removeAccents(search.toLowerCase());
+        const itemNote = removeAccents(item.note.toLowerCase());
+
+        const matchSearch = itemNote.startsWith(searchTerm);
+
+        return matchCategory && matchPrice && matchDate && matchSearch;
     });
 
     const handleSelectChange = (e) => {
@@ -595,7 +606,7 @@ export function Transactions() {
                         marginRight: '10px',
                         paddingLeft: '5px',
                         width: '230px',
-                    }} placeholder='Nhập tên giao dịch' />
+                    }} placeholder='Nhập tên giao dịch' value={search} onChange={(e) => setSearch(e.target.value)} />
                 </section>
             </div>
         </div>
