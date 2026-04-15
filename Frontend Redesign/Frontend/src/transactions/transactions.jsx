@@ -75,6 +75,96 @@ export function Transactions() {
         }
     }
 
+    const [typeSelect, setTypeSelect] = useState('income');
+
+    const handleTypeSelect = (e) => {
+        setTypeSelect(e.target.value);
+    };
+
+    const [newNote, setNewNote] = useState('');
+    const [newAmount, setNewAmount] = useState('');
+    const [newDate, setNewDate] = useState('');
+    const [newCategory, setNewCategory] = useState('Lương');
+
+    // Tự động cập nhật danh mục mặc định khi thay đổi loại giao dịch (Thu nhập <-> Chi phí)
+    useEffect(() => {
+        if (typeSelect === 'expense') {
+            setNewCategory('Ăn uống'); // Giá trị mặc định khi chọn Chi phí
+        } else {
+            setNewCategory('Lương');   // Giá trị mặc định khi chọn Thu nhập
+        }
+    }, [typeSelect]); // Hàm này sẽ chạy mỗi khi typeSelect thay đổi
+
+    const handleConfirmAdd = () => {
+        if (!newNote || !newAmount || !newDate) {
+            alert("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        let chosenCategoryIcon = '';
+
+        switch (newCategory) {
+            case 'Ăn uống':
+                chosenCategoryIcon = 'eating';
+                break;
+            case 'Đơn điện tử':
+                chosenCategoryIcon = 'elecbill';
+                break;
+            case 'Sức khỏe':
+                chosenCategoryIcon = 'health';
+                break;
+            case 'Nhà ở':
+                chosenCategoryIcon = 'housing';
+                break;
+            case 'Đi lại':
+                chosenCategoryIcon = 'movement';
+                break;
+            case 'Giải trí':
+                chosenCategoryIcon = 'recreation';
+                break;
+            case 'Mua sắm':
+                chosenCategoryIcon = 'shopping';
+                break;
+            case 'Chi tiêu khác':
+                chosenCategoryIcon = 'otherexpense';
+                break;
+            case 'Lương':
+                chosenCategoryIcon = 'salary';
+                break;
+            case 'Thu nhập khác':
+                chosenCategoryIcon = 'otherincome';
+                break;
+            default:
+                chosenCategoryIcon = 'salary';
+        }
+
+        const newTransaction = {
+            note: newNote,
+            type: typeSelect === 'income' ? 'Thu nhập' : 'Chi tiêu',
+            category: newCategory,
+            amount: Number(newAmount),
+            date: newDate.split('-').reverse().join('-'),
+            categoryIcon: `http://localhost:8080/api/images/${chosenCategoryIcon}.png`,
+        }
+
+        // Gửi yêu cầu POST đến backend
+        fetch('http://localhost:8080/api/add-transaction', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newTransaction)
+        })
+            .then(res => res.json())
+            .then(updatedData => {
+                setTransList(updatedData);
+                setAddEdit(0);
+                setNewNote('');
+                setNewAmount('');
+                setNewDate('');
+                setNewCategory('Lương');
+            })
+            .catch(err => console.error("Lỗi khi thêm:", err));
+    }
+
     return (
         <div className={styles['outer-boundary']} >
             <div className={styles['filter']} >
@@ -134,7 +224,7 @@ export function Transactions() {
                 <strong>Giao dịch</strong>
                 <hr />
                 <ul className={styles['trans-list']} style={{ listStyle: 'none' }} >
-                    {filteredTransList.map(item => (
+                    {filteredTransList.map((item, index) => (
                         <li key={item.id} style={{
                             display: 'grid',
                             gridTemplateColumns: '30px 350px 110px 180px 220px 210px 50px',
@@ -145,7 +235,7 @@ export function Transactions() {
                             marginBottom: '5px',
                             height: '50px',
                         }}>
-                            <p><strong>{item.id}</strong></p>
+                            <p><strong>{index + 1}</strong></p>
                             <p>{item.note}</p>
                             <p><img style={{ width: '30px', marginTop: '-5px' }} src={item.categoryIcon} /></p>
                             <p>{item.category}</p>
@@ -157,15 +247,111 @@ export function Transactions() {
                         </li>
                     ))}
                 </ul>
-                {addEdit === 1 && <p>Trình thêm mới</p>}
-                {addEdit === 2 && <p>Trình chỉnh sửa</p>}
+                {addEdit === 1 && <div className={styles['addingnew-section']}>
+                    <p><strong>Thêm giao dịch mới</strong></p>
+                    <input type='text' value={newNote} onChange={(e) => setNewNote(e.target.value)} style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                        width: '325px',
+                    }} placeholder='Tên giao dịch mới' />
+                    <select name='type-select' id='type-select' className={styles['filt-selector']} value={typeSelect} onChange={handleTypeSelect} >
+                        <option value='income' >Thu nhập</option>
+                        <option value='expense'>Chi phí</option>
+                    </select>
+                    <select name='category-select' id='category-select' style={{ width: '120px' }} className={styles['filt-selector']} value={newCategory} onChange={(e) => setNewCategory(e.target.value)} >
+                        {typeSelect === 'expense' ? (<div>
+                            <option value='Ăn uống' >Ăn uống</option>
+                            <option value='Đơn điện tử' >Đơn điện tử</option>
+                            <option value='Sức khỏe' >Sức khỏe</option>
+                            <option value='Nhà ở' >Nhà ở</option>
+                            <option value='Đi lại' >Đi lại</option>
+                            <option value='Giải trí' >Giải trí</option>
+                            <option value='Mua sắm' >Mua sắm</option>
+                            <option value='Chi tiêu khác' >Chi tiêu khác</option>
+                        </div>) : (<div>
+                            <option value='Lương' >Lương</option>
+                            <option value='Thu nhập khác' >Thu nhập khác</option>
+                        </div>)}
+                    </select>
+                    <input type='text' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} placeholder='Số tiền' value={newAmount} onChange={(e) => setNewAmount(e.target.value)} />
+                    <input type='date' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} value={newDate} onChange={(e) => setNewDate(e.target.value)} />
+                    <button className={styles['func-button']} onClick={handleConfirmAdd} >Thêm giao dịch</button>
+                </div>}
+                {addEdit === 2 && <div className={styles['editting-section']} >
+                    <p><strong>Sửa giao dịch hiện tại</strong></p>
+                    <input type='text' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                        width: '325px',
+                    }} placeholder='Sửa tên giao dịch' />
+                    <select name='type-select' id='type-select' className={styles['filt-selector']} value={typeSelect} onChange={handleTypeSelect} >
+                        <option value='income' >Thu nhập</option>
+                        <option value='expense'>Chi phí</option>
+                    </select>
+                    <select name='category-select' id='category-select' style={{ width: '120px' }} className={styles['filt-selector']}>
+                        {typeSelect === 'expense' ? (<>
+                            <option value='Ăn uống' >Ăn uống</option>
+                            <option value='Đơn điện tử' >Đơn điện tử</option>
+                            <option value='Sức khỏe' >Sức khỏe</option>
+                            <option value='Nhà ở' >Nhà ở</option>
+                            <option value='Đi lại' >Đi lại</option>
+                            <option value='Giải trí' >Giải trí</option>
+                            <option value='Mua sắm' >Mua sắm</option>
+                            <option value='Chi tiêu khác' >Chi tiêu khác</option>
+                        </>) : (<>
+                            <option value='Lương' >Lương</option>
+                            <option value='Thu nhập khác' >Thu nhập khác</option>
+                        </>)}
+                    </select>
+                    <input type='text' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} placeholder='Số tiền' />
+                    <input type='date' style={{
+                        border: '2px solid rgb(0, 117, 70)',
+                        borderRadius: '20px',
+                        height: '22px',
+                        marginTop: '-4px',
+                        marginRight: '10px',
+                        paddingLeft: '5px',
+                    }} />
+                    <button className={styles['func-button']} >Sửa giao dịch</button>
+                </div>}
             </div>
             <div className={styles['func-list']} >
                 <section className={styles['func-region']} >
                     <strong style={{ marginRight: '20px' }} >Chức năng</strong>
                     <button className={styles['func-button']} onClick={handleAddButton} >Thêm mới</button>
                     <button className={styles['func-button']} onClick={handleEditButton} >Sửa giao dịch</button>
-                    <button className={styles['func-button']} >Xóa</button>
+                    <button className={addEdit === 2 ? styles['delete-button-unactive'] : styles['delete-button']} >Xóa</button>
+                    <button className={addEdit === 2 ? styles['tickall-button-unactive'] : styles['tickall-button']} >Chọn hết</button>
+                    <button className={addEdit === 2 ? styles['untickall-button-unactive'] : styles['untickall-button']} >Bỏ chọn hết</button>
                     <label htmlFor='sorter' style={{ marginLeft: '10px', marginRight: '10px' }} >Sắp xếp:</label>
                     <select name='sorter' id='sorter' className={styles['filt-selector']} >
                         <option value='none' >Không sắp xếp</option>
@@ -185,7 +371,7 @@ export function Transactions() {
                         marginRight: '10px',
                         paddingLeft: '5px',
                         width: '230px',
-                    }} placeholder='Nhập tên giao dịch'/>
+                    }} placeholder='Nhập tên giao dịch' />
                 </section>
             </div>
         </div>
