@@ -14,6 +14,9 @@ app.use('/api/images', express.static(path.join(__dirname, '../Frontend/src/asse
 
 app.use(cors());
 
+// Cần để req.body không gặp lỗi undefined. Không cần dùng JSON.parse(req.body)
+app.use(express.json());
+
 app.get('/api/data', (req, res) => {
     const income = transList.filter(i => i.type === 'Thu nhập').reduce((s, i) => s + i.amount, 0);
     const expense = transList.filter(i => i.type === 'Chi tiêu').reduce((s, i) => s + i.amount, 0);
@@ -24,6 +27,27 @@ app.get('/api/data', (req, res) => {
 // Sau này có thể đặt nhiều app.get vào 1 file server này
 
 app.get('/api/translist', (req, res) => {
+    res.json(transList);
+});
+
+// Xử lý thêm giao dịch mới
+app.post('/api/add-transaction', (req, res) => {
+    const newTrans = req.body; 
+
+    // Tạo Id mới
+    const newId = transList.length > 0
+    ? Math.max(...transList.map(t => t.id)) + 1
+    : 1;
+
+    // Tạo object hoàn chỉnh để đưa vào mảng
+    const transactionToSave = {
+        id: newId,
+        ...newTrans // 
+    }
+
+    transList.push(transactionToSave);
+
+    // Trả về danh sách giao dịch mới để Frontend cập nhật lại giao diện
     res.json(transList);
 });
 
