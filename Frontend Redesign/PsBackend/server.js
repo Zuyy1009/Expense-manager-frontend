@@ -3,6 +3,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 8080;
 const { transList } = require('./storage/transactionsList.js');
+const { getIconName } = require('./storage/iconsList.js');
 // Cần có để express.static hoạt động (?)
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
@@ -28,6 +29,10 @@ app.get('/api/data', (req, res) => {
 
 app.get('/api/translist', (req, res) => {
     res.json(transList);
+});
+
+app.get('api/iconslist', (req, res) => {
+    res.json(getIconName);
 });
 
 // Xử lý thêm giao dịch mới
