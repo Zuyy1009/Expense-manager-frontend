@@ -2,7 +2,7 @@ const { getIconName } = require('./iconsList.js');
 
 let budgsListWithoutIcon = [
     {
-        id: '26Ap-1',
+        id: '26_04-1',
         category: 'Ăn uống',
         month: 'April',
         year: '2026',
@@ -11,7 +11,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26Ap-2',
+        id: '26_04-2',
         category: 'Đơn điện tử',
         month: 'April',
         year: '2026',
@@ -20,7 +20,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26Ap-3',
+        id: '26_04-3',
         category: 'Sức khỏe',
         month: 'April',
         year: '2026',
@@ -29,7 +29,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26Ap-4',
+        id: '26_04-4',
         category: 'Nhà ở',
         month: 'April',
         year: '2026',
@@ -38,7 +38,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26Ma-1',
+        id: '26_03-1',
         category: 'Ăn uống',
         month: 'March',
         year: '2026',
@@ -47,7 +47,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26Ma-2',
+        id: '26_03-2',
         category: 'Đơn điện tử',
         month: 'March',
         year: '2026',
@@ -56,7 +56,7 @@ let budgsListWithoutIcon = [
         isActive: false,
     },
     {
-        id: '26Ma-3',
+        id: '26_03-3',
         category: 'Sức khỏe',
         month: 'March',
         year: '2026',
@@ -65,7 +65,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26Ma-4',
+        id: '26_03-4',
         category: 'Nhà ở',
         month: 'March',
         year: '2026',
