@@ -6,6 +6,7 @@ import fimg2 from '../assets/function_icon/note_icon.png'
 import fimg2c from '../assets/function_icon/note_chosen.png'
 import fimg3 from '../assets/function_icon/saving_goal_icon.png'
 import fimg3c from '../assets/function_icon/saving_goal_chosen.png'
+import { Budget } from './budget/budget'
 
 export function Management() {
     const [activeTab, setActiveTab] = useState(1);
@@ -26,9 +27,9 @@ export function Management() {
             </div>
             <div className={styles['function-content']} >
                 {/* Hiển thị nội dung tương ứng với tab đang chọn */}
-                {activeTab === 1 && <p>Nội dung Ngân sách</p>}
-                {activeTab === 2 && <p>Nội dung Ghi chú</p>}
-                {activeTab === 3 && <p>Nội dung Mục tiêu tiết kiệm</p>}
+                {activeTab === 1 && <Budget />}
+                {activeTab === 2 && <p>Ghi chú</p>}
+                {activeTab === 3 && <p>Mục tiêu tiết kiệm</p>}
             </div>
         </div>
     )
