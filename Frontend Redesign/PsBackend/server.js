@@ -4,6 +4,7 @@ const app = express();
 const PORT = 8080;
 const { transList } = require('./storage/transactionsList.js');
 const { getIconName } = require('./storage/iconsList.js');
+const { budgsList } = require('./storage/budgetsList.js');
 // Cần có để express.static hoạt động (?)
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
@@ -31,7 +32,7 @@ app.get('/api/translist', (req, res) => {
     res.json(transList);
 });
 
-app.get('api/iconslist', (req, res) => {
+app.get('/api/iconslist', (req, res) => {
     res.json(getIconName);
 });
 
@@ -96,6 +97,10 @@ app.delete('/api/delete-transactions', (req, res) => {
 
     // Trả về danh sách mới nhất để Frontend đồng bộ UI
     res.json(transList);
+});
+
+app.get('/api/budgetslist', (req, res) => {
+    res.json(budgsList);
 });
 
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
