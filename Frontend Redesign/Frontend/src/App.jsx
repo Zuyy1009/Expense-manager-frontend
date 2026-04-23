@@ -7,6 +7,7 @@ import { Transactions } from './transactions/transactions.jsx'
 import { Management } from './management/management.jsx'
 import { Login } from './login/login.jsx'
 import { Register } from './login/register.jsx'
+import { Account } from './account/account.jsx'
 
 // Tạo một component riêng cho nội dung Dashboard để có thể sử dụng useNavigate
 function DashboardLayout({ onLogOut }) {
@@ -38,6 +39,7 @@ function DashboardLayout({ onLogOut }) {
                     <Link to='/stat' className='link-button'>Thống kê</Link>
                     <Link to='/transactions' className='link-button'>Giao dịch</Link>
                     <Link to='/management' className='link-button'>Quản lý</Link>
+                    <Link to='/account' className='link-button'>Tài khoản</Link>
 
                     {/* Gắn sự kiện onClick vào đây */}
                     <button onClick={handleLogout} className='logout-button'>
@@ -52,6 +54,7 @@ function DashboardLayout({ onLogOut }) {
                     <Route path='/stat' element={<Stat />} />
                     <Route path='/transactions' element={<Transactions />} />
                     <Route path='/management' element={<Management />} />
+                    <Route path='/account' element={<Account />} />
                 </Routes>
             </main>
         </div>
