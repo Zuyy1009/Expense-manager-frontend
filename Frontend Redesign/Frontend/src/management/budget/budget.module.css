@@ -39,7 +39,7 @@ body {
 }
 
 .bsl-boundary {
-    height: 190px;
+    height: 168px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: rgb(0, 117, 70) rgb(216, 227, 222);
