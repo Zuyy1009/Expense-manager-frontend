@@ -152,8 +152,28 @@ export function Budget() {
                         </div>
                     </section>
                     <hr style={{ marginTop: '3px' }} />
+                    <section className={styles['budg-button-region']} >
+                        <div>
+                            <button className={styles['budg-button']} >Thêm mới</button>
+                            <br />
+                            <button className={styles['budg-button']} >Chỉnh sửa</button>
+                            <br />
+                            <button className={styles['budg-button']} >Xóa bỏ</button>
+                        </div>
+                        <div style={{
+                            borderLeft: '1px solid rgb(167, 167, 167)',
+                            height: '92px',
+                            marginTop: '-9px'
+                        }} ></div>
+                        <div ><p>Function</p></div>
+                    </section>
                 </div>
-                <div className={styles['stat-region']} ></div>
+                <div className={styles['stat-region']} >
+                    <section style={{paddingLeft: '15px', paddingTop: '15px'}} >
+                        <p style={{ color: 'rgb(69, 74, 73)', display: 'inline', marginRight: '20px' }} ><strong>Thông số</strong></p>
+                    </section>
+                    <hr style={{ marginTop: '6px' }} />
+                </div>
             </section>
         </div>
     )
