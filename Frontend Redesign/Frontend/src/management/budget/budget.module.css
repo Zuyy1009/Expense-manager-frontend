@@ -46,3 +46,19 @@ body {
     margin-right: 5px;
     margin-left: -22px;
 }
+
+.b-checkbox[type="checkbox"] {
+    accent-color: rgb(0, 117, 70);
+    height: 20px;
+    width: 20px;
+    display: inline;
+    margin-top: 2px;
+}
+
+.b2-checkbox[type="checkbox"] {
+    accent-color: rgb(0, 117, 70);
+    height: 20px;
+    width: 20px;
+    display: inline;
+    margin-top: 12px;
+}
