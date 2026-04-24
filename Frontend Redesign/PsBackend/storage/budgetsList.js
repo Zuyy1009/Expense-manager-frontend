@@ -1,4 +1,4 @@
-const { getIconName } = require('./iconsList.js');
+const { iconsMap } = require('./iconsList.js');
 
 let budgsListWithoutIcon = [
     {
@@ -93,7 +93,7 @@ let budgsListWithoutIcon = [
 
 let budgsList = budgsListWithoutIcon.map(item => ({
     ...item,
-    categoryIcon: `http://localhost:8080/api/images/${getIconName(item.category)}.png`
+    categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category]}.png`
 }));
 
 module.exports = { budgsList };
