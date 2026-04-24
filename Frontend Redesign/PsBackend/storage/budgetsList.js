@@ -9,8 +9,8 @@ let budgsListWithoutIcon = [
         limitAmount: 500000,
         alertThreshold: 80,
         isActive: true,
-        amountConsumed: 250000,
-        percentConsumed: 50,
+        amountConsumed: 375000,
+        percentConsumed: 75,
     },
     {
         id: '26_04-2',
