@@ -122,16 +122,19 @@ export function Budget() {
                                             <div style={{
                                                 width: '300px',
                                                 height: '15px',
-                                                backgroundColor: 'rgb(217, 239, 233)',
-                                                border: '2px solid rgb(46, 158, 115)',
+                                                backgroundColor: ((item.amountConsumed / item.limitAmount) <= 0.3) ? 'rgb(217, 239, 233)' :
+                                                    ((item.amountConsumed / item.limitAmount) <= 0.6) ? 'rgb(239, 236, 217)' : 'rgb(239, 217, 217)',
+                                                border: ((item.amountConsumed / item.limitAmount) <= 0.3) ? '2px solid rgb(46, 158, 115)' :
+                                                    ((item.amountConsumed / item.limitAmount) <= 0.6) ? '2px solid rgb(158, 130, 46)' : '2px solid rgb(158, 46, 46)',
                                                 borderRadius: '20px',
                                                 marginTop: '10px',
                                                 overflow: 'hidden',
                                             }} >
                                                 <div style={{
-                                                    width: `${(item.amountConsumed/item.limitAmount) * 100}%`,
+                                                    width: `${(item.amountConsumed / item.limitAmount) * 100}%`,
                                                     height: '100%',
-                                                    backgroundColor: 'rgb(46, 158, 115)',
+                                                    backgroundColor: ((item.amountConsumed / item.limitAmount) <= 0.3) ? 'rgb(46, 158, 115)' :
+                                                        ((item.amountConsumed / item.limitAmount) <= 0.6) ? 'rgb(158, 130, 46)' : 'rgb(158, 46, 46)',
                                                     borderRadius: '20px',
                                                 }} ></div>
                                             </div> :
