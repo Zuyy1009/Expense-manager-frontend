@@ -69,7 +69,7 @@ export function Budget() {
                     <section className={styles['budgs-list-region']} >
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: '45px 205px 75px 77px 100px 153px 180px 80px',
+                            gridTemplateColumns: '45px 205px 75px 77px 100px 153px 180px 160px 50px',
                             backgroundColor: 'white',
                             border: '2px solid rgb(167, 167, 167)',
                             borderRadius: '15px',
@@ -91,13 +91,14 @@ export function Budget() {
                             <p style={{ margin: 0 }} ><strong>Ngưỡng cảnh báo</strong></p>
                             <p style={{ margin: 0 }} ><strong>Trạng thái</strong></p>
                             <p style={{ margin: 0 }} ><strong>Đã dùng</strong></p>
+                            <input type='checkbox' className={styles['b-checkbox']} />
                         </div>
                         <div className={styles['bsl-boundary']} >
                             <ul className={styles['budgs-list']} style={{ listStyle: 'none' }} >
                                 {filteredBudgetsList.map((item, index) => (
                                     <li style={{
                                         display: 'grid',
-                                        gridTemplateColumns: '30px 50px 160px 75px 80px 150px 100px 180px 50px',
+                                        gridTemplateColumns: '30px 50px 160px 75px 80px 150px 100px 180px 160px 50px',
                                         gridAutoRows: '35px',
                                         border: '2px solid rgb(0, 117, 70)',
                                         borderRadius: '20px',
@@ -116,6 +117,7 @@ export function Budget() {
                                             <p style={{ color: 'green' }} ><strong>Hoạt động</strong></p> :
                                             <p style={{ color: 'grey' }} ><strong>Không hoạt động</strong></p>}
                                         <p>{item.amountConsumed}</p>
+                                        <input type='checkbox' className={styles['b2-checkbox']} />
                                         {item.isActive === true ?
                                             <div style={{
                                                 width: '300px',
@@ -123,8 +125,16 @@ export function Budget() {
                                                 backgroundColor: 'rgb(217, 239, 233)',
                                                 border: '2px solid rgb(46, 158, 115)',
                                                 borderRadius: '20px',
-                                                marginTop: '10px'
-                                            }} ></div> :
+                                                marginTop: '10px',
+                                                overflow: 'hidden',
+                                            }} >
+                                                <div style={{
+                                                    width: `${(item.amountConsumed/item.limitAmount) * 100}%`,
+                                                    height: '100%',
+                                                    backgroundColor: 'rgb(46, 158, 115)',
+                                                    borderRadius: '20px',
+                                                }} ></div>
+                                            </div> :
                                             <div style={{
                                                 width: '300px',
                                                 height: '15px',
