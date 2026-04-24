@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 8080;
 const { transList } = require('./storage/transactionsList.js');
-const { getIconName } = require('./storage/iconsList.js');
+const { iconsMap } = require('./storage/iconsList.js');
 const { budgsList } = require('./storage/budgetsList.js');
 // Cần có để express.static hoạt động (?)
 const path = require('path');
@@ -33,7 +33,7 @@ app.get('/api/translist', (req, res) => {
 });
 
 app.get('/api/iconslist', (req, res) => {
-    res.json(getIconName);
+    res.json(iconsMap);
 });
 
 // Xử lý thêm giao dịch mới
