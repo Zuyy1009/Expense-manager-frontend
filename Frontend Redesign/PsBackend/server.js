@@ -5,6 +5,8 @@ const PORT = 8080;
 const { transList } = require('./storage/transactionsList.js');
 const { iconsMap } = require('./storage/iconsList.js');
 const { budgsList } = require('./storage/budgetsList.js');
+const { catesList } = require('./storage/categoriesList.js');
+const { nsList } = require('./storage/notesList.js');
 // Cần có để express.static hoạt động (?)
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
@@ -34,6 +36,14 @@ app.get('/api/translist', (req, res) => {
 
 app.get('/api/iconslist', (req, res) => {
     res.json(iconsMap);
+});
+
+app.get('/api/categorieslist', (req, res) => {
+    res.json(catesList);
+});
+
+app.get('/api/nslist', (req, res) => {
+    res.json(nsList);
 });
 
 // Xử lý thêm giao dịch mới
