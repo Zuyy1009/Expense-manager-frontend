@@ -2,6 +2,27 @@ import styles from './noteandcate.module.css'
 import { useState, useEffect } from 'react'
 
 export function NoteAndCate() {
+    const [catesList, setCatesList] = useState([]);
+    const [notesList, setNotesList] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/categorieslist")
+            .then(res => res.json())
+            .then(data => {
+                setCatesList(data);
+            })
+            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+    }, []);
+
+    useEffect(() => {
+        fetch("http://localhost:8080/api/nslist")
+            .then(res => res.json())
+            .then(data => {
+                setNotesList(data);
+            })
+            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+    }, []);
+
     return (
         <div>
             <h4 style={{ marginTop: '-1px' }} >Danh mục & Ghi chú</h4>
