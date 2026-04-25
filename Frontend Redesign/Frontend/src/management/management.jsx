@@ -7,6 +7,7 @@ import fimg2c from '../assets/function_icon/note_chosen.png'
 import fimg3 from '../assets/function_icon/saving_goal_icon.png'
 import fimg3c from '../assets/function_icon/saving_goal_chosen.png'
 import { Budget } from './budget/budget'
+import { NoteAndCate } from './noteandcate/noteandcate'
 
 export function Management() {
     const [activeTab, setActiveTab] = useState(1);
@@ -28,7 +29,7 @@ export function Management() {
             <div className={styles['function-content']} >
                 {/* Hiển thị nội dung tương ứng với tab đang chọn */}
                 {activeTab === 1 && <Budget />}
-                {activeTab === 2 && <p>Ghi chú</p>}
+                {activeTab === 2 && <NoteAndCate />}
                 {activeTab === 3 && <p>Mục tiêu tiết kiệm</p>}
             </div>
         </div>
