@@ -1,0 +1,26 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.outer-boundary {
+    display: grid;
+    grid-template-columns: 450px 635px;
+    gap: 20px;
+    height: 600px;
+    /*Bằng cách nào đó, tôi phải quy định chiều cao khi dùng gtcol, khó hiểu vl*/
+}
+
+.category-region {
+    border: 1.5px solid rgb(233, 244, 239);
+    border-radius: 15px;
+    background-color: rgb(233, 244, 239);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.1);
+    /*Lệch ngang, lệch dọc, bán kính mờ, độ mở rộng, màu*/
+}
+
+.note-region {
+    border: 1.5px solid rgb(246, 253, 250);
+    border-radius: 15px;
+    background-color: rgb(246, 253, 250);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.1);
+}
