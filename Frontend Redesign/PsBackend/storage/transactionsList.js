@@ -79,6 +79,76 @@ let transList = [
         note: 'Thuốc cảm cúm',
         dateCreated: '17-03-2026'
     },
+    {
+        id: 9,
+        type: 'Chi tiêu',
+        amount: 85000,
+        category: 'Đi lại',
+        categoryIcon: 'http://localhost:8080/api/images/movement.png',
+        date: '15-03-2026',
+        note: 'Taxi đến Nơi AX',
+        dateCreated: '17-03-2026'
+    },
+    {
+        id: 10,
+        type: 'Chi tiêu',
+        amount: 34000,
+        category: 'Ăn uống',
+        categoryIcon: 'http://localhost:8080/api/images/eating.png',
+        date: '13-03-2026',
+        note: 'Ăn chực ở KFC',
+        dateCreated: '14-03-2026'
+    },
+    {
+        id: 11,
+        type: 'Chi tiêu',
+        amount: 144000,
+        category: 'Giải trí',
+        categoryIcon: 'http://localhost:8080/api/images/recreation.png',
+        date: '09-03-2026',
+        note: 'Đi chơi ở XXDDXDD',
+        dateCreated: '09-03-2026'
+    },
+    {
+        id: 12,
+        type: 'Chi tiêu',
+        amount: 98000,
+        category: 'Sức khỏe',
+        categoryIcon: 'http://localhost:8080/api/images/health.png',
+        date: '04-03-2026',
+        note: 'Thuốc bổ mắt',
+        dateCreated: '05-03-2026'
+    },
+    {
+        id: 13,
+        type: 'Thu nhập',
+        amount: 204000,
+        category: 'Thu nhập khác',
+        categoryIcon: 'http://localhost:8080/api/images/otherincome.png',
+        date: '05-03-2026',
+        note: 'Tiền lì xì từ D?Dxx',
+        dateCreated: '05-03-2026'
+    },
+    {
+        id: 14,
+        type: 'Chi tiêu',
+        amount: 84000,
+        category: 'Ăn uống',
+        categoryIcon: 'http://localhost:8080/api/images/eating.png',
+        date: '02-03-2026',
+        note: 'KFCKFC',
+        dateCreated: '02-03-2026'
+    },
+    {
+        id: 15,
+        type: 'Chi tiêu',
+        amount: 80000,
+        category: 'Mua sắm',
+        categoryIcon: 'http://localhost:8080/api/images/shopping.png',
+        date: '01-03-2026',
+        note: 'Mua quần áo II',
+        dateCreated: '02-03-2026'
+    },
 ];
 
 module.exports = { transList };
