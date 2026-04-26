@@ -25,6 +25,9 @@ export function Budget() {
 
     const filteredBudgetsList = budgetsList;
 
+    /* Thứ tự hoạt động: Người dùng click -> onChange kích hoạt -> hàm handle cập nhật state */
+    /* React re-render lại component -> cập nhật lại checked (hàm sau có true hay không) */
+
     return (
         <div>
             <h4 style={{ marginTop: '-1px' }} >Ngân sách</h4>
@@ -69,7 +72,7 @@ export function Budget() {
                     <section className={styles['budgs-list-region']} >
                         <div style={{
                             display: 'grid',
-                            gridTemplateColumns: '45px 205px 75px 77px 100px 153px 180px 160px 50px',
+                            gridTemplateColumns: '45px 205px 75px 77px 100px 153px 161px 160px',
                             backgroundColor: 'white',
                             border: '2px solid rgb(167, 167, 167)',
                             borderRadius: '15px',
@@ -91,14 +94,13 @@ export function Budget() {
                             <p style={{ margin: 0 }} ><strong>Ngưỡng cảnh báo</strong></p>
                             <p style={{ margin: 0 }} ><strong>Trạng thái</strong></p>
                             <p style={{ margin: 0 }} ><strong>Đã dùng</strong></p>
-                            <input type='checkbox' className={styles['b-checkbox']} />
                         </div>
                         <div className={styles['bsl-boundary']} >
                             <ul className={styles['budgs-list']} style={{ listStyle: 'none' }} >
                                 {filteredBudgetsList.map((item, index) => (
                                     <li style={{
                                         display: 'grid',
-                                        gridTemplateColumns: '30px 50px 160px 75px 80px 150px 100px 180px 160px 50px',
+                                        gridTemplateColumns: '30px 50px 160px 75px 80px 150px 100px 160px 140px 48px 48px',
                                         gridAutoRows: '35px',
                                         border: '2px solid rgb(0, 117, 70)',
                                         borderRadius: '20px',
@@ -117,7 +119,8 @@ export function Budget() {
                                             <p style={{ color: 'green' }} ><strong>Hoạt động</strong></p> :
                                             <p style={{ color: 'grey' }} ><strong>Không hoạt động</strong></p>}
                                         <p>{item.amountConsumed}</p>
-                                        <input type='checkbox' className={styles['b2-checkbox']} />
+                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} >Sửa</button>
+                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} >Xóa</button>
                                         {item.isActive === true ?
                                             <div style={{
                                                 width: '300px',
@@ -154,11 +157,9 @@ export function Budget() {
                     <hr style={{ marginTop: '3px' }} />
                     <section className={styles['budg-button-region']} >
                         <div>
-                            <button className={styles['budg-button']} >Thêm mới</button>
+                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }} >Thêm mới</button>
                             <br />
-                            <button className={styles['budg-button']} >Chỉnh sửa</button>
-                            <br />
-                            <button className={styles['budg-button']} >Xóa bỏ</button>
+                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }}  >Xóa tất cả</button>
                         </div>
                         <div style={{
                             borderLeft: '1px solid rgb(167, 167, 167)',
