@@ -19,9 +19,9 @@ body {
 }
 
 .note-region {
-    border: 1.5px solid rgb(246, 253, 250);
+    border: 1.5px solid rgb(233, 243, 238);
     border-radius: 15px;
-    background-color: rgb(246, 253, 250);
+    background-color: rgb(233, 243, 238);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
@@ -36,10 +36,35 @@ body {
 }
 
 .cates-boundary {
-    height: 250px;
+    height: 320px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: rgb(0, 117, 70) rgb(216, 227, 222);
     border-top: 2px solid rgba(0, 0, 0, 0.3);
     border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.notes-boundary {
+    height: 450px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: rgb(0, 117, 70) rgb(216, 227, 222);
+    border-top: 2px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+.note-button {
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    background-color: white;
+    font-size: 15px;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.note-button:hover {
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    background-color: rgb(0, 117, 70);
+    color: white;
 }
