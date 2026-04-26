@@ -1,4 +1,5 @@
 const { iconsMap } = require('./iconsList.js');
+const { transList } = require('./transactionsList.js');
 
 let budgsListWithoutIcon = [
     {
@@ -9,8 +10,6 @@ let budgsListWithoutIcon = [
         limitAmount: 500000,
         alertThreshold: 80,
         isActive: true,
-        amountConsumed: 375000,
-        percentConsumed: 75,
     },
     {
         id: '26_04-2',
@@ -20,8 +19,6 @@ let budgsListWithoutIcon = [
         limitAmount: 300000,
         alertThreshold: 70,
         isActive: true,
-        amountConsumed: 150000,
-        percentConsumed: 50,
     },
     {
         id: '26_04-3',
@@ -30,9 +27,7 @@ let budgsListWithoutIcon = [
         year: '2026',
         limitAmount: 500000,
         alertThreshold: 50,
-        isActive: true,
-        amountConsumed: 125000,
-        percentConsumed: 25,
+        isActive: false,
     },
     {
         id: '26_04-4',
@@ -42,8 +37,33 @@ let budgsListWithoutIcon = [
         limitAmount: 1600000,
         alertThreshold: 70,
         isActive: true,
-        amountConsumed: 250000,
-        percentConsumed: 16,
+    },
+    {
+        id: '26_04-5',
+        category: 'Đi lại',
+        month: 'Tháng 4',
+        year: '2026',
+        limitAmount: 1600000,
+        alertThreshold: 70,
+        isActive: true,
+    },
+    {
+        id: '26_04-6',
+        category: 'Giải trí',
+        month: 'Tháng 4',
+        year: '2026',
+        limitAmount: 300000,
+        alertThreshold: 70,
+        isActive: true,
+    },
+    {
+        id: '26_04-7',
+        category: 'Mua sắm',
+        month: 'Tháng 4',
+        year: '2026',
+        limitAmount: 10000,
+        alertThreshold: 70,
+        isActive: false,
     },
     {
         id: '26_03-1',
@@ -53,8 +73,6 @@ let budgsListWithoutIcon = [
         limitAmount: 500000,
         alertThreshold: 80,
         isActive: true,
-        amountConsumed: 100000,
-        percentConsumed: 20,
     },
     {
         id: '26_03-2',
@@ -64,8 +82,6 @@ let budgsListWithoutIcon = [
         limitAmount: 300000,
         alertThreshold: 70,
         isActive: false,
-        amountConsumed: 30000,
-        percentConsumed: 10,
     },
     {
         id: '26_03-3',
@@ -75,25 +91,60 @@ let budgsListWithoutIcon = [
         limitAmount: 500000,
         alertThreshold: 50,
         isActive: true,
-        amountConsumed: 250000,
-        percentConsumed: 50,
     },
     {
         id: '26_03-4',
         category: 'Nhà ở',
         month: 'Tháng 3',
         year: '2026',
-        limitAmount: 600000,
+        limitAmount: 1400000,
         alertThreshold: 70,
-        isActive: false,
-        amountConsumed: 100000,
-        percentConsumed: 17,
+        isActive: true,
+    },
+    {
+        id: '26_03-5',
+        category: 'Đi lại',
+        month: 'Tháng 3',
+        year: '2026',
+        limitAmount: 560000,
+        alertThreshold: 75,
+        isActive: true,
+    },
+    {
+        id: '26_03-6',
+        category: 'Giải trí',
+        month: 'Tháng 3',
+        year: '2026',
+        limitAmount: 180000,
+        alertThreshold: 75,
+        isActive: true,
+    },
+    {
+        id: '26_03-7',
+        category: 'Mua sắm',
+        month: 'Tháng 3',
+        year: '2026',
+        limitAmount: 730000,
+        alertThreshold: 75,
+        isActive: true,
+    },
+    {
+        id: '26_03-8',
+        category: 'Chi tiêu khác',
+        month: 'Tháng 3',
+        year: '2026',
+        limitAmount: 120000,
+        alertThreshold: 75,
+        isActive: true,
     },
 ];
 
 let budgsList = budgsListWithoutIcon.map(item => ({
     ...item,
-    categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category]}.png`
+    categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category]}.png`,
+    amountConsumed: transList.filter(i => i.category === item.category)
+        .filter(i => i.date.substring(3, 5) === item.id.substring(3, 5))
+        .reduce((s, i) => s + i.amount, 0),
 }));
 
 module.exports = { budgsList };
