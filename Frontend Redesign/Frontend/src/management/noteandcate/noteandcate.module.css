@@ -24,3 +24,22 @@ body {
     background-color: rgb(246, 253, 250);
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.1);
 }
+
+.filt-selector {
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    height: 25px;
+    margin-top: -3px;
+    cursor: pointer;
+}
+
+.cates-boundary {
+    height: 250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: rgb(0, 117, 70) rgb(216, 227, 222);
+    border-top: 2px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+}
