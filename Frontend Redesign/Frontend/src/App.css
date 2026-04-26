@@ -59,6 +59,21 @@ body {
   color: rgb(0, 117, 70);
 }
 
+.link-button-active {
+  border: 2px solid white;
+  background-color: white;
+  border-radius: 20px;
+  font-size: 17px;
+  width: 200px;
+  height: 30px;
+  text-align: center;
+  padding-top: 10px;
+  color: rgb(0, 117, 70);
+  text-decoration: none;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
 .logout-button {
   border: 2px solid white;
   border-radius: 20px;
