@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate, useLocation } from 'react-router-dom'
 import defAvt from './assets/dashboard_icon/def_avatar.png'
 import './App.css'
 import { Stat } from './stat/stat.jsx'
@@ -12,6 +12,7 @@ import { Account } from './account/account.jsx'
 // Tạo một component riêng cho nội dung Dashboard để có thể sử dụng useNavigate
 function DashboardLayout({ onLogOut }) {
     const navigate = useNavigate();
+    const location = useLocation(); // Lấy thông tin URL hiện tại
 
     const handleLogout = () => {
         // 1. Xóa dữ liệu đăng nhập
@@ -27,6 +28,22 @@ function DashboardLayout({ onLogOut }) {
         // window.location.href = '/login';
     };
 
+    // Hàm kiểm tra xem path có đang được chọn không
+    const isActive = (path) => location.pathname === path;
+
+    // Hàm kiểm tra xem path hiện tại có thuộc về menu này không
+
+    /* const AnotherIsActive = (path) => {
+        // Nếu trang chủ là /stat, ta so sánh khớp hoàn toàn
+        if (path === '/stat') {
+            return location.pathname === '/stat' || location.pathname === '/';
+        }
+
+        // Với các trang khác, chỉ cần bắt đầu bằng path đó là được
+        // Ví dụ: /management/details sẽ khớp với /management
+        return location.pathname.startsWith(path);
+    }; */
+
     return (
         <div className='outer-boundary'>
             <aside className='left-sidebar'>
@@ -36,10 +53,10 @@ function DashboardLayout({ onLogOut }) {
                     <p style={{ color: "white", marginTop: "-5px" }}>example@gmail.com</p>
                 </section>
                 <section className='menu-sect'>
-                    <Link to='/stat' className='link-button'>Thống kê</Link>
-                    <Link to='/transactions' className='link-button'>Giao dịch</Link>
-                    <Link to='/management' className='link-button'>Quản lý</Link>
-                    <Link to='/account' className='link-button'>Tài khoản</Link>
+                    <Link to='/stat' className={`link-button${isActive('/stat') ? '-active' : ''}`}>Thống kê</Link>
+                    <Link to='/transactions' className={`link-button${isActive('/transactions') ? '-active' : ''}`}>Giao dịch</Link>
+                    <Link to='/management' className={`link-button${isActive('/management') ? '-active' : ''}`}>Quản lý</Link>
+                    <Link to='/account' className={`link-button${isActive('/account') ? '-active' : ''}`}>Tài khoản</Link>
 
                     {/* Gắn sự kiện onClick vào đây */}
                     <button onClick={handleLogout} className='logout-button'>
@@ -75,7 +92,7 @@ function App() {
                 } />
 
                 {/* CÁC TRANG CÔNG KHAI (Không có Sidebar) */}
-                <Route path="/login" element={<Login  onLogin={() => setLoggedIn(true)} />} />
+                <Route path="/login" element={<Login onLogin={() => setLoggedIn(true)} />} />
                 <Route path="/register" element={<Register />} />
 
                 {/* CÁC TRANG NỘI BỘ (Có Sidebar) */}
