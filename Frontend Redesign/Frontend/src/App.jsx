@@ -23,6 +23,8 @@ function DashboardLayout({ onLogOut }) {
         onLogOut();
         navigate('/login');
         // Đã có path là '/login' ở phần Route
+        // Hàm onLogOut đóng vai trò 1 nút trong cái điều khiển từ xa, do nó không phải component App
+        // nó không thể đi đến thẳng tivi và bấm nút tắt nguồn trên tv đó
 
         // Cách B: Dùng window.location.href (load lại trang hoàn toàn, sạch bộ nhớ RAM)
         // window.location.href = '/login';
