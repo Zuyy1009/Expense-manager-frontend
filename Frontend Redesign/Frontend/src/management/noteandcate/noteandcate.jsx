@@ -76,6 +76,45 @@ export function NoteAndCate() {
                         <p style={{ color: 'rgb(69, 74, 73)', display: 'inline', marginRight: '20px' }} ><strong>Ghi chú</strong></p>
                     </section>
                     <hr style={{ marginTop: '6px' }} />
+                    <section className={styles['notes-boundary']} >
+                        <ul className={styles['notes-list']} style={{ listStyle: 'none' }} >
+                            {notesList.map((item) => (
+                                <li style={{
+                                    border: '2px solid rgb(0, 117, 70)',
+                                    borderRadius: '20px',
+                                    backgroundColor: 'white',
+                                    marginLeft: '-25px',
+                                    marginBottom: '5px',
+                                    paddingTop: '5px'
+                                }} >
+                                    <div>
+                                        <p style={{ 
+                                            marginLeft: '10px', 
+                                            display: 'inline',
+                                            marginRight: '430px' 
+                                        }} ><strong>{item.title}</strong></p>
+                                        <button className={styles['note-button']} style={{ marginRight: '5px' }}>Sửa</button>
+                                        <button className={styles['note-button']} >Xóa</button>
+                                    </div>
+                                    <hr style={{ marginTop: '4px' }} />
+                                    <p style={{ marginLeft: '10px', height: 'auto' }} >{item.content}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                    <section style={{
+                        marginTop: '15px',
+                        marginLeft: '15px',
+                        display: 'grid',
+                        gridTemplateColumns: '110px 5px'
+                    }} >
+                        <div><button className={styles['note-button']} style={{ width: '100px' }} >Thêm mới</button></div>
+                        <div style={{
+                            borderLeft: '1px solid rgb(167, 167, 167)',
+                            height: '100px',
+                            marginTop: '-16px'
+                        }} ></div>
+                    </section>
                 </div>
             </section>
         </div>
