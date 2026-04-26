@@ -5,9 +5,41 @@ body {
 .outer-boundary {
     padding: 20px;
     display: grid;
-    grid-template-columns: 0.75fr 1.5fr;
-    grid-template-rows: 1fr 1.2fr;
+    grid-template-rows: 50px 1.2fr;
     gap: 20px;
     width: 1230px;
     height: 680px;
 }
+
+.account-setting-title {
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-top: 0px;
+}
+
+.account-setting-info {
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-top: 15px;
+    padding-left: 15px;
+}
+
+.input-field {
+    border: 2px solid rgb(0, 117, 70);
+    background-color: rgb(0, 117, 70);
+    color: white;
+    border-radius: 20px;
+    height: 30px;
+    padding-left: 5px;
+}
+
+.input-field:focus {
+    border: 2px solid rgb(0, 117, 70);
+    background-color: white;
+    color: black;
+}
+
