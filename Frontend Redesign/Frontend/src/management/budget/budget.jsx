@@ -40,7 +40,36 @@ export function Budget() {
         }
     };
 
-    const filteredBudgetsList = budgetsList;
+    /* Đặt hàm handle vào thuộc tính onClick của Button */
+
+    const [filtMonth, setFiltMonth] = useState('all-months');
+
+    const handleFiltMonthChange = (e) => {
+        setFiltMonth(e.target.value);
+    };
+
+    const [filtYear, setFiltYear] = useState('');
+
+    const handleFiltYearChange = (e) => {
+        setFiltYear(e.target.value);
+    }
+
+    const [filtState, setFiltState] = useState('all-states');
+
+    const handleFiltStateChange = (e) => {
+        setFiltState(e.target.value);
+    }
+
+    const filteredBudgetsList = budgetsList.filter(item => {
+        const matchMonth = (filtMonth === 'all-months' || Number(item.month.substring(6)) === Number(filtMonth));
+
+        const matchYear = (filtYear === '' || Number(item.year) === Number(filtYear));
+
+        const stateForComparison = item.isActive ? 'active' : 'non-active';
+        const matchState = (filtState === 'all-states' || stateForComparison === filtState);
+
+        return matchMonth && matchYear && matchState;
+    });
 
     /* Thứ tự hoạt động: Người dùng click -> onChange kích hoạt -> hàm handle cập nhật state */
     /* React re-render lại component -> cập nhật lại checked (hàm sau có true hay không) */
@@ -54,7 +83,7 @@ export function Budget() {
                     <section className={styles['filter-section']} >
                         <p style={{ color: 'rgb(69, 74, 73)', display: 'inline', marginRight: '20px' }} ><strong>Bộ lọc</strong></p>
                         <label htmlFor='month' >Tháng</label>
-                        <select name='month' id='month' className={styles['filt-selector']} style={{ width: '100px' }} >
+                        <select name='month' id='month' className={styles['filt-selector']} style={{ width: '100px' }} value={filtMonth} onChange={handleFiltMonthChange} >
                             <option value='all-months' >Tất cả tháng</option>
                             <option value='01' >Tháng 1</option>
                             <option value='02' >Tháng 2</option>
@@ -70,9 +99,9 @@ export function Budget() {
                             <option value='12' >Tháng 12</option>
                         </select>
                         <label htmlFor='year' >Năm</label>
-                        <input type='number' name='year' id='year' className={styles['input-field']} />
+                        <input type='number' name='year' id='year' className={styles['input-field']} value={filtYear} onChange={handleFiltYearChange} />
                         <label htmlFor='bstate' >Trạng thái</label>
-                        <select name='bstate' id='bstate' className={styles['filt-selector']} style={{ width: '130px' }} >
+                        <select name='bstate' id='bstate' className={styles['filt-selector']} style={{ width: '130px' }} value={filtState} onChange={handleFiltStateChange} >
                             <option value='all-states'>Tất cả trạng thái</option>
                             <option value='active' >Hoạt động</option>
                             <option value='non-active' >Không hoạt động</option>
