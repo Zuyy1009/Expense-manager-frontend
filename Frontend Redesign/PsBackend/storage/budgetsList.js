@@ -3,7 +3,7 @@ const { transList } = require('./transactionsList.js');
 
 let budgsListWithoutIcon = [
     {
-        id: '26_04-1',
+        bid: '26_04-1',
         category: 'Ăn uống',
         month: 'Tháng 4',
         year: '2026',
@@ -12,7 +12,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_04-2',
+        bid: '26_04-2',
         category: 'Đơn điện tử',
         month: 'Tháng 4',
         year: '2026',
@@ -21,7 +21,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_04-3',
+        bid: '26_04-3',
         category: 'Sức khỏe',
         month: 'Tháng 4',
         year: '2026',
@@ -30,7 +30,7 @@ let budgsListWithoutIcon = [
         isActive: false,
     },
     {
-        id: '26_04-4',
+        bid: '26_04-4',
         category: 'Nhà ở',
         month: 'Tháng 4',
         year: '2026',
@@ -39,7 +39,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_04-5',
+        bid: '26_04-5',
         category: 'Đi lại',
         month: 'Tháng 4',
         year: '2026',
@@ -48,7 +48,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_04-6',
+        bid: '26_04-6',
         category: 'Giải trí',
         month: 'Tháng 4',
         year: '2026',
@@ -57,7 +57,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_04-7',
+        bid: '26_04-7',
         category: 'Mua sắm',
         month: 'Tháng 4',
         year: '2026',
@@ -66,7 +66,7 @@ let budgsListWithoutIcon = [
         isActive: false,
     },
     {
-        id: '26_03-1',
+        bid: '26_03-1',
         category: 'Ăn uống',
         month: 'Tháng 3',
         year: '2026',
@@ -75,7 +75,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_03-2',
+        bid: '26_03-2',
         category: 'Đơn điện tử',
         month: 'Tháng 3',
         year: '2026',
@@ -84,7 +84,7 @@ let budgsListWithoutIcon = [
         isActive: false,
     },
     {
-        id: '26_03-3',
+        bid: '26_03-3',
         category: 'Sức khỏe',
         month: 'Tháng 3',
         year: '2026',
@@ -93,7 +93,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_03-4',
+        bid: '26_03-4',
         category: 'Nhà ở',
         month: 'Tháng 3',
         year: '2026',
@@ -102,7 +102,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_03-5',
+        bid: '26_03-5',
         category: 'Đi lại',
         month: 'Tháng 3',
         year: '2026',
@@ -111,7 +111,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_03-6',
+        bid: '26_03-6',
         category: 'Giải trí',
         month: 'Tháng 3',
         year: '2026',
@@ -120,7 +120,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_03-7',
+        bid: '26_03-7',
         category: 'Mua sắm',
         month: 'Tháng 3',
         year: '2026',
@@ -129,7 +129,7 @@ let budgsListWithoutIcon = [
         isActive: true,
     },
     {
-        id: '26_03-8',
+        bid: '26_03-8',
         category: 'Chi tiêu khác',
         month: 'Tháng 3',
         year: '2026',
@@ -143,7 +143,7 @@ let budgsList = budgsListWithoutIcon.map(item => ({
     ...item,
     categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category]}.png`,
     amountConsumed: transList.filter(i => i.category === item.category)
-        .filter(i => i.date.substring(3, 5) === item.id.substring(3, 5))
+        .filter(i => i.date.substring(3, 5) === item.bid.substring(3, 5))
         .reduce((s, i) => s + i.amount, 0),
 }));
 
