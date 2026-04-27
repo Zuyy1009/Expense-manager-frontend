@@ -259,7 +259,7 @@ export function Budget() {
                                     <option value='active' >Hoạt động</option>
                                     <option value='non-active' >Không hoạt động</option>
                                 </select>
-                                <button className={styles['budg-button']} style={{ marginLeft: '350px', marginTop: '10px' }} >Lưu thay đổi</button>
+                                <button className={styles['budg-button']} style={{ marginLeft: '370px', marginTop: '10px' }} >Lưu thay đổi</button>
                             </div>}
                         </div>
                     </section>
