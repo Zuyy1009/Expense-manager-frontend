@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 export function Budget() {
     const [budgetsList, setBudgetsList] = useState([]);
     const [iconsMap, setIconsMap] = useState({});
+    const [activeFunc, setActiveFunc] = useState(0);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/budgetslist")
@@ -22,6 +23,22 @@ export function Budget() {
             })
             .catch(err => console.error("Đã xảy ra lỗi!: ", err));
     }, []);
+
+    const handleAddButton = () => {
+        if (activeFunc === 1) {
+            setActiveFunc(0);
+        } else {
+            setActiveFunc(1);
+        }
+    };
+
+    const handleEditButton = () => {
+        if (activeFunc === 2) {
+            setActiveFunc(0);
+        } else {
+            setActiveFunc(2);
+        }
+    };
 
     const filteredBudgetsList = budgetsList;
 
@@ -53,16 +70,9 @@ export function Budget() {
                             <option value='12' >Tháng 12</option>
                         </select>
                         <label htmlFor='year' >Năm</label>
-                        <select name='year' id='year' className={styles['filt-selector']} style={{ width: '100px' }} >
-                            <option value='all-years' >Tất cả năm</option>
-                            <option value='2026' >2026</option>
-                            <option value='2025' >2025</option>
-                            <option value='2024' >2024</option>
-                            <option value='2023' >2023</option>
-                            <option value='2022' >2022</option>
-                        </select>
-                        <label htmlFor='state' >Trạng thái</label>
-                        <select name='state' id='state' className={styles['filt-selector']} style={{ width: '130px' }} >
+                        <input type='number' name='year' id='year' className={styles['input-field']} />
+                        <label htmlFor='bstate' >Trạng thái</label>
+                        <select name='bstate' id='bstate' className={styles['filt-selector']} style={{ width: '130px' }} >
                             <option value='all-states'>Tất cả trạng thái</option>
                             <option value='active' >Hoạt động</option>
                             <option value='non-active' >Không hoạt động</option>
@@ -119,7 +129,7 @@ export function Budget() {
                                             <p style={{ color: 'green' }} ><strong>Hoạt động</strong></p> :
                                             <p style={{ color: 'grey' }} ><strong>Không hoạt động</strong></p>}
                                         <p>{item.amountConsumed}</p>
-                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} >Sửa</button>
+                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} onClick={handleEditButton} >Sửa</button>
                                         <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} >Xóa</button>
                                         {item.isActive === true ?
                                             <div style={{
@@ -157,20 +167,105 @@ export function Budget() {
                     <hr style={{ marginTop: '3px' }} />
                     <section className={styles['budg-button-region']} >
                         <div>
-                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }} >Thêm mới</button>
+                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }} onClick={handleAddButton} >Thêm mới</button>
                             <br />
-                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }}  >Xóa tất cả</button>
+                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }}   >Xóa tất cả</button>
                         </div>
                         <div style={{
                             borderLeft: '1px solid rgb(167, 167, 167)',
                             height: '92px',
                             marginTop: '-9px'
                         }} ></div>
-                        <div ><p>Function</p></div>
+                        <div >
+                            {activeFunc === 1 && <div>
+                                <label htmlFor='sel-category'>Danh mục:</label>
+                                <select name='sel-category' id='sel-category' className={styles['filt-selector']} style={{ width: '120px' }} >
+                                    <option value='Ăn uống' >Ăn uống</option>
+                                    <option value='Đơn điện tử' >Đơn điện tử</option>
+                                    <option value='Sức khỏe' >Sức khỏe</option>
+                                    <option value='Nhà ở' >Nhà ở</option>
+                                    <option value='Đi lại' >Đi lại</option>
+                                    <option value='Giải trí' >Giải trí</option>
+                                    <option value='Mua sắm' >Mua sắm</option>
+                                    <option value='Chi tiêu khác' >Chi tiêu khác</option>
+                                    <option value='Lương' >Lương</option>
+                                    <option value='Thu nhập khác' >Thu nhập khác</option>
+                                </select>
+                                <label htmlFor='sel-month'>Tháng:</label>
+                                <select name='sel-month' id='sel-month' className={styles['filt-selector']} style={{ width: '85px' }} >
+                                    <option value='01' >Tháng 1</option>
+                                    <option value='02' >Tháng 2</option>
+                                    <option value='03' >Tháng 3</option>
+                                    <option value='04' >Tháng 4</option>
+                                    <option value='05' >Tháng 5</option>
+                                    <option value='06' >Tháng 6</option>
+                                    <option value='07' >Tháng 7</option>
+                                    <option value='08' >Tháng 8</option>
+                                    <option value='09' >Tháng 9</option>
+                                    <option value='10' >Tháng 10</option>
+                                    <option value='11' >Tháng 11</option>
+                                    <option value='12' >Tháng 12</option>
+                                </select>
+                                <label htmlFor='sel-year'>Năm:</label>
+                                <input type='number' name='sel-year' id='sel-year' className={styles['input-field']} />
+                                <label htmlFor='budg-limit'>Hạn mức:</label>
+                                <input type='number' name='budg-limit' id='budg-limit' className={styles['input-field']} style={{ width: '90px', marginRight: '110px' }} />
+                                <label htmlFor='alert-threshold' style={{ marginLeft: '110px' }} >    Ngưỡng cảnh báo (%):</label>
+                                <input type='number' name='alert-threshold' id='alert-threshold' className={styles['input-field']} style={{ width: '42px' }} />
+                                <label htmlFor='sel-state' style={{ marginTop: '10px' }} >Trạng thái:</label>
+                                <select name='sel-state' id='sel-state' className={styles['filt-selector']} style={{ width: '130px', marginTop: '10px' }}  >
+                                    <option value='active' >Hoạt động</option>
+                                    <option value='non-active' >Không hoạt động</option>
+                                </select>
+                                <button className={styles['budg-button']} style={{ marginLeft: '350px', marginTop: '10px' }} >Thêm ngân sách</button>
+                            </div>}
+                            {activeFunc === 2 && <div>
+                                <label htmlFor='sel-category'>Danh mục:</label>
+                                <select name='sel-category' id='sel-category' className={styles['filt-selector']} style={{ width: '120px' }} >
+                                    <option value='Ăn uống' >Ăn uống</option>
+                                    <option value='Đơn điện tử' >Đơn điện tử</option>
+                                    <option value='Sức khỏe' >Sức khỏe</option>
+                                    <option value='Nhà ở' >Nhà ở</option>
+                                    <option value='Đi lại' >Đi lại</option>
+                                    <option value='Giải trí' >Giải trí</option>
+                                    <option value='Mua sắm' >Mua sắm</option>
+                                    <option value='Chi tiêu khác' >Chi tiêu khác</option>
+                                    <option value='Lương' >Lương</option>
+                                    <option value='Thu nhập khác' >Thu nhập khác</option>
+                                </select>
+                                <label htmlFor='sel-month'>Tháng:</label>
+                                <select name='sel-month' id='sel-month' className={styles['filt-selector']} style={{ width: '85px' }} >
+                                    <option value='01' >Tháng 1</option>
+                                    <option value='02' >Tháng 2</option>
+                                    <option value='03' >Tháng 3</option>
+                                    <option value='04' >Tháng 4</option>
+                                    <option value='05' >Tháng 5</option>
+                                    <option value='06' >Tháng 6</option>
+                                    <option value='07' >Tháng 7</option>
+                                    <option value='08' >Tháng 8</option>
+                                    <option value='09' >Tháng 9</option>
+                                    <option value='10' >Tháng 10</option>
+                                    <option value='11' >Tháng 11</option>
+                                    <option value='12' >Tháng 12</option>
+                                </select>
+                                <label htmlFor='sel-year'>Năm:</label>
+                                <input type='number' name='sel-year' id='sel-year' className={styles['input-field']} />
+                                <label htmlFor='budg-limit'>Hạn mức:</label>
+                                <input type='number' name='budg-limit' id='budg-limit' className={styles['input-field']} style={{ width: '90px', marginRight: '110px' }} />
+                                <label htmlFor='alert-threshold' style={{ marginLeft: '110px' }} >    Ngưỡng cảnh báo (%):</label>
+                                <input type='number' name='alert-threshold' id='alert-threshold' className={styles['input-field']} style={{ width: '42px' }} />
+                                <label htmlFor='sel-state' style={{ marginTop: '10px' }} >Trạng thái:</label>
+                                <select name='sel-state' id='sel-state' className={styles['filt-selector']} style={{ width: '130px', marginTop: '10px' }}  >
+                                    <option value='active' >Hoạt động</option>
+                                    <option value='non-active' >Không hoạt động</option>
+                                </select>
+                                <button className={styles['budg-button']} style={{ marginLeft: '350px', marginTop: '10px' }} >Lưu thay đổi</button>
+                            </div>}
+                        </div>
                     </section>
                 </div>
                 <div className={styles['stat-region']} >
-                    <section style={{paddingLeft: '15px', paddingTop: '15px'}} >
+                    <section style={{ paddingLeft: '15px', paddingTop: '15px' }} >
                         <p style={{ color: 'rgb(69, 74, 73)', display: 'inline', marginRight: '20px' }} ><strong>Thông số</strong></p>
                     </section>
                     <hr style={{ marginTop: '6px' }} />
