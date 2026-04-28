@@ -1,8 +1,11 @@
+require('dotenv').config();
 const express = require('express');
+const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const PORT = 8080;
-const { transList } = require('./storage/transactionsList.js');
+const { getTransList } = require('./storage/transactionsList.js');
+const { Transaction } = require('./models/Transaction.js');
 const { iconsMap } = require('./storage/iconsList.js');
 const { budgsList } = require('./storage/budgetsList.js');
 const { catesList } = require('./storage/categoriesList.js');
@@ -11,6 +14,11 @@ const { nsList } = require('./storage/notesList.js');
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
 // Dùng express.static để "mở cửa" thư mục này
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("Connected to MongoDB: exmn"))
+    .catch(err => console.error("Could not connect to MongoDB", err));
+
 app.use('/api/images', express.static(path.join(__dirname, '../Frontend/src/assets/category_icon')));
 
 // Node.js mặc định xử lý các file .js theo chuẩn CommonJS (sử dụng require) 
@@ -21,16 +29,30 @@ app.use(cors());
 // Cần để req.body không gặp lỗi undefined. Không cần dùng JSON.parse(req.body)
 app.use(express.json());
 
-app.get('/api/data', (req, res) => {
-    const income = transList.filter(i => i.type === 'Thu nhập').reduce((s, i) => s + i.amount, 0);
-    const expense = transList.filter(i => i.type === 'Chi tiêu').reduce((s, i) => s + i.amount, 0);
-    res.json({ income, expense });
+app.get('/api/data', async (req, res) => {
+    try {
+        const transList = await getTransList() || []; // Đảm bảo luôn là mảng
+
+        const income = transList
+            .filter(i => i && i.type === 'Thu nhập') // Kiểm tra i tồn tại
+            .reduce((s, i) => s + (Number(i.amount) || 0), 0);
+
+        const expense = transList
+            .filter(i => i && i.type === 'Chi tiêu')
+            .reduce((s, i) => s + (Number(i.amount) || 0), 0);
+
+        res.json({ income, expense });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ income: 0, expense: 0, message: "Lỗi tính toán" });
+    }
 });
 // Chữ data có thể đổi thành từ khác 
 // Phần liên kết có thể đổi, nhưng chữ data ở jsx cần giữ nguyên (.then)
 // Sau này có thể đặt nhiều app.get vào 1 file server này
 
-app.get('/api/translist', (req, res) => {
+app.get('/api/translist', async (req, res) => {
+    const transList = await getTransList();
     res.json(transList);
 });
 
@@ -47,66 +69,40 @@ app.get('/api/nslist', (req, res) => {
 });
 
 // Xử lý thêm giao dịch mới
-app.post('/api/add-transaction', (req, res) => {
-    const newTrans = req.body; 
+app.post('/api/add-transaction', async (req, res) => {
+    try {
+        const newTrans = new Transaction(req.body); // Tạo instance mới từ model
+        await newTrans.save(); // Lưu trực tiếp vào MongoDB
 
-    // Tạo Id mới
-    const newId = transList.length > 0
-    ? Math.max(...transList.map(t => t.id)) + 1
-    : 1;
-
-    // Tạo object hoàn chỉnh để đưa vào mảng
-    const transactionToSave = {
-        id: newId,
-        ...newTrans // 
-    }
-
-    transList.push(transactionToSave);
-
-    // Trả về danh sách giao dịch mới để Frontend cập nhật lại giao diện
-    res.json(transList);
-});
-
-app.put('/api/update-transaction/:id', (req, res) => {
-    const { id } = req.params; // Thêm ngoặc kép để destructuring
-    const updatedTrans = req.body;
-
-    const index = transList.findIndex(item => item.id === parseInt(id));
-    if (index !== -1) {
-        // Ghi đè thuộc tính trùng nhau của obj bên phải lên obj bên trái
-        transList[index] = {...transList[index], ...updatedTrans};
-        res.json(transList);
-    } else {
-        res.status(404).json({ message: "Không tìm thấy giao dịch."});
+        const updatedList = await getTransList(); // Lấy lại danh sách mới nhất
+        res.json(updatedList);
+    } catch (err) {
+        res.status(500).send("Lỗi khi thêm dữ liệu");
     }
 });
 
-app.delete('/api/delete-transactions', (req, res) => {
-    const { ids } = req.body; // Lấy mảng ID từ frontend gửi về
+app.put('/api/update-transaction/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updatedData = req.body;
 
-    if (!Array.isArray(ids)) {
-        return res.status(400).json({ message: "Dữ liệu không hợp lệ." });
+        // Sử dụng findByIdAndUpdate để cập nhật thẳng vào MongoDB
+        await Transaction.findByIdAndUpdate(id, updatedData);
+
+        const updatedList = await getTransList();
+        res.json(updatedList);
+    } catch (err) {
+        res.status(500).json({ message: "Lỗi cập nhật" });
     }
+});
 
-    // Thực hiện lọc: Chỉ giữ lại những item có id KHÔNG nằm trong mảng ids
-    // Lưu ý: Nếu transList là hằng số (const), bạn phải dùng các hàm thay đổi tại chỗ 
-    // hoặc đổi transList sang let. Ở đây ta giả sử transList có thể cập nhật được.
-    
-    // Cách 1: Nếu transList là mảng global có thể thay đổi (thông qua lọc)
-    const originalLength = transList.length;
-    
-    // Xóa bằng cách lọc (Filter)
-    // Lưu ý: Cần gán lại giá trị cho mảng nếu file storage cho phép
-    const newTransList = transList.filter(item => !ids.includes(item.id));
-    
-    // Cập nhật lại mảng chính (xóa sạch mảng cũ và push mảng mới vào để giữ tham chiếu)
-    transList.length = 0; 
-    transList.push(...newTransList);
+app.delete('/api/delete-transactions', async (req, res) => {
+    const { ids } = req.body;
+    // Xóa tất cả các bản ghi có _id nằm trong mảng ids
+    await Transaction.deleteMany({ _id: { $in: ids } });
 
-    console.log(`Đã xóa ${originalLength - transList.length} giao dịch.`);
-
-    // Trả về danh sách mới nhất để Frontend đồng bộ UI
-    res.json(transList);
+    const updatedList = await getTransList();
+    res.json(updatedList);
 });
 
 app.get('/api/budgetslist', (req, res) => {
