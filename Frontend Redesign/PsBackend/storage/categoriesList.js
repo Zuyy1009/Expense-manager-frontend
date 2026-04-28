@@ -1,7 +1,36 @@
 const { iconsMap } = require('./iconsList.js');
-const { transList } = require('./transactionsList.js');
+const Category = require('../models/Category.js');
+const Transaction = require('../models/Transaction.js');
 
-let catesListWithoutIcon = [
+const getCategoriesWithStats = async () => {
+    try {
+        // 1. Lấy danh sách danh mục và danh sách giao dịch từ MongoDB
+        const categories = await Category.find({}).lean();
+        const transactions = await Transaction.find({}).lean();
+
+        // 2. Kết hợp dữ liệu
+        return categories.map(cate => {
+            // Tính tổng tiền cho từng danh mục dựa trên tên
+            const total = transactions
+                .filter(t => t.category === cate.name)
+                .reduce((sum, t) => sum + (Number(t.amount) || 0), 0);
+
+            return {
+                ...cate,
+                id: cate._id, // Sử dụng _id từ MongoDB
+                icon: `http://localhost:8080/api/images/${iconsMap[cate.name] || 'default'}.png`,
+                amountMade: total
+            };
+        });
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu từ MongoDB:", error);
+        return [];
+    }
+};
+
+module.exports = { getCategoriesWithStats };
+
+/* let catesListWithoutIcon = [
     {
         id: 1,
         name: 'Ăn uống',
@@ -72,12 +101,4 @@ let catesListWithoutIcon = [
         isDefault: true,
         createdAt: '20-12-2022'
     },
-];
-
-let catesList = catesListWithoutIcon.map(item => ({
-    ...item,
-    icon: `http://localhost:8080/api/images/${iconsMap[item.name]}.png`,
-    amountMade: transList.filter(i => i.category === item.name).reduce((s, i) => s + i.amount, 0)
-}));
-
-module.exports = { catesList };
+]; */
