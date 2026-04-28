@@ -438,7 +438,7 @@ export function Transactions() {
                 <hr />
                 <ul className={styles['trans-list']} style={{ listStyle: 'none' }} >
                     {filteredTransList.map((item, index) => (
-                        <li key={item.id} style={{
+                        <li key={item._id} style={{
                             display: 'grid',
                             gridTemplateColumns: '30px 350px 110px 180px 220px 210px 50px',
                             marginLeft: '-40px',
@@ -459,17 +459,17 @@ export function Transactions() {
                             <input type={addEdit === 2 ? 'radio' : 'checkbox'}
                                 // Tách luồng tránh xung đột
                                 name={addEdit === 2 ? 'edit-item' : 'delete-item'}
-                                value={item.id}
+                                value={item._id}
                                 className={styles['t-checkbox']}
                                 // Đang sửa thì dùng editingId, ngược lại dùng mảng selectedIds
-                                checked={addEdit === 2 ? editingId === item.id : selectedIds.includes(item.id)}
+                                checked={addEdit === 2 ? editingId === item._id : selectedIds.includes(item._id)}
                                 // Ghi nhớ: checked={false} sẽ khiến checkbox không bị tick
                                 // React quan tâm cả giá trị đằng sau, không như HTML
                                 onChange={() => {
                                     if (addEdit === 2) {
-                                        handleRadioChange(item.id);
+                                        handleRadioChange(item._id);
                                     } else {
-                                        handleCheckboxChange(item.id);
+                                        handleCheckboxChange(item._id);
                                     }
                                 }}
                             />
