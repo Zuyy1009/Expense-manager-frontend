@@ -1,4 +1,20 @@
-let nsList = [
+const Note = require('../models/Note.js');
+
+const getNotesList = async () => {
+    try {
+        const data = await Note.find({}).lean();
+
+        const nsList = data;
+        return nsList;
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+        return [];
+    }
+};
+
+module.exports = { getNotesList };
+
+/* let nsList = [
     {
         id: 1,
         title: 'Note A',
@@ -24,6 +40,4 @@ let nsList = [
         title: 'Note A',
         content: 'Thiết lập aabb'
     },
-];
-
-module.exports = { nsList };
+]; */
