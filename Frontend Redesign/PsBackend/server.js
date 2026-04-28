@@ -4,12 +4,15 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 const PORT = 8080;
-const { getTransList } = require('./storage/transactionsList.js');
-const { Transaction } = require('./models/Transaction.js');
+const { getTransList } = require('./storage/transactionsList.js');  // Lấy dữ liệu hiển thị
+const Transaction = require('./models/Transaction.js'); // Thêm/Sửa/Xóa
 const { iconsMap } = require('./storage/iconsList.js');
-const { budgsList } = require('./storage/budgetsList.js');
-const { catesList } = require('./storage/categoriesList.js');
-const { nsList } = require('./storage/notesList.js');
+const { getBudgetsWithProgress } = require('./storage/budgetsList.js');
+const Budget = require('./models/Budget.js');
+const { getCategoriesWithStats } = require('./storage/categoriesList.js');
+const Category = require('./models/Category.js');
+const { getNotesList } = require('./storage/notesList.js');
+const Note = require('./models/Note.js');
 // Cần có để express.static hoạt động (?)
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
@@ -60,11 +63,13 @@ app.get('/api/iconslist', (req, res) => {
     res.json(iconsMap);
 });
 
-app.get('/api/categorieslist', (req, res) => {
+app.get('/api/categorieslist', async (req, res) => {
+    const catesList = await getCategoriesWithStats();
     res.json(catesList);
 });
 
-app.get('/api/nslist', (req, res) => {
+app.get('/api/nslist', async (req, res) => {
+    const nsList = await getNotesList();
     res.json(nsList);
 });
 
@@ -105,7 +110,8 @@ app.delete('/api/delete-transactions', async (req, res) => {
     res.json(updatedList);
 });
 
-app.get('/api/budgetslist', (req, res) => {
+app.get('/api/budgetslist', async (req, res) => {
+    const budgsList = await getBudgetsWithProgress();
     res.json(budgsList);
 });
 
