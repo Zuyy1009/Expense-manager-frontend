@@ -1,7 +1,45 @@
+const mongoose = require('mongoose');
 const { iconsMap } = require('./iconsList.js');
-const { transList } = require('./transactionsList.js');
+// 1. Phải import ĐÚNG Model để truy vấn Database
+const Transaction = require('../models/Transaction.js');
+const Budget = require('../models/Budget.js');
 
-let budgsListWithoutIcon = [
+const getBudgetsWithProgress = async () => {
+    try {
+        // 1. Lấy tất cả ngân sách và giao dịch từ DB
+        const budgets = await Budget.find({}).lean();
+        const transactions = await Transaction.find({ type: 'Chi tiêu' }).lean();
+
+        // 2. Map để tính toán số tiền đã dùng và gắn icon
+        return budgets.map(budget => {
+            // Lấy mã tháng từ bid (ví dụ: '26_04-1' -> '04')
+            const budgetMonth = budget.bid.substring(3, 5);
+
+            const consumed = transactions
+                .filter(t => t.category === budget.category && t.date.substring(3, 5) === budgetMonth)
+                .reduce((sum, t) => sum + t.amount, 0);
+
+            return {
+                ...budget,
+                id: budget._id,
+                categoryIcon: `http://localhost:8080/api/images/${iconsMap[budget.category] || 'default'}.png`,
+                amountConsumed: consumed
+            };
+        });
+    } catch (error) {
+        console.error("Lỗi lấy ngân sách:", error);
+        return [];
+    }
+};
+
+module.exports = { Budget, getBudgetsWithProgress };
+
+// Import từ Model: Thực hiện các thao tác ghi/xóa dữ liệu thô, không quan tâm đến Icon
+// Import từ tệp list: Cần lấy dữ liệu để hiển thị lên giao diện
+// - Cần cho Route GET: Khi cần danh sách đã có sẵn categoryIcon và định dạng ID để gửi về cho React/Frontend.
+// - Tệp Ngân sách (budgetsList.js) cần danh sách giao dịch đã qua xử lý để tính amountConsumed.
+
+/* let budgsListWithoutIcon = [
     {
         bid: '26_04-1',
         category: 'Ăn uống',
@@ -137,14 +175,4 @@ let budgsListWithoutIcon = [
         alertThreshold: 75,
         isActive: true,
     },
-];
-
-let budgsList = budgsListWithoutIcon.map(item => ({
-    ...item,
-    categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category]}.png`,
-    amountConsumed: transList.filter(i => i.category === item.category)
-        .filter(i => i.date.substring(3, 5) === item.bid.substring(3, 5))
-        .reduce((s, i) => s + i.amount, 0),
-}));
-
-module.exports = { budgsList };
+]; */
