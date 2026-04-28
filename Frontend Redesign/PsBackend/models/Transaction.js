@@ -10,3 +10,5 @@ const TransactionSchema = new mongoose.Schema({
 }, { collection: 'listoftrans' });
 
 const Transaction = mongoose.model('Transaction', TransactionSchema);
+
+module.exports = Transaction;
