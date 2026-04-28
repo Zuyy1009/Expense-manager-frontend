@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const { iconsMap } = require('./iconsList.js');
 const Transaction = require('../models/Transaction.js');
 
@@ -21,6 +20,11 @@ const getTransList = async () => {
         return [];
     }
 }
+
+module.exports = { Transaction, getTransList };
+
+// Node.js mặc định xử lý các file .js theo chuẩn CommonJS (sử dụng require)
+// Trong khi câu lệnh import thuộc chuẩn ES Modules (ESM) => Gây lỗi .
 
 /* let transListWithoutIcon = [
     {
@@ -159,8 +163,3 @@ const getTransList = async () => {
         dateCreated: '02-03-2026'
     },
 ]; */
-
-module.exports = { Transaction, getTransList };
-
-// Node.js mặc định xử lý các file .js theo chuẩn CommonJS (sử dụng require)
-// Trong khi câu lệnh import thuộc chuẩn ES Modules (ESM) => Gây lỗi .
