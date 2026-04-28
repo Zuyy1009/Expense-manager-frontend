@@ -1,6 +1,28 @@
+const mongoose = require('mongoose');
 const { iconsMap } = require('./iconsList.js');
+const Transaction = require('../models/Transaction.js');
 
-let transListWithoutIcon = [
+// Vì làm việc với DB là bất đồng bộ  dùng async/await
+const getTransList = async () => {
+    try {
+        // Lấy dữ liệu từ MongoDB
+        const data = await Transaction.find({}).lean();
+
+        // Map để gắn thêm icon
+        const transList = data.map(item => ({
+            ...item,
+            // Chuyển _id thành id để tương thích nếu Frontend cần
+            categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category] || 'default'}.png`
+        }));
+
+        return transList;
+    } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+        return [];
+    }
+}
+
+/* let transListWithoutIcon = [
     {
         id: 1,
         type: 'Chi tiêu',
@@ -136,14 +158,9 @@ let transListWithoutIcon = [
         note: 'Mua quần áo II',
         dateCreated: '02-03-2026'
     },
-];
+]; */
 
-let transList = transListWithoutIcon.map(item => ({
-    ...item,
-    categoryIcon: `http://localhost:8080/api/images/${iconsMap[item.category]}.png`
-}));
-
-module.exports = { transList };
+module.exports = { Transaction, getTransList };
 
 // Node.js mặc định xử lý các file .js theo chuẩn CommonJS (sử dụng require)
 // Trong khi câu lệnh import thuộc chuẩn ES Modules (ESM) => Gây lỗi .
