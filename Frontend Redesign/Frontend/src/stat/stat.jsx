@@ -59,7 +59,7 @@ export function Stat() {
                 <hr />
                 <ul className={styles['trans-list']} style={{listStyle: 'none'}} >
                     {transList.slice(0, 5).map(item => (
-                        <li key={item.id} style={{
+                        <li key={item._id} style={{
                             display: 'grid',
                             gridTemplateColumns: '20px 250px 70px 120px 150px 120px',
                             marginLeft: '-20px',
@@ -69,7 +69,7 @@ export function Stat() {
                             marginBottom: '5px',
                             height: '50px',
                         }}>
-                            <p><strong>{item.id}</strong></p>
+                            <p><strong>{item._id}</strong></p>
                             <p>{item.note}</p>
                             <p><img style={{ width: '30px', marginTop: '-5px'}} src={item.categoryIcon} /></p>
                             <p>{item.category}</p>
