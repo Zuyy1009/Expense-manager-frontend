@@ -233,7 +233,7 @@ export function Transactions() {
     // Hàm xử lý khi 1 radio button được chọn
     const handleRadioChange = (id) => {
         setEditingId(id);
-        const itemToEdit = transList.find(item => item.id === id);
+        const itemToEdit = transList.find(item => item._id === id);
         if (itemToEdit) {
             // Đổ dữ liệu hiện tại vào form
             setEditedNote(itemToEdit.note);
@@ -339,7 +339,7 @@ export function Transactions() {
 
     // Chọn tất cả
     const handleSelectAll = () => {
-        const allFilteredIds = filteredTransList.map(item => item.id);
+        const allFilteredIds = filteredTransList.map(item => item._id);
         setSelectedIds(allFilteredIds);
     };
 
