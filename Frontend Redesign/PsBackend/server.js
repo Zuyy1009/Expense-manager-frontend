@@ -142,12 +142,26 @@ app.put('/api/update-budget/:id', async (req, res) => {
 });
 
 app.delete('/api/delete-budget', async (req, res) => {
-    const { id } = req.body;
+    try {
+        const { id } = req.body;
 
-    await Budget.findByIdAndDelete(id);
+        await Budget.findByIdAndDelete(id);
 
-    const updatedList = await getBudgetsWithProgress();
-    res.json(updatedList);
+        const updatedList = await getBudgetsWithProgress();
+        res.json(updatedList);
+    } catch {
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
+});
+
+app.delete('/api/delete-all-budgets', async (req, res) => {
+    try {
+        await Budget.deleteMany({});
+
+        res.json([]);
+    } catch {
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
 });
 
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
