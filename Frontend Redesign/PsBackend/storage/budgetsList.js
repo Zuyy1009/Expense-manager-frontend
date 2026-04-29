@@ -41,7 +41,7 @@ module.exports = { Budget, getBudgetsWithProgress };
 
 /* let budgsListWithoutIcon = [
     {
-        bid: '26_04-1',
+        bid: '26_04',
         category: 'Ăn uống',
         month: 'Tháng 4',
         year: '2026',
@@ -50,7 +50,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_04-2',
+        bid: '26_04',
         category: 'Đơn điện tử',
         month: 'Tháng 4',
         year: '2026',
@@ -59,7 +59,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_04-3',
+        bid: '26_04',
         category: 'Sức khỏe',
         month: 'Tháng 4',
         year: '2026',
@@ -68,7 +68,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: false,
     },
     {
-        bid: '26_04-4',
+        bid: '26_04',
         category: 'Nhà ở',
         month: 'Tháng 4',
         year: '2026',
@@ -77,7 +77,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_04-5',
+        bid: '26_04',
         category: 'Đi lại',
         month: 'Tháng 4',
         year: '2026',
@@ -86,7 +86,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_04-6',
+        bid: '26_04',
         category: 'Giải trí',
         month: 'Tháng 4',
         year: '2026',
@@ -95,7 +95,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_04-7',
+        bid: '26_04',
         category: 'Mua sắm',
         month: 'Tháng 4',
         year: '2026',
@@ -104,7 +104,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: false,
     },
     {
-        bid: '26_03-1',
+        bid: '26_03',
         category: 'Ăn uống',
         month: 'Tháng 3',
         year: '2026',
@@ -113,7 +113,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_03-2',
+        bid: '26_03',
         category: 'Đơn điện tử',
         month: 'Tháng 3',
         year: '2026',
@@ -122,7 +122,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: false,
     },
     {
-        bid: '26_03-3',
+        bid: '26_03',
         category: 'Sức khỏe',
         month: 'Tháng 3',
         year: '2026',
@@ -131,7 +131,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_03-4',
+        bid: '26_03',
         category: 'Nhà ở',
         month: 'Tháng 3',
         year: '2026',
@@ -140,7 +140,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_03-5',
+        bid: '26_03',
         category: 'Đi lại',
         month: 'Tháng 3',
         year: '2026',
@@ -149,7 +149,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_03-6',
+        bid: '26_03',
         category: 'Giải trí',
         month: 'Tháng 3',
         year: '2026',
@@ -158,7 +158,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_03-7',
+        bid: '26_03',
         category: 'Mua sắm',
         month: 'Tháng 3',
         year: '2026',
@@ -167,7 +167,7 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
-        bid: '26_03-8',
+        bid: '26_03',
         category: 'Chi tiêu khác',
         month: 'Tháng 3',
         year: '2026',
