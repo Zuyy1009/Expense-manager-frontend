@@ -98,6 +98,17 @@ export function Budget() {
             isActive: newIsActive
         }
 
+        const prefix = `${newYear.substring(2, 4)}_${newMonth}`;
+
+        const existingIds = budgetsList
+            .filter(item => item.bid.startsWith(prefix))
+            .map(item => parseInt(item.bid.split('-')[1]) || 0);
+        /* Tách theo dấu gạch ngang, lấy số cuối cùng */
+
+        const maxId = existingIds.length > 0 ? Math.max(...existingIds) : 0;
+
+        newBudget['bid'] = `${prefix}-${maxId + 1}`
+
         fetch('http://localhost:8080/api/add-budget', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
