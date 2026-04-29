@@ -203,6 +203,26 @@ export function Budget() {
         }
     };
 
+    const handleDeleteAllButton = () => {
+        if (window.confirm('Bạn có chắc chắn muốn xóa TẤT CẢ ngân sách? Hành động này không thể hoàn tác!')) {
+            fetch('http://localhost:8080/api/delete-all-budgets', {
+                method: "DELETE"
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Lỗi khi xóa từ server!");
+                    return res.json();
+                })
+                .then(updatedData => {
+                    setBudgetsList(updatedData);
+                    alert('Xóa thành công!');
+                })
+                .catch(err => {
+                    console.error("Lỗi xóa:", err);
+                    alert("Không thể xóa giao dịch, vui lòng thử lại.");
+                });
+        }
+    };
+
     return (
         <div>
             <h4 style={{ marginTop: '-1px' }} >Ngân sách</h4>
@@ -327,7 +347,7 @@ export function Budget() {
                         <div>
                             <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }} onClick={handleAddButton} >Thêm mới</button>
                             <br />
-                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }}   >Xóa tất cả</button>
+                            <button className={styles['budg-button']} style={{ width: '100px', height: '27px' }} onClick={handleDeleteAllButton}  >Xóa tất cả</button>
                         </div>
                         <div style={{
                             borderLeft: '1px solid rgb(167, 167, 167)',
