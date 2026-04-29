@@ -115,4 +115,16 @@ app.get('/api/budgetslist', async (req, res) => {
     res.json(budgsList);
 });
 
+app.post('/api/add-budget', async (req, res) => {
+    try {
+        const newBudg = new Budget(req.body);
+        await newBudg.save();
+
+        const updatedList = await getBudgetsWithProgress();
+        res.json(updatedList);
+    } catch {
+        res.status(500).send("Lỗi khi thêm dữ liệu");
+    }
+});
+
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
