@@ -141,4 +141,13 @@ app.put('/api/update-budget/:id', async (req, res) => {
     }
 });
 
+app.delete('/api/delete-budget', async (req, res) => {
+    const { id } = req.body;
+
+    await Budget.findByIdAndDelete(id);
+
+    const updatedList = await getBudgetsWithProgress();
+    res.json(updatedList);
+});
+
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
