@@ -127,4 +127,18 @@ app.post('/api/add-budget', async (req, res) => {
     }
 });
 
+app.put('/api/update-budget/:id', async (req, res) => {
+    try {
+        const { id } = req.params; /* Lưu ý phải phân ra cấu trúc bằng cặp {} */
+        const updatedData = req.body;
+
+        await Budget.findByIdAndUpdate(id, updatedData);
+
+        const updatedList = await getBudgetsWithProgress();
+        res.json(updatedList);
+    } catch {
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
+});
+
 app.listen(PORT, () => console.log(`Backend is run at ${PORT}`));
