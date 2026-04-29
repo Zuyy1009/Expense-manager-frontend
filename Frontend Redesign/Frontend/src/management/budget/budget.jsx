@@ -2,6 +2,7 @@ import styles from './budget.module.css'
 import { useState, useEffect } from 'react'
 
 export function Budget() {
+    /* Tạo useState -> gắn hàm set vào handle -> gắn hàm handle vào onChange */
     const [budgetsList, setBudgetsList] = useState([]);
     const [iconsMap, setIconsMap] = useState({});
     const [activeFunc, setActiveFunc] = useState(0);
@@ -73,6 +74,49 @@ export function Budget() {
 
     /* Thứ tự hoạt động: Người dùng click -> onChange kích hoạt -> hàm handle cập nhật state */
     /* React re-render lại component -> cập nhật lại checked (hàm sau có true hay không) */
+
+    const [newCategory, setNewCategory] = useState('Ăn uống');
+    const [newMonth, setNewMonth] = useState('01');
+    const [newYear, setNewYear] = useState(`${new Date().getFullYear()}`);
+    const [newLimitAmount, setNewLimitAmount] = useState(0);
+    const [newAlertThreshold, setNewAlertThreshold] = useState(70);
+    const [newIsActive, setNewIsActive] = useState(true);
+
+    const handleConfirmAdd = () => {
+        if (!newYear || newLimitAmount === 0) {
+            alert("Vui lòng điền đầy đủ thông tin");
+            return;
+        }
+
+        const newBudget = {
+            bid: `${newYear.substring(2, 4)}_${newMonth}`,
+            category: newCategory,
+            month: `Tháng ${newMonth.substring(0, 1) === '0' ? newMonth.substring(1) : newMonth}`,
+            year: newYear,
+            limitAmount: newLimitAmount,
+            alertThreshold: newAlertThreshold,
+            isActive: newIsActive
+        }
+
+        fetch('http://localhost:8080/api/add-budget', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newBudget)
+        })
+            .then(res => res.json())
+            .then(updatedData => {
+                setBudgetsList(updatedData);
+                setActiveFunc(0);
+                setNewCategory('Ăn uống');
+                setNewMonth('01');
+                setNewYear(`${new Date().getFullYear()}`);
+                setNewLimitAmount(0);
+                setNewAlertThreshold(70);
+                setNewIsActive(true);
+                alert("Đã thêm ngân sách!");
+            })
+            .catch(err => console.error("Lỗi khi thêm: ", err));
+    };
 
     return (
         <div>
@@ -208,7 +252,7 @@ export function Budget() {
                         <div >
                             {activeFunc === 1 && <div>
                                 <label htmlFor='sel-category'>Danh mục:</label>
-                                <select name='sel-category' id='sel-category' className={styles['filt-selector']} style={{ width: '120px' }} >
+                                <select name='sel-category' id='sel-category' className={styles['filt-selector']} style={{ width: '120px' }} value={newCategory} onChange={(e) => setNewCategory(e.target.value)} >
                                     <option value='Ăn uống' >Ăn uống</option>
                                     <option value='Đơn điện tử' >Đơn điện tử</option>
                                     <option value='Sức khỏe' >Sức khỏe</option>
@@ -221,7 +265,7 @@ export function Budget() {
                                     <option value='Thu nhập khác' >Thu nhập khác</option>
                                 </select>
                                 <label htmlFor='sel-month'>Tháng:</label>
-                                <select name='sel-month' id='sel-month' className={styles['filt-selector']} style={{ width: '85px' }} >
+                                <select name='sel-month' id='sel-month' className={styles['filt-selector']} style={{ width: '85px' }} value={newMonth} onChange={(e) => setNewMonth(e.target.value)} >
                                     <option value='01' >Tháng 1</option>
                                     <option value='02' >Tháng 2</option>
                                     <option value='03' >Tháng 3</option>
@@ -236,17 +280,17 @@ export function Budget() {
                                     <option value='12' >Tháng 12</option>
                                 </select>
                                 <label htmlFor='sel-year'>Năm:</label>
-                                <input type='number' name='sel-year' id='sel-year' className={styles['input-field']} />
+                                <input type='number' name='sel-year' id='sel-year' className={styles['input-field']} value={newYear} onChange={(e) => setNewYear(e.target.value)} />
                                 <label htmlFor='budg-limit'>Hạn mức:</label>
-                                <input type='number' name='budg-limit' id='budg-limit' className={styles['input-field']} style={{ width: '90px', marginRight: '110px' }} />
+                                <input type='number' name='budg-limit' id='budg-limit' className={styles['input-field']} style={{ width: '90px', marginRight: '110px' }} value={newLimitAmount} onChange={(e) => setNewLimitAmount(e.target.value)} />
                                 <label htmlFor='alert-threshold' style={{ marginLeft: '110px' }} >    Ngưỡng cảnh báo (%):</label>
-                                <input type='number' name='alert-threshold' id='alert-threshold' className={styles['input-field']} style={{ width: '42px' }} />
+                                <input type='number' name='alert-threshold' id='alert-threshold' className={styles['input-field']} style={{ width: '42px' }} value={newAlertThreshold} onChange={(e) => setNewAlertThreshold(e.target.value)} />
                                 <label htmlFor='sel-state' style={{ marginTop: '10px' }} >Trạng thái:</label>
-                                <select name='sel-state' id='sel-state' className={styles['filt-selector']} style={{ width: '130px', marginTop: '10px' }}  >
+                                <select name='sel-state' id='sel-state' className={styles['filt-selector']} style={{ width: '130px', marginTop: '10px' }} value={newIsActive} onChange={(e) => setNewIsActive(e.target.value)} >
                                     <option value='active' >Hoạt động</option>
                                     <option value='non-active' >Không hoạt động</option>
                                 </select>
-                                <button className={styles['budg-button']} style={{ marginLeft: '350px', marginTop: '10px' }} >Thêm ngân sách</button>
+                                <button className={styles['budg-button']} style={{ marginLeft: '350px', marginTop: '10px' }} onClick={handleConfirmAdd} >Thêm ngân sách</button>
                             </div>}
                             {activeFunc === 2 && <div>
                                 <label htmlFor='sel-category'>Danh mục:</label>
