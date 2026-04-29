@@ -179,6 +179,30 @@ export function Budget() {
             .catch(err => console.error("Lỗi khi sửa: ", err));
     };
 
+    const handleDeleteButton = (id) => {
+        // Bỏ hàm setDeletedId đi, không dùng đồng thời deletedId do State bất đồng bộ
+
+        if (window.confirm('Xóa giao dịch này?')) {
+            fetch('http://localhost:8080/api/delete-budget', {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: id })
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Lỗi khi xóa từ server!");
+                    return res.json();
+                })
+                .then(updatedData => {
+                    setBudgetsList(updatedData);
+                    alert('Xóa thành công!');
+                })
+                .catch(err => {
+                    console.error("Lỗi xóa:", err);
+                    alert("Không thể xóa giao dịch, vui lòng thử lại.");
+                });
+        }
+    };
+
     return (
         <div>
             <h4 style={{ marginTop: '-1px' }} >Ngân sách</h4>
@@ -264,7 +288,7 @@ export function Budget() {
                                             <p style={{ color: 'grey' }} ><strong>Không hoạt động</strong></p>}
                                         <p>{item.amountConsumed}</p>
                                         <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} onClick={() => handleEditButton(item._id)} >Sửa</button>
-                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} >Xóa</button>
+                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} onClick={() => handleDeleteButton(item._id)} >Xóa</button>
                                         {item.isActive === true ?
                                             <div style={{
                                                 width: '300px',
