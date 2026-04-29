@@ -33,14 +33,6 @@ export function Budget() {
         }
     };
 
-    const handleEditButton = () => {
-        if (activeFunc === 2) {
-            setActiveFunc(0);
-        } else {
-            setActiveFunc(2);
-        }
-    };
-
     /* Đặt hàm handle vào thuộc tính onClick của Button */
 
     const [filtMonth, setFiltMonth] = useState('all-months');
@@ -95,19 +87,8 @@ export function Budget() {
             year: newYear,
             limitAmount: newLimitAmount,
             alertThreshold: newAlertThreshold,
-            isActive: newIsActive
+            isActive: newIsActive === 'active'
         }
-
-        const prefix = `${newYear.substring(2, 4)}_${newMonth}`;
-
-        const existingIds = budgetsList
-            .filter(item => item.bid.startsWith(prefix))
-            .map(item => parseInt(item.bid.split('-')[1]) || 0);
-        /* Tách theo dấu gạch ngang, lấy số cuối cùng */
-
-        const maxId = existingIds.length > 0 ? Math.max(...existingIds) : 0;
-
-        newBudget['bid'] = `${prefix}-${maxId + 1}`
 
         fetch('http://localhost:8080/api/add-budget', {
             method: "POST",
@@ -127,6 +108,75 @@ export function Budget() {
                 alert("Đã thêm ngân sách!");
             })
             .catch(err => console.error("Lỗi khi thêm: ", err));
+    };
+
+    const [edittingId, setEdittingId] = useState(null);
+    const [edittedBid, setEdittedBid] = useState('');
+    const [edittedCategory, setEdittedCategory] = useState('Ăn uống');
+    const [edittedMonth, setEdittedMonth] = useState('01');
+    const [edittedYear, setEdittedYear] = useState(`${new Date().getFullYear()}`);
+    const [edittedLimitAmount, setEdittedLimitAmount] = useState(0);
+    const [edittedAlertThreshold, setEdittedAlertThreshold] = useState(70);
+    const [edittedIsActive, setEdittedIsActive] = useState(true);
+
+    const handleEditButton = (id) => {
+        if (activeFunc === 2) {
+            setActiveFunc(0);
+            setEdittingId(null);
+        } else {
+            setActiveFunc(2);
+            setEdittingId(id);
+            const itemToEdit = budgetsList.find(item => item._id === id);
+            if (itemToEdit) {
+                setEdittedBid(itemToEdit.bid);
+                setEdittedCategory(itemToEdit.category);
+                setEdittedMonth(Number(itemToEdit.month.substring(6)) >= 10 ? `${itemToEdit.month.substring(6)}` : `0${itemToEdit.month.substring(6)}`);
+                setEdittedYear(itemToEdit.year.toString());
+                setEdittedLimitAmount(itemToEdit.limitAmount);
+                setEdittedAlertThreshold(itemToEdit.alertThreshold);
+                setEdittedIsActive(itemToEdit.isActive === true ? 'active' : 'non-active');
+            }
+        }
+    };
+
+    const handleConfirmEdit = () => {
+        if (!edittingId) {
+            alert("Vui lòng chọn ngân sách để sửa!")
+            return;
+        }
+
+        const updatedBudget = {
+            bid: edittedBid,
+            category: edittedCategory,
+            month: `Tháng ${edittedMonth.substring(0, 1) === '0' ? edittedMonth.substring(1) : edittedMonth}`,
+            year: edittedYear,
+            limitAmount: edittedLimitAmount,
+            alertThreshold: edittedAlertThreshold,
+            isActive: edittedIsActive === 'active' /* Ép 1 phép so sánh để trả về kiểu boolean (data nguyên thủy) */
+        }
+
+        const prefix = `${edittedYear.substring(2, 4)}_${edittedMonth}`;
+
+        updatedBudget['bid'] = `${prefix}`
+
+        fetch(`http://localhost:8080/api/update-budget/${edittingId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedBudget),
+        })
+            .then(res => res.json())
+            .then(updatedData => {
+                setBudgetsList(updatedData)
+                setActiveFunc(0);
+                setEdittedCategory('Ăn uống');
+                setEdittedMonth('01');
+                setEdittedYear(`${new Date().getFullYear()}`);
+                setEdittedLimitAmount(0);
+                setEdittedAlertThreshold(70);
+                setEdittedIsActive(true);
+                alert("Đã chỉnh sửa ngân sách!");
+            })
+            .catch(err => console.error("Lỗi khi sửa: ", err));
     };
 
     return (
@@ -192,7 +242,7 @@ export function Budget() {
                         <div className={styles['bsl-boundary']} >
                             <ul className={styles['budgs-list']} style={{ listStyle: 'none' }} >
                                 {filteredBudgetsList.map((item, index) => (
-                                    <li style={{
+                                    <li key={item._id} style={{
                                         display: 'grid',
                                         gridTemplateColumns: '30px 50px 160px 75px 80px 150px 100px 160px 140px 48px 48px',
                                         gridAutoRows: '35px',
@@ -213,7 +263,7 @@ export function Budget() {
                                             <p style={{ color: 'green' }} ><strong>Hoạt động</strong></p> :
                                             <p style={{ color: 'grey' }} ><strong>Không hoạt động</strong></p>}
                                         <p>{item.amountConsumed}</p>
-                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} onClick={handleEditButton} >Sửa</button>
+                                        <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} onClick={() => handleEditButton(item._id)} >Sửa</button>
                                         <button className={styles['budg-button']} style={{ width: '45px', marginTop: '9px', marginBottom: '-3px' }} >Xóa</button>
                                         {item.isActive === true ?
                                             <div style={{
@@ -305,7 +355,7 @@ export function Budget() {
                             </div>}
                             {activeFunc === 2 && <div>
                                 <label htmlFor='sel-category'>Danh mục:</label>
-                                <select name='sel-category' id='sel-category' className={styles['filt-selector']} style={{ width: '120px' }} >
+                                <select name='sel-category' id='sel-category' className={styles['filt-selector']} style={{ width: '120px' }} value={edittedCategory} onChange={(e) => setEdittedCategory(e.target.value)} >
                                     <option value='Ăn uống' >Ăn uống</option>
                                     <option value='Đơn điện tử' >Đơn điện tử</option>
                                     <option value='Sức khỏe' >Sức khỏe</option>
@@ -318,7 +368,7 @@ export function Budget() {
                                     <option value='Thu nhập khác' >Thu nhập khác</option>
                                 </select>
                                 <label htmlFor='sel-month'>Tháng:</label>
-                                <select name='sel-month' id='sel-month' className={styles['filt-selector']} style={{ width: '85px' }} >
+                                <select name='sel-month' id='sel-month' className={styles['filt-selector']} style={{ width: '85px' }} value={edittedMonth} onChange={(e) => setEdittedMonth(e.target.value)} >
                                     <option value='01' >Tháng 1</option>
                                     <option value='02' >Tháng 2</option>
                                     <option value='03' >Tháng 3</option>
@@ -333,17 +383,17 @@ export function Budget() {
                                     <option value='12' >Tháng 12</option>
                                 </select>
                                 <label htmlFor='sel-year'>Năm:</label>
-                                <input type='number' name='sel-year' id='sel-year' className={styles['input-field']} />
+                                <input type='number' name='sel-year' id='sel-year' className={styles['input-field']} value={edittedYear} onChange={(e) => setEdittedYear(e.target.value)} />
                                 <label htmlFor='budg-limit'>Hạn mức:</label>
-                                <input type='number' name='budg-limit' id='budg-limit' className={styles['input-field']} style={{ width: '90px', marginRight: '110px' }} />
+                                <input type='number' name='budg-limit' id='budg-limit' className={styles['input-field']} style={{ width: '90px', marginRight: '110px' }} value={edittedLimitAmount} onChange={(e) => setEdittedLimitAmount(e.target.value)} />
                                 <label htmlFor='alert-threshold' style={{ marginLeft: '110px' }} >    Ngưỡng cảnh báo (%):</label>
-                                <input type='number' name='alert-threshold' id='alert-threshold' className={styles['input-field']} style={{ width: '42px' }} />
+                                <input type='number' name='alert-threshold' id='alert-threshold' className={styles['input-field']} style={{ width: '42px' }} value={edittedAlertThreshold} onChange={(e) => setEdittedAlertThreshold(e.target.value)} />
                                 <label htmlFor='sel-state' style={{ marginTop: '10px' }} >Trạng thái:</label>
-                                <select name='sel-state' id='sel-state' className={styles['filt-selector']} style={{ width: '130px', marginTop: '10px' }}  >
+                                <select name='sel-state' id='sel-state' className={styles['filt-selector']} style={{ width: '130px', marginTop: '10px' }} value={edittedIsActive} onChange={(e) => setEdittedIsActive(e.target.value)} >
                                     <option value='active' >Hoạt động</option>
                                     <option value='non-active' >Không hoạt động</option>
                                 </select>
-                                <button className={styles['budg-button']} style={{ marginLeft: '370px', marginTop: '10px' }} >Lưu thay đổi</button>
+                                <button className={styles['budg-button']} style={{ marginLeft: '370px', marginTop: '10px' }} onClick={handleConfirmEdit} >Lưu thay đổi</button>
                             </div>}
                         </div>
                     </section>
