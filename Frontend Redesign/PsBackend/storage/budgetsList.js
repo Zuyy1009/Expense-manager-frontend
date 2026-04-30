@@ -41,6 +41,9 @@ module.exports = { Budget, getBudgetsWithProgress };
 
 /* let budgsListWithoutIcon = [
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Ăn uống',
         month: 'Tháng 4',
@@ -50,6 +53,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Đơn điện tử',
         month: 'Tháng 4',
@@ -59,6 +65,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Sức khỏe',
         month: 'Tháng 4',
@@ -68,6 +77,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: false,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Nhà ở',
         month: 'Tháng 4',
@@ -77,6 +89,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Đi lại',
         month: 'Tháng 4',
@@ -86,6 +101,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Giải trí',
         month: 'Tháng 4',
@@ -95,6 +113,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_04',
         category: 'Mua sắm',
         month: 'Tháng 4',
@@ -104,6 +125,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: false,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Ăn uống',
         month: 'Tháng 3',
@@ -113,6 +137,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Đơn điện tử',
         month: 'Tháng 3',
@@ -122,6 +149,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: false,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Sức khỏe',
         month: 'Tháng 3',
@@ -131,6 +161,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Nhà ở',
         month: 'Tháng 3',
@@ -140,6 +173,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Đi lại',
         month: 'Tháng 3',
@@ -149,6 +185,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Giải trí',
         month: 'Tháng 3',
@@ -158,6 +197,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Mua sắm',
         month: 'Tháng 3',
@@ -167,6 +209,9 @@ module.exports = { Budget, getBudgetsWithProgress };
         isActive: true,
     },
     {
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         bid: '26_03',
         category: 'Chi tiêu khác',
         month: 'Tháng 3',
