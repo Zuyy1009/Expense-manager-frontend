@@ -45,7 +45,7 @@ body {
 }
 
 .notes-boundary {
-    height: 450px;
+    height: 325px;
     overflow-y: auto;
     overflow-x: hidden;
     scrollbar-color: rgb(0, 117, 70) rgb(216, 227, 222);
@@ -67,4 +67,23 @@ body {
     border-radius: 20px;
     background-color: rgb(0, 117, 70);
     color: white;
+}
+
+.input-field {
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    padding-left: 5px;
+}
+
+.text-field {
+    margin-right: 10px;
+    margin-left: 10px;
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 12px;
+    padding-left: 5px;
+    padding-top: 4px;
+    resize: none;
+    font-family: Arial, Helvetica, sans-serif;
 }
