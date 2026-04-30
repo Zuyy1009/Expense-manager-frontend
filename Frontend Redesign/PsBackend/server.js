@@ -13,6 +13,7 @@ const { getCategoriesWithStats } = require('./storage/categoriesList.js');
 const Category = require('./models/Category.js');
 const { getNotesList } = require('./storage/notesList.js');
 const Note = require('./models/Note.js');
+const User = require('./models/User.js');
 // Cần có để express.static hoạt động (?)
 const path = require('path');
 // Giả sử ảnh của bạn nằm ở: D:\TTCS Project\...\assets\category_icon
@@ -31,6 +32,35 @@ app.use(cors());
 
 // Cần để req.body không gặp lỗi undefined. Không cần dùng JSON.parse(req.body)
 app.use(express.json());
+
+app.post('/api/login', async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // 1. Tìm user theo email
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(404).json({ message: "Email không tồn tại!" });
+        }
+
+        // 2. So sánh mật khẩu thô (Vì chưa hash nên so sánh chuỗi trực tiếp)
+        if (user.password !== password) {
+            return res.status(401).json({ message: "Mật khẩu không chính xác!" });
+        }
+
+        // 3. Đăng nhập thành công -> Trả về thông tin user (trừ password)
+        // Lưu ý: Ta trả về _id để Frontend dùng làm userId cho các collection khác
+        res.json({
+            message: "Đăng nhập thành công!",
+            userId: user._id,
+            username: user.username
+        });
+
+    } catch (err) {
+        res.status(500).json({ message: "Lỗi server!" });
+    }
+});
 
 app.get('/api/data', async (req, res) => {
     try {
