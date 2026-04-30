@@ -16,27 +16,37 @@ module.exports = { getNotesList };
 
 /* let nsList = [
     {
-        id: 1,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         title: 'Note A',
         content: 'Chi tiêu phần ăn uống ít lại'
     },
     {
-        id: 2,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         title: 'Note B',
         content: 'Thiết lập aabb'
     },
     {
-        id: 3,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         title: 'Note A',
         content: 'On the Insert tab, the galleries include items that are designed to coordinate with the overall look of your document. You can use these galleries to insert tables, headers, footers, lists, cover pages, and other document building blocks.'
     },
     {
-        id: 4,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         title: 'Note B',
         content: 'Thiết lập aabb,On the Insert tab, the galleries include items that are designed to coordinate with the overall look of your document. You can use these galleries to insert tables, headers, footers, lists, cover pages, and other document building blocks.'
     },
     {
-        id: 5,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         title: 'Note A',
         content: 'Thiết lập aabb'
     },
