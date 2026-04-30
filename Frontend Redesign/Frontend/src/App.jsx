@@ -16,7 +16,7 @@ function DashboardLayout({ onLogOut }) {
 
     const handleLogout = () => {
         // 1. Xóa dữ liệu đăng nhập
-        //localStorage.clear();
+        localStorage.clear();
 
         // 2. Chuyển hướng về trang login
         // Cách A: Dùng navigate (mượt, không load lại trang)
