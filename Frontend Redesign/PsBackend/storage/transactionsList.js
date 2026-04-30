@@ -28,7 +28,9 @@ module.exports = { Transaction, getTransList };
 
 /* let transListWithoutIcon = [
     {
-        id: 1,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 110000,
         category: 'Ăn uống',
@@ -37,7 +39,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '12-04-2026'
     },
     {
-        id: 2,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 68000,
         category: 'Đi lại',
@@ -46,7 +50,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '09-04-2026'
     },
     {
-        id: 3,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Thu nhập',
         amount: 18000000,
         category: 'Lương',
@@ -55,7 +61,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '31-03-2026'
     },
     {
-        id: 4,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 1300000,
         category: 'Nhà ở',
@@ -64,7 +72,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '30-03-2026'
     },
     {
-        id: 5,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 125000,
         category: 'Đơn điện tử',
@@ -73,7 +83,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '28-03-2026'
     },
     {
-        id: 6,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Thu nhập',
         amount: 50000,
         category: 'Thu nhập khác',
@@ -82,7 +94,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '25-03-2026'
     },
     {
-        id: 7,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 350000,
         category: 'Mua sắm',
@@ -91,7 +105,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '23-03-2026'
     },
     {
-        id: 8,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 75000,
         category: 'Sức khỏe',
@@ -100,7 +116,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '17-03-2026'
     },
     {
-        id: 9,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 85000,
         category: 'Đi lại',
@@ -109,7 +127,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '17-03-2026'
     },
     {
-        id: 10,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 34000,
         category: 'Ăn uống',
@@ -118,7 +138,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '14-03-2026'
     },
     {
-        id: 11,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 144000,
         category: 'Giải trí',
@@ -127,7 +149,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '09-03-2026'
     },
     {
-        id: 12,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 98000,
         category: 'Sức khỏe',
@@ -136,7 +160,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '05-03-2026'
     },
     {
-        id: 13,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Thu nhập',
         amount: 204000,
         category: 'Thu nhập khác',
@@ -145,7 +171,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '05-03-2026'
     },
     {
-        id: 14,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 84000,
         category: 'Ăn uống',
@@ -154,7 +182,9 @@ module.exports = { Transaction, getTransList };
         dateCreated: '02-03-2026'
     },
     {
-        id: 15,
+        userId: { 
+           "$oid": '69f304a59400fcc7aeed1cb3'
+        },
         type: 'Chi tiêu',
         amount: 80000,
         category: 'Mua sắm',
