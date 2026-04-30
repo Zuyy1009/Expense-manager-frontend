@@ -10,18 +10,24 @@ export function Login({ onLogin }) {
     const handleLogin = (e) => {
         e.preventDefault();
 
-        console.log('Dữ liệu gửi đi:', { email, password });
+        fetch('http://localhost:8080/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.userId) {
+                    localStorage.setItem('currentUserId', data.userId);
+                    onLogin(data.userId); // Gọi để biết là đã có người đăng nhập
+                    navigate('/');
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => console.error("Lỗi đăng nhập:", err));
 
-        // 1. Giả lập lưu token vào localStorage
-        // Trong thực tế, bạn sẽ gọi API ở đây và lưu token thật
-        if (email === "abc" && password === "12") {
-            // localStorage.setItem('userToken', 'true');
-            // Sử dụng window.location.href để ép toàn bộ ứng dụng (App.jsx)
-            onLogin();
-            navigate('/');
-        } else {
-            alert("Sai tài khoản hoặc mật khẩu.");
-        }
+        console.log("Dữ liệu gửi đi:", { email, password })
     };
 
     const handleGoToRegister = (e) => {
