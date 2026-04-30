@@ -23,9 +23,32 @@ export function NoteAndCate() {
             .catch(err => console.error("Đã xảy ra lỗi!: ", err));
     }, []);
 
-    const rearrangedCatesList = catesList;
+    const [filtType, setFiltType] = useState('all-ctype');
+    const [sorterFunc, setSorterFunc] = useState('none');
 
-    const filteredCatesList = rearrangedCatesList;
+    const rearrangedCatesList = [...catesList]; // Phải dùng toán tử trải rộng, nếu không catesList gốc sẽ bị thay đổi
+
+    switch (sorterFunc) {
+        case 'atoz':
+            rearrangedCatesList.sort((a, b) => {
+                return a.name.localeCompare(b.name);
+            });
+            break;
+        case 'ztoa':
+            rearrangedCatesList.sort((a, b) => {
+                return b.name.localeCompare(a.name);
+            });
+            break;
+        default:
+            break;
+    }
+
+    const filteredCatesList = rearrangedCatesList.filter(item => {
+        const typeToCompare = item.type === 'Thu nhập' ? 'income' : 'expense';
+        const matchType = (filtType === 'all-ctype' || typeToCompare === filtType);
+
+        return matchType;
+    });
 
     return (
         <div>
@@ -39,16 +62,16 @@ export function NoteAndCate() {
                     <hr style={{ marginTop: '6px' }} />
                     <section style={{ paddingLeft: '15px', paddingTop: '2px' }} >
                         <label htmlFor='ctype'>Loại</label>
-                        <select name='ctype' id='ctype' className={styles['filt-selector']} style={{ width: '80px' }}  >
+                        <select name='ctype' id='ctype' className={styles['filt-selector']} style={{ width: '80px' }} value={filtType} onChange={(e) => setFiltType(e.target.value)} >
                             <option value='all-ctype' >Tất cả</option>
                             <option value='expense' >Chi tiêu</option>
                             <option value='income' >Thu nhập</option>
                         </select>
                         <label htmlFor='csorter'>Sắp xếp</label>
-                        <select name='csorter' id='csorter' className={styles['filt-selector']} style={{ width: '120px' }}  >
+                        <select name='csorter' id='csorter' className={styles['filt-selector']} style={{ width: '120px' }} value={sorterFunc} onChange={(e) => setSorterFunc(e.target.value)} >
                             <option value='none' >Không sắp xếp</option>
-                            <option value='expense' >Từ A → Z</option>
-                            <option value='income' >Từ Z → A</option>
+                            <option value='atoz' >Từ A → Z</option>
+                            <option value='ztoa' >Từ Z → A</option>
                         </select>
                     </section>
                     <hr style={{ marginTop: '6px' }} />
@@ -88,10 +111,10 @@ export function NoteAndCate() {
                                     paddingTop: '5px'
                                 }} >
                                     <div>
-                                        <p style={{ 
-                                            marginLeft: '10px', 
+                                        <p style={{
+                                            marginLeft: '10px',
                                             display: 'inline',
-                                            marginRight: '430px' 
+                                            marginRight: '430px'
                                         }} ><strong>{item.title}</strong></p>
                                         <button className={styles['note-button']} style={{ marginRight: '5px' }}>Sửa</button>
                                         <button className={styles['note-button']} >Xóa</button>
