@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 export function NoteAndCate() {
     const [catesList, setCatesList] = useState([]);
     const [notesList, setNotesList] = useState([]);
+    const [activeFunc, setActiveFunc] = useState(0);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/categorieslist")
@@ -22,6 +23,14 @@ export function NoteAndCate() {
             })
             .catch(err => console.error("Đã xảy ra lỗi!: ", err));
     }, []);
+
+    const handleAddButton = () => {
+        if (activeFunc === 1) {
+            setActiveFunc(0);
+        } else {
+            setActiveFunc(1);
+        }
+    };
 
     const [filtType, setFiltType] = useState('all-ctype');
     const [sorterFunc, setSorterFunc] = useState('none');
@@ -49,6 +58,14 @@ export function NoteAndCate() {
 
         return matchType;
     });
+
+    const handleEditButton = () => {
+        if (activeFunc === 2) {
+            setActiveFunc(0);
+        } else {
+            setActiveFunc(2);
+        }
+    };
 
     return (
         <div>
@@ -102,7 +119,7 @@ export function NoteAndCate() {
                     <section className={styles['notes-boundary']} >
                         <ul className={styles['notes-list']} style={{ listStyle: 'none' }} >
                             {notesList.map((item) => (
-                                <li style={{
+                                <li key={item._id} style={{
                                     border: '2px solid rgb(0, 117, 70)',
                                     borderRadius: '20px',
                                     backgroundColor: 'white',
@@ -116,7 +133,7 @@ export function NoteAndCate() {
                                             display: 'inline',
                                             marginRight: '430px'
                                         }} ><strong>{item.title}</strong></p>
-                                        <button className={styles['note-button']} style={{ marginRight: '5px' }}>Sửa</button>
+                                        <button className={styles['note-button']} style={{ marginRight: '5px' }} onClick={handleEditButton} >Sửa</button>
                                         <button className={styles['note-button']} >Xóa</button>
                                     </div>
                                     <hr style={{ marginTop: '4px' }} />
@@ -129,14 +146,57 @@ export function NoteAndCate() {
                         marginTop: '15px',
                         marginLeft: '15px',
                         display: 'grid',
-                        gridTemplateColumns: '110px 5px'
+                        gridTemplateColumns: '110px 5px 200px'
                     }} >
-                        <div><button className={styles['note-button']} style={{ width: '100px' }} >Thêm mới</button></div>
+                        <div>
+                            <button className={styles['note-button']} style={{ width: '100px', height: '25px', marginBottom: '10px' }} onClick={handleAddButton} >Thêm mới</button>
+                            <button className={styles['note-button']} style={{ width: '100px', height: '25px' }} >Xóa tất cả</button>
+                        </div>
                         <div style={{
                             borderLeft: '1px solid rgb(167, 167, 167)',
-                            height: '100px',
+                            height: '222px',
                             marginTop: '-16px'
                         }} ></div>
+                        <div>
+                            {activeFunc === 1 && <div>
+                                <input
+                                    type='text'
+                                    name='n-title'
+                                    id='n-title'
+                                    className={styles['input-field']}
+                                    placeholder='Tiêu đề'
+                                    style={{ width: '470px', height: '20px', marginBottom: '10px' }}
+                                />
+                                <textarea
+                                    type='textar'
+                                    name='n-title'
+                                    id='n-title'
+                                    className={styles['text-field']}
+                                    placeholder='Nội dung'
+                                    style={{ width: '470px', height: '120px' }}
+                                />
+                                <button className={styles['note-button']} style={{ marginLeft: '10px', marginTop: '4px' }} >Thêm ghi chú</button>
+                            </div>}
+                            {activeFunc === 2 && <div>
+                                <input
+                                    type='text'
+                                    name='n-title'
+                                    id='n-title'
+                                    className={styles['input-field']}
+                                    placeholder='Tiêu đề'
+                                    style={{ width: '470px', height: '20px', marginBottom: '10px' }}
+                                />
+                                <textarea
+                                    type='textar'
+                                    name='n-title'
+                                    id='n-title'
+                                    className={styles['text-field']}
+                                    placeholder='Nội dung'
+                                    style={{ width: '470px', height: '120px' }}
+                                />
+                                <button className={styles['note-button']} style={{ marginLeft: '10px', marginTop: '4px' }} >Lưu thay đổi</button>
+                            </div>}
+                        </div>
                     </section>
                 </div>
             </section>
