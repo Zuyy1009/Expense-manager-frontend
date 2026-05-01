@@ -4,10 +4,11 @@ const { iconsMap } = require('./iconsList.js');
 const Transaction = require('../models/Transaction.js');
 const Budget = require('../models/Budget.js');
 
-const getBudgetsWithProgress = async () => {
+const getBudgetsWithProgress = async (userId) => {
     try {
         // 1. Lấy tất cả ngân sách và giao dịch từ DB
-        const budgets = await Budget.find({}).lean();
+        const queryId = new mongoose.Types.ObjectId(userId);
+        const budgets = await Budget.find({ userId: queryId }).lean();
         const transactions = await Transaction.find({ type: 'Chi tiêu' }).lean();
 
         // 2. Map để tính toán số tiền đã dùng và gắn icon
@@ -217,6 +218,18 @@ module.exports = { Budget, getBudgetsWithProgress };
         month: 'Tháng 3',
         year: '2026',
         limitAmount: 120000,
+        alertThreshold: 75,
+        isActive: true,
+    },
+    {
+        userId: { 
+           "$oid": '69f4021be61ae2b6a5d2d916'
+        },
+        bid: '26_03',
+        category: 'Mua sắm',
+        month: 'Tháng 3',
+        year: '2026',
+        limitAmount: 730000,
         alertThreshold: 75,
         isActive: true,
     },
