@@ -254,7 +254,7 @@ export function Transactions() {
         }
     };
 
-    useEffect(() => {
+    /* useEffect(() => {
         if (addEdit === 2 && editingId) { // Chỉ chạy khi đang ở chế độ sửa
             if (typeSelect === 'expense') {
                 setEditedCategory('Ăn uống');
@@ -262,7 +262,7 @@ export function Transactions() {
                 setEditedCategory('Lương');
             }
         }
-    }, [typeSelect, addEdit]);
+    }, [typeSelect, addEdit]); */
 
     const handleConfirmEdit = () => {
         if (!editingId) {
