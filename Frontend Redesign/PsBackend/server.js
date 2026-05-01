@@ -85,8 +85,18 @@ app.get('/api/data', async (req, res) => {
 // Sau này có thể đặt nhiều app.get vào 1 file server này
 
 app.get('/api/translist', async (req, res) => {
-    const transList = await getTransList();
-    res.json(transList);
+    try {
+        const { userId } = req.query;
+
+        if ( !userId ) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        const transList = await getTransList(userId);
+        res.json(transList);
+    } catch {
+        res.status(500).json({ message: "Lỗi Server" });
+    }
 });
 
 app.get('/api/iconslist', (req, res) => {
