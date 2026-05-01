@@ -62,6 +62,42 @@ export function NoteAndCate() {
         return matchType;
     });
 
+    const [newTitle, setNewTitle] = useState('');
+    const [newContent, setNewContent] = useState('');
+
+    const handleConfirmAdd = () => {
+        if (!newTitle || !newContent) {
+            alert("Vui lòng điền đầy đủ thông tin!");
+            return;
+        }
+
+        if (!currentUserId) {
+            alert("Không tìm thấy thông tin người dùng!");
+            return;
+        }
+
+        const newNote = {
+            userId: currentUserId,
+            title: newTitle,
+            content: newContent
+        }
+
+        fetch('http://localhost:8080/api/add-note', {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newNote)
+        })
+        .then(res => res.json())
+        .then(updatedData => {
+            setNotesList(updatedData);
+            setActiveFunc(0);
+            setNewTitle('');
+            setNewContent('');
+            alert('Đã thêm ghi chú!');
+        })
+        .catch(err => console.error("Lỗi khi thêm: ", err));
+    };
+
     const handleEditButton = () => {
         if (activeFunc === 2) {
             setActiveFunc(0);
@@ -130,14 +166,18 @@ export function NoteAndCate() {
                                     marginBottom: '5px',
                                     paddingTop: '5px'
                                 }} >
-                                    <div>
+                                    <div style={{
+                                        display: 'grid',
+                                        gridTemplateColumns: '470px 55px 50px',
+                                        height: '25px'
+                                    }} >
                                         <p style={{
                                             marginLeft: '10px',
                                             display: 'inline',
-                                            marginRight: '430px'
+                                            marginTop: '5px'
                                         }} ><strong>{item.title}</strong></p>
-                                        <button className={styles['note-button']} style={{ marginRight: '5px' }} onClick={handleEditButton} >Sửa</button>
-                                        <button className={styles['note-button']} >Xóa</button>
+                                        <button className={styles['note-button']} style={{ marginRight: '5px', height: '25px' }} onClick={handleEditButton} >Sửa</button>
+                                        <button className={styles['note-button']} style={{ height: '25px' }} >Xóa</button>
                                     </div>
                                     <hr style={{ marginTop: '4px' }} />
                                     <p style={{ marginLeft: '10px', height: 'auto' }} >{item.content}</p>
@@ -169,16 +209,20 @@ export function NoteAndCate() {
                                     className={styles['input-field']}
                                     placeholder='Tiêu đề'
                                     style={{ width: '470px', height: '20px', marginBottom: '10px' }}
+                                    value={newTitle}
+                                    onChange={(e) => setNewTitle(e.target.value)}
                                 />
                                 <textarea
                                     type='textar'
-                                    name='n-title'
-                                    id='n-title'
+                                    name='n-content'
+                                    id='n-content'
                                     className={styles['text-field']}
                                     placeholder='Nội dung'
                                     style={{ width: '470px', height: '120px' }}
+                                    value={newContent}
+                                    onChange={(e) => setNewContent(e.target.value)}
                                 />
-                                <button className={styles['note-button']} style={{ marginLeft: '10px', marginTop: '4px' }} >Thêm ghi chú</button>
+                                <button className={styles['note-button']} style={{ marginLeft: '10px', marginTop: '4px' }} onClick={handleConfirmAdd} >Thêm ghi chú</button>
                             </div>}
                             {activeFunc === 2 && <div>
                                 <input
