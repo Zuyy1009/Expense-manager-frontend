@@ -203,10 +203,16 @@ app.get('/api/budgetslist', async (req, res) => {
 
 app.post('/api/add-budget', async (req, res) => {
     try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
         const newBudg = new Budget(req.body);
         await newBudg.save();
 
-        const updatedList = await getBudgetsWithProgress();
+        const updatedList = await getBudgetsWithProgress(userId);
         res.json(updatedList);
     } catch {
         res.status(500).send("Lỗi khi thêm dữ liệu");
@@ -216,11 +222,15 @@ app.post('/api/add-budget', async (req, res) => {
 app.put('/api/update-budget/:id', async (req, res) => {
     try {
         const { id } = req.params; /* Lưu ý phải phân ra cấu trúc bằng cặp {} */
-        const updatedData = req.body;
+        const { userId, ...updatedData } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
 
         await Budget.findByIdAndUpdate(id, updatedData);
 
-        const updatedList = await getBudgetsWithProgress();
+        const updatedList = await getBudgetsWithProgress(userId);
         res.json(updatedList);
     } catch {
         res.status(500).json({ message: "Lỗi cập nhật" });
@@ -229,23 +239,42 @@ app.put('/api/update-budget/:id', async (req, res) => {
 
 app.delete('/api/delete-budget', async (req, res) => {
     try {
-        const { id } = req.body;
+        const { id, userId } = req.body;
 
-        await Budget.findByIdAndDelete(id);
+        if (!userId || !id) {
+            return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
+        }
 
-        const updatedList = await getBudgetsWithProgress();
+        const deletedBudget = await Budget.findOneAndDelete({ 
+            _id: id, 
+            userId: userId
+        });
+
+        if (!deletedBudget) {
+            return res.status(404).json({ message: "Không tìm thấy ngân sách" });
+        }
+
+        const updatedList = await getBudgetsWithProgress(userId);
         res.json(updatedList);
-    } catch {
+    } catch(err) {
+        console.error(err);
         res.status(500).json({ message: "Lỗi cập nhật" });
     }
 });
 
 app.delete('/api/delete-all-budgets', async (req, res) => {
     try {
-        await Budget.deleteMany({});
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        await Budget.deleteMany({ userId: userId }); // Chỉ xóa ngân sách của người dùng đang đăng nhập
 
         res.json([]);
-    } catch {
+    } catch(err) {
+        console.error(err);
         res.status(500).json({ message: "Lỗi cập nhật" });
     }
 });
