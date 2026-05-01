@@ -87,25 +87,68 @@ export function NoteAndCate() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newNote)
         })
-        .then(res => res.json())
-        .then(updatedData => {
-            setNotesList(updatedData);
-            setActiveFunc(0);
-            setNewTitle('');
-            setNewContent('');
-            alert('Đã thêm ghi chú!');
-        })
-        .catch(err => console.error("Lỗi khi thêm: ", err));
+            .then(res => {
+                if (!res.ok) throw new Error("Cập nhật thất bại!");
+                return res.json();
+            })
+            .then(updatedData => {
+                setNotesList(updatedData);
+                setActiveFunc(0);
+                setNewTitle('');
+                setNewContent('');
+                alert('Đã thêm ghi chú!');
+            })
+            .catch(err => console.error("Lỗi khi thêm: ", err));
     };
 
-    const handleEditButton = () => {
+    const [edittingId, setEdittingId] = useState(null);
+    const [edittedTitle, setEdittedTitle] = useState('');
+    const [edittedContent, setEdittedContent] = useState('');
+
+    const handleEditButton = (id) => {
         if (activeFunc === 2) {
             setActiveFunc(0);
+            setEdittingId(null);
         } else {
             setActiveFunc(2);
+            setEdittingId(id);
+            const itemToEdit = notesList.find(item => item._id === id);
+            if (itemToEdit) {
+                setEdittedTitle(itemToEdit.title);
+                setEdittedContent(itemToEdit.content);
+            }
         }
     };
 
+    const handleConfirmEdit = () => {
+        if (!edittingId) {
+            alert("Vui lòng chọn ghi chú để sửa!")
+            return;
+        }
+
+        const updatedNote = {
+            userId: currentUserId,
+            title: edittedTitle,
+            content: edittedContent
+        }
+
+        fetch(`http://localhost:8080/api/update-note/${edittingId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedNote),
+        })
+            .then(res => res.json())
+            .then(updatedData => {
+                setNotesList(updatedData);
+                setActiveFunc(0);
+                setEdittedTitle('');
+                setEdittedContent('');
+                alert("Đã chỉnh sửa ghi chú!");
+            })
+            .catch(err => console.error("Lỗi khi thêm: ", err));
+    };
+
+    /* Những hàm kích hoạt onClick có tham số phải đặt trong khối lệnh của 1 hàm mũi tên ẩn danh */
     return (
         <div>
             <h4 style={{ marginTop: '-1px' }} >Danh mục & Ghi chú</h4>
@@ -176,7 +219,7 @@ export function NoteAndCate() {
                                             display: 'inline',
                                             marginTop: '5px'
                                         }} ><strong>{item.title}</strong></p>
-                                        <button className={styles['note-button']} style={{ marginRight: '5px', height: '25px' }} onClick={handleEditButton} >Sửa</button>
+                                        <button className={styles['note-button']} style={{ marginRight: '5px', height: '25px' }} onClick={() => handleEditButton(item._id)} >Sửa</button>
                                         <button className={styles['note-button']} style={{ height: '25px' }} >Xóa</button>
                                     </div>
                                     <hr style={{ marginTop: '4px' }} />
@@ -232,16 +275,19 @@ export function NoteAndCate() {
                                     className={styles['input-field']}
                                     placeholder='Tiêu đề'
                                     style={{ width: '470px', height: '20px', marginBottom: '10px' }}
+                                    value={edittedTitle}
+                                    onChange={(e) => setEdittedTitle(e.target.value)}
                                 />
                                 <textarea
-                                    type='textar'
                                     name='n-title'
                                     id='n-title'
                                     className={styles['text-field']}
                                     placeholder='Nội dung'
                                     style={{ width: '470px', height: '120px' }}
+                                    value={edittedContent}
+                                    onChange={(e) => setEdittedContent(e.target.value)}
                                 />
-                                <button className={styles['note-button']} style={{ marginLeft: '10px', marginTop: '4px' }} >Lưu thay đổi</button>
+                                <button className={styles['note-button']} style={{ marginLeft: '10px', marginTop: '4px' }} onClick={handleConfirmEdit} >Lưu thay đổi</button>
                             </div>}
                         </div>
                     </section>
