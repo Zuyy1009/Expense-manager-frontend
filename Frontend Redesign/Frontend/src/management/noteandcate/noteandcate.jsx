@@ -256,7 +256,6 @@ export function NoteAndCate() {
                                     onChange={(e) => setNewTitle(e.target.value)}
                                 />
                                 <textarea
-                                    type='textar'
                                     name='n-content'
                                     id='n-content'
                                     className={styles['text-field']}
