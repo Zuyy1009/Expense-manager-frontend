@@ -299,6 +299,31 @@ app.delete('/api/delete-budget', async (req, res) => {
     }
 });
 
+app.delete('/api/delete-note', async (req, res) => {
+    try {
+        const { id, userId } = req.body;
+
+        if (!userId || !id) {
+            return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
+        }
+
+        const deletedNote = await Note.findOneAndDelete({
+            _id: id,
+            userId: new mongoose.Types.ObjectId(userId)
+        })
+
+        if (!deletedNote) {
+            return res.status(404).json({ message: "Không tìm thấy ghi chú!" });
+        }
+
+        const updatedList = await getNotesList(userId);
+        res.json(updatedList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
+});
+
 app.delete('/api/delete-all-budgets', async (req, res) => {
     try {
         const { userId } = req.body;
@@ -311,6 +336,23 @@ app.delete('/api/delete-all-budgets', async (req, res) => {
 
         res.json([]);
     } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
+});
+
+app.delete('/api/delete-all-notes', async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        await Note.deleteMany({ userId: new mongoose.Types.ObjectId(userId) });
+
+        res.json([]);
+    } catch {
         console.error(err);
         res.status(500).json({ message: "Lỗi cập nhật" });
     }
