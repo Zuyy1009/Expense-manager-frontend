@@ -11,13 +11,15 @@ export function Stat() {
     const currentUserId = localStorage.getItem('currentUserId');
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/data")
-            .then(res => res.json())
-            .then(data => {
-                setInc(data.income);
-                setExp(data.expense);
-            })
-            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+        if (currentUserId) {
+            fetch(`http://localhost:8080/api/data?userId=${currentUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    setInc(data.income);
+                    setExp(data.expense);
+                })
+                .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+        }
     }, []);
 
     useEffect(() => {
