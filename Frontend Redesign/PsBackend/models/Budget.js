@@ -3,6 +3,7 @@ const { iconsMap } = require('../storage/iconsList.js');
 const { Transaction } = require('../storage/transactionsList.js'); // Import để tính toán số tiền đã tiêu
 
 const BudgetSchema = new mongoose.Schema({
+    userId: mongoose.Schema.Types.ObjectId,
     bid: String,
     category: String,
     month: String,
