@@ -91,3 +91,15 @@ body {
   background-color: white;
   color: rgb(0, 117, 70);
 }
+
+.logo-sect {
+  display: grid;
+  justify-items: center;
+  /* Hai dòng trên căn phần tử trong mỗi hàng ra giữa (rows của grid ở left-sidebar)*/
+}
+
+.logo-img {
+  width: 70px;
+  display: block;
+  margin: 0 auto;
+}
