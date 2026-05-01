@@ -255,6 +255,25 @@ app.put('/api/update-budget/:id', async (req, res) => {
     }
 });
 
+app.put('/api/update-note/:id', async (req, res) => {
+    try {
+        const { id } = req.params; /* Lưu ý phải phân ra cấu trúc bằng cặp {} */
+        const { userId, ...updatedData } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        await Note.findByIdAndUpdate(id, updatedData);
+
+        const updatedList = await getNotesList(userId);
+        res.json(updatedList);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
+});
+
 app.delete('/api/delete-budget', async (req, res) => {
     try {
         const { id, userId } = req.body;
