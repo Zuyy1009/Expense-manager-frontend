@@ -148,6 +148,55 @@ export function NoteAndCate() {
             .catch(err => console.error("Lỗi khi thêm: ", err));
     };
 
+    const handleDeleteButton = (id) => {
+        if (window.confirm('Xóa giao dịch này?')) {
+            fetch('http://localhost:8080/api/delete-note', {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    id: id,
+                    userId: currentUserId
+                })
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Lỗi khi xóa từ server!");
+                    return res.json();
+                })
+                .then(updatedData => {
+                    setNotesList(updatedData);
+                    alert('Xóa thành công!');
+                })
+                .catch(err => {
+                    console.error("Lỗi xóa:", err);
+                    alert("Không thể xóa ghi chú, vui lòng thử lại.");
+                })
+        }
+    };
+
+    const handleDeleteAllButton = () => {
+        if (window.confirm('Bạn có chắc chắn muốn xóa TẤT CẢ ghi chú? Hành động này không thể hoàn tác!')) {
+            fetch('http://localhost:8080/api/delete-all-notes', {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    userId: currentUserId
+                })
+            })
+                .then(res => {
+                    if (!res.ok) throw new Error("Lỗi khi xóa từ server!");
+                    return res.json();
+                })
+                .then(updatedData => {
+                    setNotesList(updatedData);
+                    alert('Xóa thành công!');
+                })
+                .catch(err => {
+                    console.error("Lỗi xóa:", err);
+                    alert("Không thể xóa ghi chú, vui lòng thử lại.");
+                });
+        }
+    };
+
     /* Những hàm kích hoạt onClick có tham số phải đặt trong khối lệnh của 1 hàm mũi tên ẩn danh */
     return (
         <div>
@@ -220,7 +269,7 @@ export function NoteAndCate() {
                                             marginTop: '5px'
                                         }} ><strong>{item.title}</strong></p>
                                         <button className={styles['note-button']} style={{ marginRight: '5px', height: '25px' }} onClick={() => handleEditButton(item._id)} >Sửa</button>
-                                        <button className={styles['note-button']} style={{ height: '25px' }} >Xóa</button>
+                                        <button className={styles['note-button']} style={{ height: '25px' }} onClick={() => handleDeleteButton(item._id)} >Xóa</button>
                                     </div>
                                     <hr style={{ marginTop: '4px' }} />
                                     <p style={{ marginLeft: '10px', height: 'auto' }} >{item.content}</p>
@@ -236,7 +285,7 @@ export function NoteAndCate() {
                     }} >
                         <div>
                             <button className={styles['note-button']} style={{ width: '100px', height: '25px', marginBottom: '10px' }} onClick={handleAddButton} >Thêm mới</button>
-                            <button className={styles['note-button']} style={{ width: '100px', height: '25px' }} >Xóa tất cả</button>
+                            <button className={styles['note-button']} style={{ width: '100px', height: '25px' }} onClick={handleDeleteAllButton} >Xóa tất cả</button>
                         </div>
                         <div style={{
                             borderLeft: '1px solid rgb(167, 167, 167)',
