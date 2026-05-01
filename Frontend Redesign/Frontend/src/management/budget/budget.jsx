@@ -83,7 +83,13 @@ export function Budget() {
             return;
         }
 
+        if (!currentUserId) {
+            alert("Không tìm thấy thông tin người dùng!");
+            return;
+        }
+
         const newBudget = {
+            userId: currentUserId, // <<< Added UserID
             bid: `${newYear.substring(2, 4)}_${newMonth}`,
             category: newCategory,
             month: `Tháng ${newMonth.substring(0, 1) === '0' ? newMonth.substring(1) : newMonth}`,
@@ -149,6 +155,7 @@ export function Budget() {
         }
 
         const updatedBudget = {
+            userId: currentUserId, // <<< Added UserID
             bid: edittedBid,
             category: edittedCategory,
             month: `Tháng ${edittedMonth.substring(0, 1) === '0' ? edittedMonth.substring(1) : edittedMonth}`,
@@ -189,7 +196,10 @@ export function Budget() {
             fetch('http://localhost:8080/api/delete-budget', {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: id })
+                body: JSON.stringify({ 
+                    id: id,
+                    userId: currentUserId
+                })
             })
                 .then(res => {
                     if (!res.ok) throw new Error("Lỗi khi xóa từ server!");
@@ -209,7 +219,11 @@ export function Budget() {
     const handleDeleteAllButton = () => {
         if (window.confirm('Bạn có chắc chắn muốn xóa TẤT CẢ ngân sách? Hành động này không thể hoàn tác!')) {
             fetch('http://localhost:8080/api/delete-all-budgets', {
-                method: "DELETE"
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    userId: currentUserId
+                })
             })
                 .then(res => {
                     if (!res.ok) throw new Error("Lỗi khi xóa từ server!");
