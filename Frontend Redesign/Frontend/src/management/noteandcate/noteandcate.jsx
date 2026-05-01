@@ -5,6 +5,7 @@ export function NoteAndCate() {
     const [catesList, setCatesList] = useState([]);
     const [notesList, setNotesList] = useState([]);
     const [activeFunc, setActiveFunc] = useState(0);
+    const currentUserId = localStorage.getItem('currentUserId');
 
     useEffect(() => {
         fetch("http://localhost:8080/api/categorieslist")
@@ -16,13 +17,15 @@ export function NoteAndCate() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/nslist")
-            .then(res => res.json())
-            .then(data => {
-                setNotesList(data);
-            })
-            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
-    }, []);
+        if (currentUserId) {
+            fetch(`http://localhost:8080/api/nslist?userId=${currentUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    setNotesList(data);
+                })
+                .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+        }
+    }, [currentUserId]);
 
     const handleAddButton = () => {
         if (activeFunc === 1) {
