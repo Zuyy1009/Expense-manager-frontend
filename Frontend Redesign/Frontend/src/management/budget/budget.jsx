@@ -221,7 +221,7 @@ export function Budget() {
             fetch('http://localhost:8080/api/delete-all-budgets', {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     userId: currentUserId
                 })
             })
