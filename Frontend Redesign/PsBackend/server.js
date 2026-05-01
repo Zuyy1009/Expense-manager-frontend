@@ -165,12 +165,25 @@ app.put('/api/update-transaction/:id', async (req, res) => {
 });
 
 app.delete('/api/delete-transactions', async (req, res) => {
-    const { ids } = req.body;
-    // Xóa tất cả các bản ghi có _id nằm trong mảng ids
-    await Transaction.deleteMany({ _id: { $in: ids } });
+    try {
+        const { ids, userId } = req.body;
 
-    const updatedList = await getTransList();
-    res.json(updatedList);
+        if (!userId || !ids || ids.length === 0) {
+            return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
+        }
+
+        // Xóa các bản ghi có _id nằm trong mảng ids VÀ thuộc về userId này
+        await Transaction.deleteMany({ 
+            _id: { $in: ids }, 
+            userId: userId 
+        });
+
+        const updatedList = await getTransList(userId);
+        res.json(updatedList);
+    } catch {
+        console.error(err);
+        res.status(500).json({ message: "Lỗi cập nhật" });
+    }
 });
 
 app.get('/api/budgetslist', async (req, res) => {
