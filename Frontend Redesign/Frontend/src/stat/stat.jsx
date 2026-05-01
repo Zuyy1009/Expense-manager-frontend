@@ -8,6 +8,7 @@ export function Stat() {
     const [inc, setInc] = useState(0);
     const [exp, setExp] = useState(0);
     const [transList, setTransList] = useState([]);
+    const currentUserId = localStorage.getItem('currentUserId');
 
     useEffect(() => {
         fetch("http://localhost:8080/api/data")
@@ -20,13 +21,15 @@ export function Stat() {
     }, []);
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/translist")
-            .then(res => res.json())
-            .then(data => {
-                setTransList(data);
-            })
-            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
-    }, []);
+        if (currentUserId) {
+            fetch(`http://localhost:8080/api/translist?userId=${currentUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    setTransList(data);
+                })
+                .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+        }
+    }, [currentUserId]);
 
     return (
         <div className={styles['outer-boundary']} >
@@ -57,7 +60,7 @@ export function Stat() {
             <div className={styles['recent-transactions']} >
                 <strong>Giao dịch gần đây</strong>
                 <hr />
-                <ul className={styles['trans-list']} style={{listStyle: 'none'}} >
+                <ul className={styles['trans-list']} style={{ listStyle: 'none' }} >
                     {transList.slice(0, 5).map((item, index) => (
                         <li key={item._id} style={{
                             display: 'grid',
@@ -71,9 +74,9 @@ export function Stat() {
                         }}>
                             <p><strong>{index + 1}</strong></p>
                             <p>{item.note}</p>
-                            <p><img style={{ width: '30px', marginTop: '-5px'}} src={item.categoryIcon} /></p>
+                            <p><img style={{ width: '30px', marginTop: '-5px' }} src={item.categoryIcon} /></p>
                             <p>{item.category}</p>
-                            <p style={item.type === 'Thu nhập' ? {color : 'green'} : {color : 'red'}}>
+                            <p style={item.type === 'Thu nhập' ? { color: 'green' } : { color: 'red' }}>
                                 {item.type === 'Thu nhập' ? `+ ` : `- `}{`${item.amount} đ`}
                             </p>
                             <p>{item.date}</p>
