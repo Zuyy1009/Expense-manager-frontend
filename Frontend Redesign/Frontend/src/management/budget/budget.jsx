@@ -75,7 +75,7 @@ export function Budget() {
     const [newYear, setNewYear] = useState(`${new Date().getFullYear()}`);
     const [newLimitAmount, setNewLimitAmount] = useState(0);
     const [newAlertThreshold, setNewAlertThreshold] = useState(70);
-    const [newIsActive, setNewIsActive] = useState(true);
+    const [newIsActive, setNewIsActive] = useState('active');
 
     const handleConfirmAdd = () => {
         if (!newYear || newLimitAmount === 0) {
@@ -126,7 +126,7 @@ export function Budget() {
     const [edittedYear, setEdittedYear] = useState(`${new Date().getFullYear()}`);
     const [edittedLimitAmount, setEdittedLimitAmount] = useState(0);
     const [edittedAlertThreshold, setEdittedAlertThreshold] = useState(70);
-    const [edittedIsActive, setEdittedIsActive] = useState(true);
+    const [edittedIsActive, setEdittedIsActive] = useState('active');
 
     const handleEditButton = (id) => {
         if (activeFunc === 2) {
