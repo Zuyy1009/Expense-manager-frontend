@@ -127,12 +127,19 @@ app.get('/api/nslist', async (req, res) => {
 // Xử lý thêm giao dịch mới
 app.post('/api/add-transaction', async (req, res) => {
     try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
         const newTrans = new Transaction(req.body); // Tạo instance mới từ model
         await newTrans.save(); // Lưu trực tiếp vào MongoDB
 
-        const updatedList = await getTransList(); // Lấy lại danh sách mới nhất
+        const updatedList = await getTransList(userId); // Lấy lại danh sách mới nhất của riêng user đó
         res.json(updatedList);
     } catch (err) {
+        console.error(err);
         res.status(500).send("Lỗi khi thêm dữ liệu");
     }
 });
