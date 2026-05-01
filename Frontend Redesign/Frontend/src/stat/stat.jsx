@@ -20,7 +20,7 @@ export function Stat() {
                 })
                 .catch(err => console.error("Đã xảy ra lỗi!: ", err));
         }
-    }, []);
+    }, [currentUserId]);
 
     useEffect(() => {
         if (currentUserId) {
