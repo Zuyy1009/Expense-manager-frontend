@@ -377,7 +377,10 @@ export function Transactions() {
             fetch('http://localhost:8080/api/delete-transactions', {
                 method: "DELETE",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ ids: selectedIds }) // Gửi mảng ID
+                body: JSON.stringify({
+                    ids: selectedIds,
+                    userId: currentUserId // <<< THÊM DÒNG NÀY
+                }) // Gửi mảng ID & userId
             })
                 .then(res => {
                     if (!res.ok) throw new Error("Lỗi khi xóa từ server");
