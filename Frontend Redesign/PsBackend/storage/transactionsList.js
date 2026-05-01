@@ -1,11 +1,14 @@
 const { iconsMap } = require('./iconsList.js');
 const Transaction = require('../models/Transaction.js');
+const mongoose = require('mongoose');
 
 // Vì làm việc với DB là bất đồng bộ  dùng async/await
-const getTransList = async () => {
+const getTransList = async (userId) => {
     try {
         // Lấy dữ liệu từ MongoDB
-        const data = await Transaction.find({}).lean();
+        const queryId = new mongoose.Types.ObjectId(userId);
+        const data = await Transaction.find({ userId: queryId }).lean();
+        console.log("Tìm thấy số lượng giao dịch:", data.length);
 
         // Map để gắn thêm icon
         const transList = data.map(item => ({
@@ -191,5 +194,27 @@ module.exports = { Transaction, getTransList };
         date: '01-03-2026',
         note: 'Mua quần áo II',
         dateCreated: '02-03-2026'
+    },
+    {
+        userId: { 
+           "$oid": '69f4021be61ae2b6a5d2d916'
+        },
+        type: 'Chi tiêu',
+        amount: 90000,
+        category: 'Mua sắm',
+        date: '01-03-2026',
+        note: 'Mua quần áo II',
+        dateCreated: '02-03-2026'
+    },
+    {
+        userId: { 
+           "$oid": '69f4021be61ae2b6a5d2d916'
+        },
+        type: 'Chi tiêu',
+        amount: 90000,
+        category: 'Ăn uống',
+        date: '25-02-2026',
+        note: 'Mua quần áo II',
+        dateCreated: '01-03-2026'
     },
 ]; */
