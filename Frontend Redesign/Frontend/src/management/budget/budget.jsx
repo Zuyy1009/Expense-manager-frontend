@@ -6,15 +6,18 @@ export function Budget() {
     const [budgetsList, setBudgetsList] = useState([]);
     const [iconsMap, setIconsMap] = useState({});
     const [activeFunc, setActiveFunc] = useState(0);
+    const currentUserId = localStorage.getItem('currentUserId');
 
     useEffect(() => {
-        fetch("http://localhost:8080/api/budgetslist")
-            .then(res => res.json())
-            .then(data => {
-                setBudgetsList(data);
-            })
-            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
-    }, []);
+        if (currentUserId) {
+            fetch(`http://localhost:8080/api/budgetslist?userId=${currentUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    setBudgetsList(data);
+                })
+                .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+        }
+    }, [currentUserId]);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/iconslist")
