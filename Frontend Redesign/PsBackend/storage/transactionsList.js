@@ -8,7 +8,6 @@ const getTransList = async (userId) => {
         // Lấy dữ liệu từ MongoDB
         const queryId = new mongoose.Types.ObjectId(userId);
         const data = await Transaction.find({ userId: queryId }).lean();
-        console.log("Tìm thấy số lượng giao dịch:", data.length);
 
         // Map để gắn thêm icon
         const transList = data.map(item => ({
