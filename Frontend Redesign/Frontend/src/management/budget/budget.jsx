@@ -176,7 +176,7 @@ export function Budget() {
         })
             .then(res => res.json())
             .then(updatedData => {
-                setBudgetsList(updatedData)
+                setBudgetsList(updatedData);
                 setActiveFunc(0);
                 setEdittedCategory('Ăn uống');
                 setEdittedMonth('01');
@@ -211,7 +211,7 @@ export function Budget() {
                 })
                 .catch(err => {
                     console.error("Lỗi xóa:", err);
-                    alert("Không thể xóa giao dịch, vui lòng thử lại.");
+                    alert("Không thể xóa ngân sách, vui lòng thử lại.");
                 });
         }
     };
@@ -235,7 +235,7 @@ export function Budget() {
                 })
                 .catch(err => {
                     console.error("Lỗi xóa:", err);
-                    alert("Không thể xóa giao dịch, vui lòng thử lại.");
+                    alert("Không thể xóa ngân sách, vui lòng thử lại.");
                 });
         }
     };
