@@ -270,6 +270,11 @@ export function Transactions() {
             return;
         }
 
+        if (!currentUserId) {
+            alert("Không tìm thấy thông tin người dùng!");
+            return;
+        }
+
         // Tái sử dụng logic lấy icon
 
         let chosenCategoryIcon = '';
@@ -310,7 +315,7 @@ export function Transactions() {
         }
 
         const updatedTransaction = {
-            id: editingId,
+            userId: currentUserId, // <<< Added UserID
             note: editedNote,
             type: typeSelect === 'income' ? 'Thu nhập' : 'Chi tiêu',
             category: editedCategory,
@@ -324,7 +329,10 @@ export function Transactions() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedTransaction),
         })
-            .then(res => res.json())
+            .then(res => {
+                if (!res.ok) throw new Error("Cập nhật thất bại");
+                return res.json();
+            })
             .then(updatedData => {
                 setTransList(updatedData);
                 setAddEdit(0);
