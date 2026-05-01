@@ -15,9 +15,10 @@ const getBudgetsWithProgress = async (userId) => {
         return budgets.map(budget => {
             // Lấy mã tháng từ bid (ví dụ: '26_04-1' -> '04')
             const budgetMonth = budget.bid.substring(3, 5);
+            // Cân nhắc dùng Aggregation sau này
 
             const consumed = transactions
-                .filter(t => t.category === budget.category && t.date.substring(3, 5) === budgetMonth)
+                .filter(t => t.category === budget.category && t.date.substring(3, 5) === budgetMonth && t.date.substring(6, 10) === budget.year)
                 .reduce((sum, t) => sum + t.amount, 0);
 
             return {
