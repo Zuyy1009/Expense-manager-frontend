@@ -147,14 +147,19 @@ app.post('/api/add-transaction', async (req, res) => {
 app.put('/api/update-transaction/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const updatedData = req.body;
+        const { userId, ...updatedData } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
 
         // Sử dụng findByIdAndUpdate để cập nhật thẳng vào MongoDB
         await Transaction.findByIdAndUpdate(id, updatedData);
 
-        const updatedList = await getTransList();
+        const updatedList = await getTransList(userId);
         res.json(updatedList);
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: "Lỗi cập nhật" });
     }
 });
