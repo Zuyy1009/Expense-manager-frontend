@@ -64,7 +64,8 @@ app.post('/api/login', async (req, res) => {
 
 app.get('/api/data', async (req, res) => {
     try {
-        const transList = await getTransList() || []; // Đảm bảo luôn là mảng
+        const { userId } = req.query; // Lấy userId từ phần sau dấu '?' ở frontend
+        const transList = await getTransList(userId) || []; // Đảm bảo luôn là mảng
 
         const income = transList
             .filter(i => i && i.type === 'Thu nhập') // Kiểm tra i tồn tại
