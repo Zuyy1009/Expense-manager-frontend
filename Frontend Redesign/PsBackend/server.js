@@ -175,7 +175,7 @@ app.delete('/api/delete-transactions', async (req, res) => {
         // Xóa các bản ghi có _id nằm trong mảng ids VÀ thuộc về userId này
         await Transaction.deleteMany({ 
             _id: { $in: ids }, 
-            userId: userId 
+            userId: new mongoose.Types.ObjectId(userId)
         });
 
         const updatedList = await getTransList(userId);
@@ -247,7 +247,7 @@ app.delete('/api/delete-budget', async (req, res) => {
 
         const deletedBudget = await Budget.findOneAndDelete({ 
             _id: id, 
-            userId: userId
+            userId: new mongoose.Types.ObjectId(userId)
         });
 
         if (!deletedBudget) {
@@ -270,7 +270,7 @@ app.delete('/api/delete-all-budgets', async (req, res) => {
             return res.status(400).json({ message: "Thiếu userId" });
         }
 
-        await Budget.deleteMany({ userId: userId }); // Chỉ xóa ngân sách của người dùng đang đăng nhập
+        await Budget.deleteMany({ userId: new mongoose.Types.ObjectId(userId) }); // Chỉ xóa ngân sách của người dùng đang đăng nhập
 
         res.json([]);
     } catch(err) {
