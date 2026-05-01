@@ -89,7 +89,7 @@ app.get('/api/translist', async (req, res) => {
     try {
         const { userId } = req.query;
 
-        if ( !userId ) {
+        if (!userId) {
             return res.status(400).json({ message: "Thiếu userId" });
         }
 
@@ -110,8 +110,18 @@ app.get('/api/categorieslist', async (req, res) => {
 });
 
 app.get('/api/nslist', async (req, res) => {
-    const nsList = await getNotesList();
-    res.json(nsList);
+    try {
+        const { userId } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        const nsList = await getNotesList(userId);
+        res.json(nsList);
+    } catch {
+        res.status(500).json({ message: "Lỗi Server" });
+    }
 });
 
 // Xử lý thêm giao dịch mới
