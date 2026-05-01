@@ -1,8 +1,10 @@
 const Note = require('../models/Note.js');
+const mongoose = require('mongoose');
 
-const getNotesList = async () => {
+const getNotesList = async (userId) => {
     try {
-        const data = await Note.find({}).lean();
+        const queryId = new mongoose.Types.ObjectId(userId);
+        const data = await Note.find({ userId: queryId }).lean();
 
         const nsList = data;
         return nsList;
@@ -48,6 +50,20 @@ module.exports = { getNotesList };
            "$oid": '69f304a59400fcc7aeed1cb3'
         },
         title: 'Note A',
+        content: 'Thiết lập aabb'
+    },
+    {
+        userId: { 
+           "$oid": '69f4021be61ae2b6a5d2d916'
+        },
+        title: 'Note A',
+        content: 'Thiết lập aabb'
+    },
+    {
+        userId: { 
+           "$oid": '69f4021be61ae2b6a5d2d916'
+        },
+        title: 'Note B',
         content: 'Thiết lập aabb'
     },
 ]; */
