@@ -163,6 +163,11 @@ export function Transactions() {
             return;
         }
 
+        if (!currentUserId) {
+            alert("Không tìm thấy thông tin người dùng!");
+            return;
+        }
+
         let chosenCategoryIcon = '';
 
         switch (newCategory) {
@@ -201,6 +206,7 @@ export function Transactions() {
         }
 
         const newTransaction = {
+            userId: currentUserId, // <<< Added UserID
             note: newNote,
             type: typeSelect === 'income' ? 'Thu nhập' : 'Chi tiêu',
             category: newCategory,
