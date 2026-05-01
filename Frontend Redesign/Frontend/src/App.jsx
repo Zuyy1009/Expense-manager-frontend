@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useNavigate, Navigate, useLocation } from 'react-router-dom'
 import defAvt from './assets/dashboard_icon/def_avatar.png'
+import Logo from './assets/Logo.png'
 import './App.css'
 import { Stat } from './stat/stat.jsx'
 import { Transactions } from './transactions/transactions.jsx'
@@ -65,6 +66,10 @@ function DashboardLayout({ onLogOut }) {
                         Đăng xuất
                     </button>
                     {/* Không được thả ngoặc () sau handleLogout*/}
+                </section>
+                <section className='logo-sect' style={{ marginTop: '120px' }} >
+                    <img src={Logo} class="logo-img" alt="logoimg" />
+                    <h2 style={{ color: 'white' }} >Expense Manager</h2>
                 </section>
             </aside>
 
