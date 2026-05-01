@@ -162,8 +162,18 @@ app.delete('/api/delete-transactions', async (req, res) => {
 });
 
 app.get('/api/budgetslist', async (req, res) => {
-    const budgsList = await getBudgetsWithProgress();
-    res.json(budgsList);
+    try {
+        const { userId } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        const budgsList = await getBudgetsWithProgress(userId);
+        res.json(budgsList);
+    } catch {
+        res.status(500).json({ message: "Lỗi Server" });
+    }
 });
 
 app.post('/api/add-budget', async (req, res) => {
