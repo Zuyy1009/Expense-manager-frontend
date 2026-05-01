@@ -7,14 +7,18 @@ export function Transactions() {
     // Nó sẽ đưa vào 1 hàng đợi trước. Vì thế nếu dùng ngay sau khi gọi hàm set, giá trị vẫn là cũ.
     // Không nên viết logic lọc bên trong hàm xử lý thay đổi.
 
+    const currentUserId = localStorage.getItem('currentUserId');
+
     useEffect(() => {
-        fetch("http://localhost:8080/api/translist")
-            .then(res => res.json())
-            .then(data => {
-                setTransList(data);
-            })
-            .catch(err => console.error("Đã xảy ra lỗi!: ", err));
-    }, []);
+        if (currentUserId) {
+            fetch(`http://localhost:8080/api/translist?userId=${currentUserId}`)
+                .then(res => res.json())
+                .then(data => {
+                    setTransList(data);
+                })
+                .catch(err => console.error("Đã xảy ra lỗi!: ", err));
+        }
+    }, [currentUserId]);
 
     const [chosenCategory, setChosenCategory] = useState('all-category');
     const [minPrice, setMinPrice] = useState('');
