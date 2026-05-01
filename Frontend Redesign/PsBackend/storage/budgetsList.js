@@ -9,7 +9,7 @@ const getBudgetsWithProgress = async (userId) => {
         // 1. Lấy tất cả ngân sách và giao dịch từ DB
         const queryId = new mongoose.Types.ObjectId(userId);
         const budgets = await Budget.find({ userId: queryId }).lean();
-        const transactions = await Transaction.find({ type: 'Chi tiêu' }).lean();
+        const transactions = await Transaction.find({ type: 'Chi tiêu', userId: queryId }).lean();
 
         // 2. Map để tính toán số tiền đã dùng và gắn icon
         return budgets.map(budget => {
