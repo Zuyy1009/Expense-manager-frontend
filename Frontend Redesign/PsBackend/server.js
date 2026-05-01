@@ -173,8 +173,8 @@ app.delete('/api/delete-transactions', async (req, res) => {
         }
 
         // Xóa các bản ghi có _id nằm trong mảng ids VÀ thuộc về userId này
-        await Transaction.deleteMany({ 
-            _id: { $in: ids }, 
+        await Transaction.deleteMany({
+            _id: { $in: ids },
             userId: new mongoose.Types.ObjectId(userId)
         });
 
@@ -219,6 +219,24 @@ app.post('/api/add-budget', async (req, res) => {
     }
 });
 
+app.post('/api/add-note', async (req, res) => {
+    try {
+        const { userId } = req.body;
+
+        if (!userId) {
+            return res.status(400).json({ message: "Thiếu userId" });
+        }
+
+        const newNote = new Note(req.body);
+        await newNote.save();
+
+        const updatedList = await getNotesList(userId);
+        res.json(updatedList);
+    } catch {
+        res.status(500).send("Lỗi khi thêm dữ liệu");
+    }
+});
+
 app.put('/api/update-budget/:id', async (req, res) => {
     try {
         const { id } = req.params; /* Lưu ý phải phân ra cấu trúc bằng cặp {} */
@@ -245,8 +263,8 @@ app.delete('/api/delete-budget', async (req, res) => {
             return res.status(400).json({ message: "Dữ liệu không hợp lệ" });
         }
 
-        const deletedBudget = await Budget.findOneAndDelete({ 
-            _id: id, 
+        const deletedBudget = await Budget.findOneAndDelete({
+            _id: id,
             userId: new mongoose.Types.ObjectId(userId)
         });
 
@@ -256,7 +274,7 @@ app.delete('/api/delete-budget', async (req, res) => {
 
         const updatedList = await getBudgetsWithProgress(userId);
         res.json(updatedList);
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Lỗi cập nhật" });
     }
@@ -273,7 +291,7 @@ app.delete('/api/delete-all-budgets', async (req, res) => {
         await Budget.deleteMany({ userId: new mongoose.Types.ObjectId(userId) }); // Chỉ xóa ngân sách của người dùng đang đăng nhập
 
         res.json([]);
-    } catch(err) {
+    } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Lỗi cập nhật" });
     }
