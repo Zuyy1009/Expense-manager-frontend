@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.admin-container {
+    display: grid;
+    grid-template-rows: 100px 520px 100px;
+    gap: 20px;
+    padding: 20px;
+}
+
+.header-section {
+    border: 1.5px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-left: 20px;
+    /*Lệch ngang, lệch dọc, bán kính mờ, độ mở rộng, màu*/
+}
+
+.table-responsive {
+    border: 1.5px solid rgb(255, 255, 255);
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-left: 20px;
+}
+
+.input-field {
+    margin-right: 10px;
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    height: 20px;
+    width: 255px;
+    padding-left: 5px;
+}
+
+.acc-button {
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    background-color: white;
+    font-size: 15px;
+    margin-bottom: 6px;
+    cursor: pointer;
+}
+
+.acc-button:hover {
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    background-color: rgb(0, 117, 70);
+    color: white;
+}
+
+.account-table {
+    height: 470px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-color: rgb(0, 117, 70) rgb(216, 227, 222);
+    margin-right: 5px;
+    margin-left: -22px;
+    padding-left: 20px;
+    border-top: 1px solid rgb(169, 169, 169);
+    border-bottom: 1px solid rgb(169, 169, 169);
+}
+
+.table-responsive {
+    padding-left: 22px;
+}

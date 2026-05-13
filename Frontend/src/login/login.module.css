@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.outer-boundary {
+    background-color: #ddfff7;
+    height: 98vh;
+    overflow: hidden;
+    /* Để ý phần trên về sau */
+    display: grid;
+    grid-template-columns: 500px 1fr 500px;
+}
+
+.middle-sect {
+    display: grid;
+    grid-template-rows: 200px 1fr 200px;
+}
+
+.login-region {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
+    display: grid;
+    justify-items: center;
+}
+
+.input-field {
+    border: 2px solid rgb(0, 117, 70);
+    border-radius: 20px;
+    background-color: white;
+    width: 400px;
+    padding: 10px;
+}

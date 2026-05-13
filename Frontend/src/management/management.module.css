@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.outer-boundary {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1230px;
+    gap: 20px;
+    width: 1230px;
+    height: 680px;
+}
+
+.function-col {
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
+    padding-top: 15px;
+}
+
+.function-content {
+    border: 2px solid white;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+}
+
+.function-button {
+    width: 50px;
+    background-color: transparent;
+    border: 0px;
+    margin-left: 3px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.button-img {
+    width: 50px;
+}
