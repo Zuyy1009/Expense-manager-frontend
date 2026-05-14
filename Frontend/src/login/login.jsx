@@ -44,6 +44,10 @@ export function Login({ onLogin }) {
                 } else {
                     navigate('/stat');  // User thường vào trang thống kê cá nhân
                 }
+
+                setTimeout(() => {
+                    alert('Đăng nhập thành công!');
+                }, 100);
             } else {
                 alert(data.message || "Email hoặc mật khẩu không chính xác");
             }
